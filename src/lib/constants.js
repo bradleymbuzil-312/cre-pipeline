@@ -1,1 +1,32 @@
-ZXhwb3J0IGNvbnN0IFNUQUdFUyA9IFsKICAnUHJvc3BlY3RpbmcnLAogICdBcHBsaWNhdGlvbiAvIE5EQScsCiAgJ0xPSSAvIFRlcm0gU2hlZXQnLAogICdEdWUgRGlsaWdlbmNlJywKICAnQ2xvc2luZycsCiAgJ0Z1bmRlZCAvIENsb3NlZCcsCl0KCmV4cG9ydCBjb25zdCBTVEFHRV9DT0xPUlMgPSB7CiAgJ1Byb3NwZWN0aW5nJzogICAgICAgeyBiZzogJyMwZTFmM2QnLCBib3JkZXI6ICcjMWUzZDZlJywgdGV4dDogJyM2YjlmZjcnIH0sCiAgJ0FwcGxpY2F0aW9uIC8gTkRBJzogeyBiZzogJyMxZTEwMzAnLCBib3JkZXI6ICcjM2QxZTY4JywgdGV4dDogJyNiMDdlZjcnIH0sCiAgJ0xPSSAvIFRlcm0gU2hlZXQnOiAgeyBiZzogJyMyYTE4MDAnLCBib3JkZXI6ICcjNmIzYTAwJywgdGV4dDogJyNmMDlhM2EnIH0sCiAgJ0R1ZSBEaWxpZ2VuY2UnOiAgICAgeyBiZzogJyMwMDFlMTInLCBib3JkZXI6ICcjMDA1MjJlJywgdGV4dDogJyMzYWRmYTAnIH0sCiAgJ0Nsb3NpbmcnOiAgICAgICAgICAgeyBiZzogJyMwMDE4MjInLCBib3JkZXI6ICcjMDA0NDY2JywgdGV4dDogJyMzYWNhZTgnIH0sCiAgJ0Z1bmRlZCAvIENsb3NlZCc6ICAgeyBiZzogJyMwMDFhMDgnLCBib3JkZXI6ICcjMDA1MjE4JywgdGV4dDogJyMzYWQ0NjAnIH0sCn0KCmV4cG9ydCBjb25zdCBQUk9QRVJUWV9UWVBFUyA9IFsKICAnTXVsdGlmYW1pbHknLAogICdPZmZpY2UnLAogICdSZXRhaWwnLAogICdJbmR1c3RyaWFsJywKICAnSG9zcGl0YWxpdHknLAogICdTZW5pb3JzIEhvdXNpbmcnLAogICdNaXhlZCBVc2UnLAogICdMYW5kJywKICAnU2VsZiBTdG9yYWdlJywKICAnTW9iaWxlIEhvbWUgUGFyaycsCiAgJ1N0dWRlbnQgSG91c2luZycsCiAgJ090aGVyJywKXQo=
+export const STAGES = [
+  'Prospecting',
+  'Application / NDA',
+  'LOI / Term Sheet',
+  'Due Diligence',
+  'Closing',
+  'Funded / Closed',
+]
+
+export const STAGE_COLORS = {
+  'Prospecting':       { bg: '#0e1f3d', border: '#1e3d6e', text: '#6b9ff7' },
+  'Application / NDA': { bg: '#1e1030', border: '#3d1e68', text: '#b07ef7' },
+  'LOI / Term Sheet':  { bg: '#2a1800', border: '#6b3a00', text: '#f09a3a' },
+  'Due Diligence':     { bg: '#001e12', border: '#00522e', text: '#3adfa0' },
+  'Closing':           { bg: '#001822', border: '#004466', text: '#3acae8' },
+  'Funded / Closed':   { bg: '#001a08', border: '#005218', text: '#3ad460' },
+}
+
+export const PROPERTY_TYPES = [
+  'Multifamily',
+  'Office',
+  'Retail',
+  'Industrial',
+  'Hospitality',
+  'Seniors Housing',
+  'Mixed Use',
+  'Land',
+  'Self Storage',
+  'Mobile Home Park',
+  'Student Housing',
+  'Other',
+]
