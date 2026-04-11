@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { Plus, Search, AlertCircle, Clock, CheckCircle } from 'lucide-react'
+import { Plus, Search } from 'lucide-react'
 import ClientModal from './ClientModal'
 import ClientCard from './ClientCard'
 

@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase'
 import KanbanBoard from './KanbanBoard'
 import ListView from './ListView'
 import DealModal from './DealModal'
-import { LayoutGrid, List, Plus, TrendingUp } from 'lucide-react'
+import { LayoutGrid, List, Plus } from 'lucide-react'
 import { formatCurrency } from '../lib/format'
 import { STAGES } from '../lib/constants'
 
