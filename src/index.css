@@ -1,19 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap');
 
 :root {
-  --bg: #0d1117;
-  --surface: #161b22;
-  --surface2: #21262d;
-  --border: #30363d;
-  --border-hover: #484f58;
-  --gold: #d4a843;
-  --gold-dim: #9a7a30;
-  --text: #e6edf3;
-  --muted: #8b949e;
-  --danger: #f85149;
-  --success: #3fb950;
+  --bg:           #f0f4f8;
+  --surface:      #ffffff;
+  --surface2:     #f1f5f9;
+  --border:       #e2e8f0;
+  --border-hover: #cbd5e1;
+  --blue:         #2563eb;
+  --blue-dim:     #1d4ed8;
+  --blue-light:   #eff6ff;
+  --blue-muted:   #93c5fd;
+  --text:         #0f172a;
+  --muted:        #64748b;
+  --danger:       #ef4444;
+  --success:      #16a34a;
+  --gold:         #2563eb;
+  --gold-dim:     #1d4ed8;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,22 +32,19 @@ input, select, textarea, button { font-family: inherit; }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--gold-dim) !important;
-  box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.08);
+  border-color: var(--blue) !important;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
 }
 
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-/* Date input styling */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.5);
+  filter: none;
   cursor: pointer;
+  opacity: 0.5;
 }
 
-select option {
-  background: var(--surface2);
-  color: var(--text);
-}
+select option { background: #ffffff; color: var(--text); }
