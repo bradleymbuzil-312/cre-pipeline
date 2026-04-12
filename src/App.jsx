@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Pipeline from './components/Pipeline'
 import Clients from './components/Clients'
 import Tasks from './components/Tasks'
+import AccessManager from './components/AccessManager'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -35,7 +36,10 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header session={session} view={view} setView={setView} />
-      {view === 'pipeline' ? <Pipeline session={session} /> : view === 'clients' ? <Clients session={session} /> : <Tasks session={session} />}
+      {view === 'pipeline' ? <Pipeline session={session} /> :
+       view === 'clients' ? <Clients session={session} /> :
+       view === 'tasks' ? <Tasks session={session} /> :
+       <AccessManager session={session} />}
     </div>
   )
 }

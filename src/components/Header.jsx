@@ -17,7 +17,7 @@ export default function Header({ session, view, setView }) {
     setAlertCount(data?.length || 0)
   }
 
-  const NAV = [['pipeline','Deals'],['clients','Clients'],['tasks','Tasks']]
+  const NAV = [['pipeline','Deals'],['clients','Clients'],['tasks','Tasks'],['access','Access']]
 
   return (
     <div style={{ height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 24px', background: 'var(--surface)', borderBottom: '1px solid var(--border)', flexShrink: 0, zIndex: 10 }}>
