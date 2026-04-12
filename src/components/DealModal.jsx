@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { X, ChevronDown, ChevronUp } from 'lucide-react'
+import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square } from 'lucide-react'
 import { STAGES, PROPERTY_TYPES } from '../lib/constants'
 
 const FINANCE_PURPOSES = ['Acquisition','Refinance','Construction','Bridge','Mezzanine','Preferred Equity','Recapitalization','Other']
@@ -11,6 +11,7 @@ const RATE_TYPES = ['Fixed','Floating','Fixed to Floating']
 const RATE_INDEXES = ['SOFR','Prime','Treasury','LIBOR','Other']
 const RECOURSE_TYPES = ['Full Recourse','Non-Recourse','Partial Recourse','Carve-Out Guaranty']
 const FEE_AGREEMENT_TYPES = ['Exclusive','Non-Exclusive','Right of First Refusal']
+const PRIORITIES = ['High','Medium','Low']
 
 const EMPTY = {
   borrower_name:'',stage:'Prospecting',expected_close_date:'',
@@ -36,19 +37,137 @@ function F({label,children,span}){return <div style={{gridColumn:span===2?'1 / -
 function Sel({value,onChange,options}){return <select value={value} onChange={onChange} style={IS}><option value="">Select...</option>{options.map(o=><option key={o} value={o}>{o}</option>)}</select>}
 function Inp({type='text',value,onChange,placeholder,step}){return <input type={type} value={value} onChange={onChange} placeholder={placeholder} step={step} style={IS}/>}
 
-function Section({title,children,defaultOpen=true}){
+function Section({title,children,defaultOpen=true,badge}){
   const [open,setOpen]=useState(defaultOpen)
   return(
     <div style={{marginBottom:'4px'}}>
       <button type="button" onClick={()=>setOpen(o=>!o)} style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',background:'var(--surface2)',border:'1px solid var(--border)',color:'var(--text)',padding:'7px 12px',borderRadius:'6px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'11px',letterSpacing:'0.06em',textTransform:'uppercase',marginBottom:open?'12px':'0'}}>
-        {title}{open?<ChevronUp size={13}/>:<ChevronDown size={13}/>}
+        <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
+          {title}
+          {badge > 0 && <span style={{background:'var(--gold)',color:'#000',borderRadius:'9px',padding:'1px 6px',fontSize:'9px',fontWeight:700}}>{badge}</span>}
+        </div>
+        {open?<ChevronUp size={13}/>:<ChevronDown size={13}/>}
       </button>
-      {open&&<div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px',paddingBottom:'14px'}}>{children}</div>}
+      {open&&<div style={{paddingBottom:'14px'}}>{children}</div>}
     </div>
   )
 }
 
-export default function DealModal({deal,session,onClose,onSaved}){
+// Inline task manager for a deal
+function DealTasks({dealId, session, teamMembers}){
+  const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [adding, setAdding] = useState(false)
+  const [newTask, setNewTask] = useState({title:'',assigned_to:'',priority:'Medium',due_date:'',description:''})
+
+  useEffect(()=>{ if(dealId) fetchTasks() }, [dealId])
+
+  async function fetchTasks(){
+    const {data} = await supabase.from('tasks').select('*').eq('deal_id', dealId).order('created_at')
+    setTasks(data||[])
+    setLoading(false)
+  }
+
+  async function addTask(){
+    if(!newTask.title.trim()) return
+    const {error} = await supabase.from('tasks').insert({
+      title: newTask.title.trim(),
+      description: newTask.description.trim()||null,
+      assigned_to: newTask.assigned_to||null,
+      priority: newTask.priority,
+      due_date: newTask.due_date||null,
+      status: 'To Do',
+      deal_id: dealId,
+      created_by: session.user.id
+    })
+    if(!error){
+      setNewTask({title:'',assigned_to:'',priority:'Medium',due_date:'',description:''})
+      setAdding(false)
+      fetchTasks()
+    }
+  }
+
+  async function toggleStatus(task){
+    const status = task.status === 'Done' ? 'To Do' : 'Done'
+    await supabase.from('tasks').update({status, updated_at: new Date().toISOString()}).eq('id', task.id)
+    fetchTasks()
+  }
+
+  async function deleteTask(id){
+    if(!window.confirm('Delete this task?')) return
+    await supabase.from('tasks').delete().eq('id', id)
+    fetchTasks()
+  }
+
+  const PRIORITY_COLORS = {High:'#f85149',Medium:'#f09a3a',Low:'#6b9ff7'}
+
+  return(
+    <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
+      {loading ? (
+        <div style={{fontSize:'11px',color:'var(--muted)',fontFamily:'IBM Plex Mono, monospace'}}>LOADING TASKS...</div>
+      ) : tasks.length === 0 && !adding ? (
+        <div style={{fontSize:'12px',color:'var(--muted)',padding:'12px',background:'var(--surface2)',borderRadius:'6px',textAlign:'center'}}>No tasks yet for this deal</div>
+      ) : (
+        tasks.map(task => (
+          <div key={task.id} style={{display:'flex',alignItems:'flex-start',gap:'8px',padding:'8px 10px',background:'var(--surface2)',borderRadius:'6px',border:'1px solid var(--border)'}}>
+            <button onClick={()=>toggleStatus(task)} style={{background:'transparent',border:'none',cursor:'pointer',color:task.status==='Done'?'#3ad460':'var(--muted)',padding:'1px',flexShrink:0,marginTop:'1px'}}>
+              {task.status==='Done'?<CheckSquare size={14}/>:<Square size={14}/>}
+            </button>
+            <div style={{flex:1,minWidth:0}}>
+              <div style={{fontSize:'12px',fontWeight:600,color:task.status==='Done'?'var(--muted)':'var(--text)',textDecoration:task.status==='Done'?'line-through':'none',fontFamily:'Syne, sans-serif',marginBottom:'2px'}}>{task.title}</div>
+              <div style={{display:'flex',gap:'8px',alignItems:'center',flexWrap:'wrap'}}>
+                <span style={{fontSize:'9px',padding:'1px 5px',borderRadius:'3px',background:'var(--surface)',color:PRIORITY_COLORS[task.priority]||'var(--muted)',border:`1px solid ${PRIORITY_COLORS[task.priority]||'var(--border)'}33`,fontFamily:'Syne, sans-serif',fontWeight:700,textTransform:'uppercase'}}>{task.priority}</span>
+                {task.assigned_to && <span style={{fontSize:'10px',color:'var(--muted)'}}>{task.assigned_to}</span>}
+                {task.due_date && <span style={{fontSize:'10px',color:'var(--muted)',fontFamily:'IBM Plex Mono, monospace'}}>{new Date(task.due_date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>}
+                {task.status && <span style={{fontSize:'9px',color:task.status==='Done'?'#3ad460':task.status==='In Progress'?'#f09a3a':'var(--muted)',fontFamily:'Syne, sans-serif',fontWeight:600,textTransform:'uppercase'}}>{task.status}</span>}
+              </div>
+              {task.description && <div style={{fontSize:'11px',color:'var(--muted)',marginTop:'3px',lineHeight:1.4}}>{task.description}</div>}
+            </div>
+            <button onClick={()=>deleteTask(task.id)} style={{background:'transparent',border:'none',cursor:'pointer',color:'var(--muted)',padding:'2px',flexShrink:0}} onMouseEnter={e=>e.currentTarget.style.color='var(--danger)'} onMouseLeave={e=>e.currentTarget.style.color='var(--muted)'}><Trash2 size={11}/></button>
+          </div>
+        ))
+      )}
+
+      {adding && (
+        <div style={{background:'var(--surface2)',border:'1px solid var(--gold-dim)',borderRadius:'6px',padding:'12px',display:'flex',flexDirection:'column',gap:'8px'}}>
+          <input value={newTask.title} onChange={e=>setNewTask(t=>({...t,title:e.target.value}))} placeholder="Task title *" autoFocus style={{...IS,fontSize:'13px'}} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
+          <textarea value={newTask.description} onChange={e=>setNewTask(t=>({...t,description:e.target.value}))} placeholder="Description (optional)" rows={2} style={{...IS,resize:'none',lineHeight:1.5}}/>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'8px'}}>
+            <div>
+              <label style={LS}>Assign To</label>
+              <select value={newTask.assigned_to} onChange={e=>setNewTask(t=>({...t,assigned_to:e.target.value}))} style={IS}>
+                <option value="">Unassigned</option>
+                {(teamMembers||[]).map(m=><option key={m.id} value={m.name}>{m.name}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={LS}>Priority</label>
+              <select value={newTask.priority} onChange={e=>setNewTask(t=>({...t,priority:e.target.value}))} style={IS}>
+                {PRIORITIES.map(p=><option key={p} value={p}>{p}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={LS}>Due Date</label>
+              <input type="date" value={newTask.due_date} onChange={e=>setNewTask(t=>({...t,due_date:e.target.value}))} style={IS}/>
+            </div>
+          </div>
+          <div style={{display:'flex',gap:'6px',justifyContent:'flex-end'}}>
+            <button onClick={()=>{setAdding(false);setNewTask({title:'',assigned_to:'',priority:'Medium',due_date:'',description:''})}} style={{background:'transparent',border:'1px solid var(--border)',color:'var(--muted)',padding:'6px 12px',borderRadius:'5px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:600,fontSize:'11px'}}>CANCEL</button>
+            <button onClick={addTask} style={{background:'var(--gold)',border:'none',color:'#000',padding:'6px 16px',borderRadius:'5px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'11px'}}>ADD TASK</button>
+          </div>
+        </div>
+      )}
+
+      {!adding && (
+        <button onClick={()=>setAdding(true)} style={{display:'flex',alignItems:'center',gap:'5px',background:'transparent',border:'1px dashed var(--border)',borderRadius:'6px',color:'var(--muted)',padding:'8px 12px',cursor:'pointer',fontSize:'11px',fontFamily:'Syne, sans-serif',fontWeight:600,width:'100%',justifyContent:'center',transition:'all 0.15s'}} onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--gold-dim)';e.currentTarget.style.color='var(--gold)'}} onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--muted)'}}>
+          <Plus size={11}/> ADD TASK TO THIS DEAL
+        </button>
+      )}
+    </div>
+  )
+}
+
+export default function DealModal({deal, session, onClose, onSaved}){
   const [form,setForm]=useState(()=>{
     if(!deal)return{...EMPTY}
     const f={...EMPTY,...deal}
@@ -58,6 +177,11 @@ export default function DealModal({deal,session,onClose,onSaved}){
   })
   const [saving,setSaving]=useState(false)
   const [error,setError]=useState('')
+  const [teamMembers,setTeamMembers]=useState([])
+
+  useEffect(()=>{
+    supabase.from('team_members').select('*').order('name').then(({data})=>setTeamMembers(data||[]))
+  },[])
 
   function set(k,v){setForm(f=>({...f,[k]:v}))}
   function num(v){return v!==''?parseFloat(v):null}
@@ -96,7 +220,7 @@ export default function DealModal({deal,session,onClose,onSaved}){
 
   return(
     <div onClick={e=>{if(e.target===e.currentTarget)onClose()}} style={{position:'fixed',inset:0,zIndex:1000,background:'rgba(0,0,0,0.8)',backdropFilter:'blur(6px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'16px'}}>
-      <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'12px',width:'100%',maxWidth:'860px',maxHeight:'94vh',display:'flex',flexDirection:'column',boxShadow:'0 32px 80px rgba(0,0,0,0.7)'}}>
+      <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'12px',width:'100%',maxWidth:'900px',maxHeight:'94vh',display:'flex',flexDirection:'column',boxShadow:'0 32px 80px rgba(0,0,0,0.7)'}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 22px',borderBottom:'1px solid var(--border)',flexShrink:0}}>
           <div>
             <h2 style={{fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'16px',color:'var(--text)',marginBottom:'1px'}}>{deal?'Edit Deal':'New Deal'}</h2>
@@ -104,67 +228,100 @@ export default function DealModal({deal,session,onClose,onSaved}){
           </div>
           <button onClick={onClose} style={{background:'transparent',border:'1px solid var(--border)',color:'var(--muted)',cursor:'pointer',padding:'5px',borderRadius:'6px',display:'flex',alignItems:'center'}}><X size={15}/></button>
         </div>
+
         <div style={{overflowY:'auto',flex:1,padding:'16px 22px',display:'flex',flexDirection:'column',gap:'4px'}}>
           <Section title="Summary">
-            <F label="Borrower / Client *"><Inp value={form.borrower_name} onChange={e=>set('borrower_name',e.target.value)} placeholder="Larry Li"/></F>
-            <F label="Stage"><Sel value={form.stage} onChange={e=>set('stage',e.target.value)} options={STAGES}/></F>
-            <F label="Close Date"><Inp type="date" value={form.expected_close_date} onChange={e=>set('expected_close_date',e.target.value)}/></F>
-            <F label="Proceeds / Loan Amount ($)"><Inp type="number" value={form.loan_amount} onChange={e=>set('loan_amount',e.target.value)} placeholder="27500000"/></F>
-            <F label="Finance Purpose"><Sel value={form.finance_purpose} onChange={e=>set('finance_purpose',e.target.value)} options={FINANCE_PURPOSES}/></F>
-            <F label="Capital Type"><Sel value={form.capital_type} onChange={e=>set('capital_type',e.target.value)} options={CAPITAL_TYPES}/></F>
-            <F label="Debt / Equity Type"><Sel value={form.debt_equity_type} onChange={e=>set('debt_equity_type',e.target.value)} options={DEBT_EQUITY_TYPES}/></F>
-            <F label="Fee Agreement Type"><Sel value={form.fee_agreement_type} onChange={e=>set('fee_agreement_type',e.target.value)} options={FEE_AGREEMENT_TYPES}/></F>
-            <F label="1031 Exchange"><div style={{display:'flex',alignItems:'center',gap:'8px',paddingTop:'6px'}}><input type="checkbox" checked={!!form.x1031_exchange} onChange={e=>set('x1031_exchange',e.target.checked)} style={{width:'14px',height:'14px',accentColor:'var(--gold)',cursor:'pointer'}}/><span style={{fontSize:'12px',color:'var(--muted)'}}>Yes</span></div></F>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
+              <F label="Borrower / Client *"><Inp value={form.borrower_name} onChange={e=>set('borrower_name',e.target.value)} placeholder="Larry Li"/></F>
+              <F label="Stage"><Sel value={form.stage} onChange={e=>set('stage',e.target.value)} options={STAGES}/></F>
+              <F label="Close Date"><Inp type="date" value={form.expected_close_date} onChange={e=>set('expected_close_date',e.target.value)}/></F>
+              <F label="Proceeds / Loan Amount ($)"><Inp type="number" value={form.loan_amount} onChange={e=>set('loan_amount',e.target.value)} placeholder="27500000"/></F>
+              <F label="Finance Purpose"><Sel value={form.finance_purpose} onChange={e=>set('finance_purpose',e.target.value)} options={FINANCE_PURPOSES}/></F>
+              <F label="Capital Type"><Sel value={form.capital_type} onChange={e=>set('capital_type',e.target.value)} options={CAPITAL_TYPES}/></F>
+              <F label="Debt / Equity Type"><Sel value={form.debt_equity_type} onChange={e=>set('debt_equity_type',e.target.value)} options={DEBT_EQUITY_TYPES}/></F>
+              <F label="Fee Agreement Type"><Sel value={form.fee_agreement_type} onChange={e=>set('fee_agreement_type',e.target.value)} options={FEE_AGREEMENT_TYPES}/></F>
+              <F label="1031 Exchange"><div style={{display:'flex',alignItems:'center',gap:'8px',paddingTop:'6px'}}><input type="checkbox" checked={!!form.x1031_exchange} onChange={e=>set('x1031_exchange',e.target.checked)} style={{width:'14px',height:'14px',accentColor:'var(--gold)',cursor:'pointer'}}/><span style={{fontSize:'12px',color:'var(--muted)'}}>Yes</span></div></F>
+            </div>
           </Section>
-          <Section title="Property Details">
-            <F label="Property Type"><Sel value={form.property_type} onChange={e=>set('property_type',e.target.value)} options={PROPERTY_TYPES}/></F>
-            <F label="Address" span={2}><Inp value={form.property_address} onChange={e=>set('property_address',e.target.value)} placeholder="111 San Bruno Ave W"/></F>
-            <F label="City"><Inp value={form.city} onChange={e=>set('city',e.target.value)} placeholder="San Bruno"/></F>
-            <F label="State / Province"><Inp value={form.state_province} onChange={e=>set('state_province',e.target.value)} placeholder="California"/></F>
-            <F label="Zip / Postal Code"><Inp value={form.zip_code} onChange={e=>set('zip_code',e.target.value)} placeholder="94066"/></F>
-            <F label="Total Units"><Inp type="number" value={form.total_units} onChange={e=>set('total_units',e.target.value)} placeholder="46"/></F>
-            <F label="Property Size (Sq Ft)"><Inp type="number" value={form.sq_ft} onChange={e=>set('sq_ft',e.target.value)} placeholder="111400"/></F>
-            <F label="Year Built"><Inp type="number" value={form.year_built} onChange={e=>set('year_built',e.target.value)} placeholder="2020"/></F>
+
+          <Section title="Property Details" defaultOpen={false}>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
+              <F label="Property Type"><Sel value={form.property_type} onChange={e=>set('property_type',e.target.value)} options={PROPERTY_TYPES}/></F>
+              <F label="Address" span={2}><Inp value={form.property_address} onChange={e=>set('property_address',e.target.value)} placeholder="111 San Bruno Ave W"/></F>
+              <F label="City"><Inp value={form.city} onChange={e=>set('city',e.target.value)} placeholder="San Bruno"/></F>
+              <F label="State / Province"><Inp value={form.state_province} onChange={e=>set('state_province',e.target.value)} placeholder="California"/></F>
+              <F label="Zip / Postal Code"><Inp value={form.zip_code} onChange={e=>set('zip_code',e.target.value)} placeholder="94066"/></F>
+              <F label="Total Units"><Inp type="number" value={form.total_units} onChange={e=>set('total_units',e.target.value)} placeholder="46"/></F>
+              <F label="Property Size (Sq Ft)"><Inp type="number" value={form.sq_ft} onChange={e=>set('sq_ft',e.target.value)} placeholder="111400"/></F>
+              <F label="Year Built"><Inp type="number" value={form.year_built} onChange={e=>set('year_built',e.target.value)} placeholder="2020"/></F>
+            </div>
           </Section>
-          <Section title="Capital Details">
-            <F label="Capital Source (Lender)"><Inp value={form.lender_name} onChange={e=>set('lender_name',e.target.value)} placeholder="East West Bank"/></F>
-            <F label="Term (Months)"><Inp type="number" value={form.term_months} onChange={e=>set('term_months',e.target.value)} placeholder="360"/></F>
-            <F label="Amortization (Months)"><Inp type="number" value={form.amortization_months} onChange={e=>set('amortization_months',e.target.value)} placeholder="360"/></F>
-            <F label="I/O (Months)"><Inp type="number" value={form.io_months} onChange={e=>set('io_months',e.target.value)} placeholder="24"/></F>
-            <F label="Interest Rate Type"><Sel value={form.interest_rate_type} onChange={e=>set('interest_rate_type',e.target.value)} options={RATE_TYPES}/></F>
-            <F label="Interest Rate Index"><Sel value={form.interest_rate_index} onChange={e=>set('interest_rate_index',e.target.value)} options={RATE_INDEXES}/></F>
-            <F label="Base Rate (%)"><Inp type="number" value={form.base_rate} onChange={e=>set('base_rate',e.target.value)} placeholder="5.25" step="0.01"/></F>
-            <F label="Spread (bps)"><Inp type="number" value={form.spread_bps} onChange={e=>set('spread_bps',e.target.value)} placeholder="250"/></F>
-            <F label="Interest Rate (%)"><Inp type="number" value={form.interest_rate} onChange={e=>set('interest_rate',e.target.value)} placeholder="6.50" step="0.01"/></F>
-            <F label="LTV/LTC (%)"><Inp type="number" value={form.ltv} onChange={e=>set('ltv',e.target.value)} placeholder="65" step="0.1"/></F>
-            <F label="DSCR"><Inp type="number" value={form.dscr} onChange={e=>set('dscr',e.target.value)} placeholder="1.25" step="0.01"/></F>
-            <F label="Recourse"><Sel value={form.recourse} onChange={e=>set('recourse',e.target.value)} options={RECOURSE_TYPES}/></F>
-            <F label="Maturity Date"><Inp type="date" value={form.maturity_date} onChange={e=>set('maturity_date',e.target.value)}/></F>
-            <F label="Prepay Penalty Exp Date"><Inp type="date" value={form.prepay_penalty_exp} onChange={e=>set('prepay_penalty_exp',e.target.value)}/></F>
-            <F label="Prepay Description"><Inp value={form.prepay_description} onChange={e=>set('prepay_description',e.target.value)} placeholder="5-4-3-2-1 step-down"/></F>
-            <F label="Capital Exit Fee (%)"><Inp type="number" value={form.capital_exit_fee_pct} onChange={e=>set('capital_exit_fee_pct',e.target.value)} placeholder="1.00" step="0.01"/></F>
-            <F label="Capital Exit Fee ($)"><Inp type="number" value={form.capital_exit_fee_amt} onChange={e=>set('capital_exit_fee_amt',e.target.value)} placeholder="275000"/></F>
-            <F label="Capital Notes" span={3}><textarea value={form.capital_notes} onChange={e=>set('capital_notes',e.target.value)} rows={2} placeholder="Lender-specific notes..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
+
+          <Section title="Capital Details" defaultOpen={false}>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
+              <F label="Capital Source (Lender)"><Inp value={form.lender_name} onChange={e=>set('lender_name',e.target.value)} placeholder="East West Bank"/></F>
+              <F label="Term (Months)"><Inp type="number" value={form.term_months} onChange={e=>set('term_months',e.target.value)} placeholder="360"/></F>
+              <F label="Amortization (Months)"><Inp type="number" value={form.amortization_months} onChange={e=>set('amortization_months',e.target.value)} placeholder="360"/></F>
+              <F label="I/O (Months)"><Inp type="number" value={form.io_months} onChange={e=>set('io_months',e.target.value)} placeholder="24"/></F>
+              <F label="Interest Rate Type"><Sel value={form.interest_rate_type} onChange={e=>set('interest_rate_type',e.target.value)} options={RATE_TYPES}/></F>
+              <F label="Interest Rate Index"><Sel value={form.interest_rate_index} onChange={e=>set('interest_rate_index',e.target.value)} options={RATE_INDEXES}/></F>
+              <F label="Base Rate (%)"><Inp type="number" value={form.base_rate} onChange={e=>set('base_rate',e.target.value)} placeholder="5.25" step="0.01"/></F>
+              <F label="Spread (bps)"><Inp type="number" value={form.spread_bps} onChange={e=>set('spread_bps',e.target.value)} placeholder="250"/></F>
+              <F label="Interest Rate (%)"><Inp type="number" value={form.interest_rate} onChange={e=>set('interest_rate',e.target.value)} placeholder="6.50" step="0.01"/></F>
+              <F label="LTV/LTC (%)"><Inp type="number" value={form.ltv} onChange={e=>set('ltv',e.target.value)} placeholder="65" step="0.1"/></F>
+              <F label="DSCR"><Inp type="number" value={form.dscr} onChange={e=>set('dscr',e.target.value)} placeholder="1.25" step="0.01"/></F>
+              <F label="Recourse"><Sel value={form.recourse} onChange={e=>set('recourse',e.target.value)} options={RECOURSE_TYPES}/></F>
+              <F label="Maturity Date"><Inp type="date" value={form.maturity_date} onChange={e=>set('maturity_date',e.target.value)}/></F>
+              <F label="Prepay Penalty Exp Date"><Inp type="date" value={form.prepay_penalty_exp} onChange={e=>set('prepay_penalty_exp',e.target.value)}/></F>
+              <F label="Prepay Description"><Inp value={form.prepay_description} onChange={e=>set('prepay_description',e.target.value)} placeholder="5-4-3-2-1 step-down"/></F>
+              <F label="Capital Exit Fee (%)"><Inp type="number" value={form.capital_exit_fee_pct} onChange={e=>set('capital_exit_fee_pct',e.target.value)} placeholder="1.00" step="0.01"/></F>
+              <F label="Capital Exit Fee ($)"><Inp type="number" value={form.capital_exit_fee_amt} onChange={e=>set('capital_exit_fee_amt',e.target.value)} placeholder="275000"/></F>
+              <F label="Capital Notes" span={3}><textarea value={form.capital_notes} onChange={e=>set('capital_notes',e.target.value)} rows={2} placeholder="Lender-specific notes..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
+            </div>
           </Section>
-          <Section title="Fee Details">
-            <F label="Origination Fee Type"><Sel value={form.origination_fee_type} onChange={e=>set('origination_fee_type',e.target.value)} options={FEE_TYPES}/></F>
-            <F label="Origination Fee (%)"><Inp type="number" value={form.origination_fee_pct} onChange={e=>set('origination_fee_pct',e.target.value)} placeholder="1.000" step="0.001"/></F>
-            <F label="Origination Fee ($)"><Inp type="number" value={form.origination_fee_amt} onChange={e=>set('origination_fee_amt',e.target.value)} placeholder="275000"/></F>
-            <F label="Total Commission / Fee ($)"><Inp type="number" value={form.commission_fee} onChange={e=>set('commission_fee',e.target.value)} placeholder="275000"/></F>
-            <F label="Engagement Executed Date"><Inp type="date" value={form.engagement_date} onChange={e=>set('engagement_date',e.target.value)}/></F>
-            <F label="Term Sheet / LOI Date"><Inp type="date" value={form.term_sheet_date} onChange={e=>set('term_sheet_date',e.target.value)}/></F>
-            <F label="Rate Lock Date"><Inp type="date" value={form.rate_lock_date} onChange={e=>set('rate_lock_date',e.target.value)}/></F>
+
+          <Section title="Fee Details" defaultOpen={false}>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
+              <F label="Origination Fee Type"><Sel value={form.origination_fee_type} onChange={e=>set('origination_fee_type',e.target.value)} options={FEE_TYPES}/></F>
+              <F label="Origination Fee (%)"><Inp type="number" value={form.origination_fee_pct} onChange={e=>set('origination_fee_pct',e.target.value)} placeholder="1.000" step="0.001"/></F>
+              <F label="Origination Fee ($)"><Inp type="number" value={form.origination_fee_amt} onChange={e=>set('origination_fee_amt',e.target.value)} placeholder="275000"/></F>
+              <F label="Total Commission / Fee ($)"><Inp type="number" value={form.commission_fee} onChange={e=>set('commission_fee',e.target.value)} placeholder="275000"/></F>
+              <F label="Engagement Executed Date"><Inp type="date" value={form.engagement_date} onChange={e=>set('engagement_date',e.target.value)}/></F>
+              <F label="Term Sheet / LOI Date"><Inp type="date" value={form.term_sheet_date} onChange={e=>set('term_sheet_date',e.target.value)}/></F>
+              <F label="Rate Lock Date"><Inp type="date" value={form.rate_lock_date} onChange={e=>set('rate_lock_date',e.target.value)}/></F>
+            </div>
           </Section>
+
           <Section title="Referral Details" defaultOpen={false}>
-            <F label="Referral Source"><Inp value={form.referral_source} onChange={e=>set('referral_source',e.target.value)} placeholder="John Smith"/></F>
-            <F label="Referred By"><Inp value={form.referred_by} onChange={e=>set('referred_by',e.target.value)} placeholder="Internal or external"/></F>
-            <F label="Referral Notes" span={3}><textarea value={form.referral_notes} onChange={e=>set('referral_notes',e.target.value)} rows={2} placeholder="Referral context..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
+              <F label="Referral Source"><Inp value={form.referral_source} onChange={e=>set('referral_source',e.target.value)} placeholder="John Smith"/></F>
+              <F label="Referred By"><Inp value={form.referred_by} onChange={e=>set('referred_by',e.target.value)} placeholder="Internal or external"/></F>
+              <F label="Referral Notes" span={3}><textarea value={form.referral_notes} onChange={e=>set('referral_notes',e.target.value)} rows={2} placeholder="Referral context..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
+            </div>
           </Section>
+
           <Section title="General Notes" defaultOpen={false}>
-            <F label="Notes / Next Steps" span={3}><textarea value={form.notes} onChange={e=>set('notes',e.target.value)} rows={3} placeholder="Key next steps, outstanding items..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
+            <div style={{display:'grid',gridTemplateColumns:'1fr',gap:'10px'}}>
+              <F label="Notes / Next Steps" span={3}><textarea value={form.notes} onChange={e=>set('notes',e.target.value)} rows={3} placeholder="Key next steps, outstanding items, lender notes..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
+            </div>
           </Section>
+
+          {/* Tasks section - only shown when editing an existing deal */}
+          {deal?.id && (
+            <Section title="Tasks" defaultOpen={true}>
+              <DealTasks dealId={deal.id} session={session} teamMembers={teamMembers}/>
+            </Section>
+          )}
+
+          {!deal?.id && (
+            <div style={{padding:'10px 14px',borderRadius:'6px',background:'var(--surface2)',border:'1px solid var(--border)',fontSize:'11px',color:'var(--muted)'}}>
+              Save this deal first, then reopen it to add tasks.
+            </div>
+          )}
+
           {error&&<div style={{padding:'10px 14px',borderRadius:'6px',background:'rgba(248,81,73,0.08)',border:'1px solid rgba(248,81,73,0.25)',color:'var(--danger)',fontSize:'13px'}}>{error}</div>}
         </div>
+
         <div style={{padding:'12px 22px',borderTop:'1px solid var(--border)',display:'flex',justifyContent:'flex-end',gap:'10px',flexShrink:0}}>
           <button onClick={onClose} style={{background:'transparent',border:'1px solid var(--border)',color:'var(--text)',padding:'8px 20px',borderRadius:'6px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:600,fontSize:'12px',letterSpacing:'0.04em'}}>CANCEL</button>
           <button onClick={handleSave} disabled={saving} style={{background:saving?'var(--gold-dim)':'var(--gold)',border:'none',color:'#000',padding:'8px 24px',borderRadius:'6px',cursor:saving?'not-allowed':'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'12px',letterSpacing:'0.04em'}}>{saving?'SAVING...':deal?'SAVE CHANGES':'ADD DEAL'}</button>
