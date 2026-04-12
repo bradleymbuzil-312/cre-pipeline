@@ -24,11 +24,7 @@ export default function App() {
   }, [])
 
   if (loading) {
-    return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', color: 'var(--muted)', fontFamily: 'IBM Plex Mono, monospace', fontSize: '13px', letterSpacing: '0.1em' }}>
-        LOADING...
-      </div>
-    )
+    return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg)', color: 'var(--muted)', fontFamily: 'IBM Plex Mono, monospace', fontSize: '13px', letterSpacing: '0.1em' }}>LOADING...</div>
   }
 
   if (!session) return <Auth />
