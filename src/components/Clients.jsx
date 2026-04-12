@@ -18,9 +18,7 @@ export default function Clients({ session }) {
 
   useEffect(() => {
     fetchClients()
-    const channel = supabase.channel('clients-realtime')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'clients' }, fetchClients)
-      .subscribe()
+    const channel = supabase.channel('clients-realtime').on('postgres_changes', { event: '*', schema: 'public', table: 'clients' }, fetchClients).subscribe()
     return () => supabase.removeChannel(channel)
   }, [])
 
@@ -51,14 +49,10 @@ export default function Clients({ session }) {
 
   const overdueCount = clients.filter(c => c.follow_up_date && c.follow_up_date < today).length
   const dueTodayCount = clients.filter(c => c.follow_up_date === today).length
-
   const BLUE = '#2563eb'
-  const btnBase = { display: 'flex', alignItems: 'center', gap: '6px', border: 'none', borderRadius: '6px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '12px', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap' }
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-
-      {/* Toolbar */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 24px', borderBottom: '1px solid var(--border)', background: 'var(--surface)', flexShrink: 0, gap: '16px', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
           <Stat label="Total Clients" value={clients.length} />
@@ -68,46 +62,36 @@ export default function Clients({ session }) {
           <Stat label="Overdue" value={overdueCount} danger={overdueCount > 0} />
         </div>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0 }}>
-          {/* Search */}
           <div style={{ position: 'relative' }}>
             <Search size={12} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: 'var(--muted)' }} />
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search clients..."
               style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text)', borderRadius: '6px', padding: '6px 10px 6px 28px', fontSize: '12px', width: '180px', fontFamily: 'DM Sans, sans-serif' }} />
           </div>
-          {/* Import button */}
           <button onClick={() => setImportOpen(true)}
-            style={{ ...btnBase, background: 'var(--surface2)', color: 'var(--muted)', border: '1px solid var(--border)', padding: '7px 12px', fontWeight: 600, fontSize: '11px' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--surface2)', color: 'var(--muted)', border: '1px solid var(--border)', padding: '7px 12px', borderRadius: '6px', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '11px', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = BLUE; e.currentTarget.style.color = BLUE }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted)' }}>
             <Upload size={12} /> IMPORT FROM OUTLOOK
           </button>
-          {/* New client button */}
           <button onClick={() => { setEditingClient(null); setModalOpen(true) }}
-            style={{ ...btnBase, background: BLUE, color: '#fff', padding: '7px 14px' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: '6px', background: BLUE, color: '#fff', border: 'none', padding: '7px 14px', borderRadius: '6px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '12px', cursor: 'pointer', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
             <Plus size={13} strokeWidth={2.5} /> NEW CLIENT
           </button>
         </div>
       </div>
-
-      {/* Filter pills */}
       <div style={{ display: 'flex', gap: '6px', padding: '10px 24px', background: 'var(--bg)', borderBottom: '1px solid var(--border)', flexShrink: 0, overflowX: 'auto' }}>
         {FILTERS.map(f => (
-          <button key={f} onClick={() => setFilter(f)} style={{ background: filter === f ? BLUE : 'var(--surface)', color: filter === f ? '#fff' : 'var(--muted)', border: ('1px solid ' + (filter === f ? BLUE : 'var(--border)')), borderRadius: '20px', padding: '4px 12px', cursor: 'pointer', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '11px', letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
-            {f}
-            {f === 'Overdue' && overdueCount > 0 && <span style={{ marginLeft: '5px', background: '#ef4444', color: '#fff', borderRadius: '9px', padding: '0 5px', fontSize: '9px' }}>{overdueCount}</span>}
+          <button key={f} onClick={() => setFilter(f)} style={{ background: filter === f ? BLUE : 'var(--surface)', color: filter === f ? '#fff' : 'var(--muted)', border: '1px solid ' + (filter === f ? BLUE : 'var(--border)'), borderRadius: '20px', padding: '4px 12px', cursor: 'pointer', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '11px', letterSpacing: '0.04em', whiteSpace: 'nowrap', transition: 'all 0.15s' }}>
+            {f}{f === 'Overdue' && overdueCount > 0 && <span style={{ marginLeft: '5px', background: '#ef4444', color: '#fff', borderRadius: '9px', padding: '0 5px', fontSize: '9px' }}>{overdueCount}</span>}
           </button>
         ))}
       </div>
-
-      {/* Client grid */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 24px' }}>
         {loading ? (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--muted)', fontFamily: 'IBM Plex Mono, monospace', fontSize: '12px', letterSpacing: '0.1em' }}>
-            LOADING CLIENTS...
-          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--muted)', fontFamily: 'IBM Plex Mono, monospace', fontSize: '12px' }}>LOADING CLIENTS...</div>
         ) : filtered.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '200px', color: 'var(--muted)', gap: '12px' }}>
-            <div style={{ fontSize: '13px' }}>No clients found</div>
+            <div>No clients found</div>
             {clients.length === 0 && (
               <div style={{ display: 'flex', gap: '8px' }}>
                 <button onClick={() => setImportOpen(true)} style={{ background: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--muted)', padding: '8px 16px', borderRadius: '6px', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -122,15 +106,11 @@ export default function Clients({ session }) {
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '12px' }}>
             {filtered.map(client => (
-              <ClientCard key={client.id} client={client}
-                onEdit={() => { setEditingClient(client); setModalOpen(true) }}
-                onDelete={() => deleteClient(client.id)}
-                onRefresh={fetchClients} session={session} />
+              <ClientCard key={client.id} client={client} onEdit={() => { setEditingClient(client); setModalOpen(true) }} onDelete={() => deleteClient(client.id)} onRefresh={fetchClients} session={session} />
             ))}
           </div>
         )}
       </div>
-
       {modalOpen && <ClientModal client={editingClient} session={session} onClose={() => setModalOpen(false)} onSaved={fetchClients} />}
       {importOpen && <ImportModal session={session} onClose={() => setImportOpen(false)} onImported={() => { fetchClients(); setImportOpen(false) }} />}
     </div>
