@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square } from 'lucide-react'
 import { STAGES, PROPERTY_TYPES } from '../lib/constants'
+import ActivityLog, { logActivity } from './ActivityLog'
+import { useToast } from './Toast'
 
 const FINANCE_PURPOSES = ['Acquisition','Refinance','Construction','Bridge','Mezzanine','Preferred Equity','Recapitalization','Other']
 const CAPITAL_TYPES = ['Debt','Equity','Preferred Equity','Mezzanine']
@@ -14,7 +16,8 @@ const FEE_AGREEMENT_TYPES = ['Exclusive','Non-Exclusive','Right of First Refusal
 const PRIORITIES = ['High','Medium','Low']
 
 const EMPTY = {
-  borrower_name:'',stage:'Prospecting',expected_close_date:'',
+  borrower_name:'',stage:'Engagement',expected_close_date:'',
+  property_id:'',referral_source_id:'',
   property_address:'',city:'',state_province:'',zip_code:'',
   property_type:'',total_units:'',sq_ft:'',year_built:'',
   loan_amount:'',finance_purpose:'',capital_type:'Debt',debt_equity_type:'',
@@ -30,10 +33,10 @@ const EMPTY = {
   referral_source:'',referred_by:'',referral_notes:'',notes:'',
 }
 
-const IS = {width:'100%',background:'var(--surface2)',border:'1px solid var(--border)',color:'var(--text)',borderRadius:'6px',padding:'7px 10px',fontSize:'12px',fontFamily:'DM Sans, sans-serif',transition:'border-color 0.15s',boxSizing:'border-box'}
+const IS = {width:'100%',background:'var(--surface2)',border:'1px solid var(--border)',color:'var(--text)',borderRadius:'6px',padding:'7px 10px',fontSize:'12px',fontFamily:'DM Sans, sans-serif',boxSizing:'border-box'}
 const LS = {display:'block',marginBottom:'4px',fontSize:'10px',fontWeight:700,color:'var(--muted)',fontFamily:'Syne, sans-serif',textTransform:'uppercase',letterSpacing:'0.08em'}
 
-function F({label,children,span}){return <div style={{gridColumn:span===2?'1 / -1':span===3?'1 / -1':'auto'}}><label style={LS}>{label}</label>{children}</div>}
+function F({label,children,span}){return <div style={{gridColumn:span===2?'span 2':span===3?'1 / -1':'auto'}}><label style={LS}>{label}</label>{children}</div>}
 function Sel({value,onChange,options}){return <select value={value} onChange={onChange} style={IS}><option value="">Select...</option>{options.map(o=><option key={o} value={o}>{o}</option>)}</select>}
 function Inp({type='text',value,onChange,placeholder,step}){return <input type={type} value={value} onChange={onChange} placeholder={placeholder} step={step} style={IS}/>}
 
@@ -44,16 +47,15 @@ function Section({title,children,defaultOpen=true,badge}){
       <button type="button" onClick={()=>setOpen(o=>!o)} style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',background:'var(--surface2)',border:'1px solid var(--border)',color:'var(--text)',padding:'7px 12px',borderRadius:'6px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'11px',letterSpacing:'0.06em',textTransform:'uppercase',marginBottom:open?'12px':'0'}}>
         <div style={{display:'flex',alignItems:'center',gap:'8px'}}>
           {title}
-          {badge > 0 && <span style={{background:'var(--gold)',color:'#000',borderRadius:'9px',padding:'1px 6px',fontSize:'9px',fontWeight:700}}>{badge}</span>}
+          {badge > 0 && <span style={{background:'#2563eb',color:'#fff',borderRadius:'9px',padding:'1px 6px',fontSize:'9px',fontWeight:700}}>{badge}</span>}
         </div>
         {open?<ChevronUp size={13}/>:<ChevronDown size={13}/>}
       </button>
-      {open&&<div style={{paddingBottom:'14px'}}>{children}</div>}
+      {open && <div style={{paddingBottom:'14px'}}>{children}</div>}
     </div>
   )
 }
 
-// Inline task manager for a deal
 function DealTasks({dealId, session, teamMembers}){
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
@@ -99,7 +101,7 @@ function DealTasks({dealId, session, teamMembers}){
     fetchTasks()
   }
 
-  const PRIORITY_COLORS = {High:'#f85149',Medium:'#f09a3a',Low:'#6b9ff7'}
+  const PRIORITY_COLORS = {High:'#ef4444',Medium:'#c2410c',Low:'#2563eb'}
 
   return(
     <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
@@ -110,26 +112,25 @@ function DealTasks({dealId, session, teamMembers}){
       ) : (
         tasks.map(task => (
           <div key={task.id} style={{display:'flex',alignItems:'flex-start',gap:'8px',padding:'8px 10px',background:'var(--surface2)',borderRadius:'6px',border:'1px solid var(--border)'}}>
-            <button onClick={()=>toggleStatus(task)} style={{background:'transparent',border:'none',cursor:'pointer',color:task.status==='Done'?'#3ad460':'var(--muted)',padding:'1px',flexShrink:0,marginTop:'1px'}}>
+            <button onClick={()=>toggleStatus(task)} style={{background:'transparent',border:'none',cursor:'pointer',color:task.status==='Done'?'#16a34a':'var(--muted)',padding:'1px',flexShrink:0,marginTop:'1px'}}>
               {task.status==='Done'?<CheckSquare size={14}/>:<Square size={14}/>}
             </button>
             <div style={{flex:1,minWidth:0}}>
               <div style={{fontSize:'12px',fontWeight:600,color:task.status==='Done'?'var(--muted)':'var(--text)',textDecoration:task.status==='Done'?'line-through':'none',fontFamily:'Syne, sans-serif',marginBottom:'2px'}}>{task.title}</div>
               <div style={{display:'flex',gap:'8px',alignItems:'center',flexWrap:'wrap'}}>
-                <span style={{fontSize:'9px',padding:'1px 5px',borderRadius:'3px',background:'var(--surface)',color:PRIORITY_COLORS[task.priority]||'var(--muted)',border:`1px solid ${PRIORITY_COLORS[task.priority]||'var(--border)'}33`,fontFamily:'Syne, sans-serif',fontWeight:700,textTransform:'uppercase'}}>{task.priority}</span>
+                <span style={{fontSize:'9px',padding:'1px 5px',borderRadius:'3px',background:'var(--surface)',color:PRIORITY_COLORS[task.priority]||'var(--muted)',border:'1px solid '+(PRIORITY_COLORS[task.priority]||'var(--border)')+'33',fontFamily:'Syne, sans-serif',fontWeight:700,textTransform:'uppercase'}}>{task.priority}</span>
                 {task.assigned_to && <span style={{fontSize:'10px',color:'var(--muted)'}}>{task.assigned_to}</span>}
                 {task.due_date && <span style={{fontSize:'10px',color:'var(--muted)',fontFamily:'IBM Plex Mono, monospace'}}>{new Date(task.due_date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}</span>}
-                {task.status && <span style={{fontSize:'9px',color:task.status==='Done'?'#3ad460':task.status==='In Progress'?'#f09a3a':'var(--muted)',fontFamily:'Syne, sans-serif',fontWeight:600,textTransform:'uppercase'}}>{task.status}</span>}
               </div>
               {task.description && <div style={{fontSize:'11px',color:'var(--muted)',marginTop:'3px',lineHeight:1.4}}>{task.description}</div>}
             </div>
-            <button onClick={()=>deleteTask(task.id)} style={{background:'transparent',border:'none',cursor:'pointer',color:'var(--muted)',padding:'2px',flexShrink:0}} onMouseEnter={e=>e.currentTarget.style.color='var(--danger)'} onMouseLeave={e=>e.currentTarget.style.color='var(--muted)'}><Trash2 size={11}/></button>
+            <button onClick={()=>deleteTask(task.id)} style={{background:'transparent',border:'none',cursor:'pointer',color:'var(--muted)',padding:'2px',flexShrink:0}} onMouseEnter={e=>e.currentTarget.style.color='#ef4444'} onMouseLeave={e=>e.currentTarget.style.color='var(--muted)'}><Trash2 size={11}/></button>
           </div>
         ))
       )}
 
       {adding && (
-        <div style={{background:'var(--surface2)',border:'1px solid var(--gold-dim)',borderRadius:'6px',padding:'12px',display:'flex',flexDirection:'column',gap:'8px'}}>
+        <div style={{background:'var(--surface2)',border:'1px solid #2563eb',borderRadius:'6px',padding:'12px',display:'flex',flexDirection:'column',gap:'8px'}}>
           <input value={newTask.title} onChange={e=>setNewTask(t=>({...t,title:e.target.value}))} placeholder="Task title *" autoFocus style={{...IS,fontSize:'13px'}} onKeyDown={e=>e.key==='Enter'&&addTask()}/>
           <textarea value={newTask.description} onChange={e=>setNewTask(t=>({...t,description:e.target.value}))} placeholder="Description (optional)" rows={2} style={{...IS,resize:'none',lineHeight:1.5}}/>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'8px'}}>
@@ -153,13 +154,13 @@ function DealTasks({dealId, session, teamMembers}){
           </div>
           <div style={{display:'flex',gap:'6px',justifyContent:'flex-end'}}>
             <button onClick={()=>{setAdding(false);setNewTask({title:'',assigned_to:'',priority:'Medium',due_date:'',description:''})}} style={{background:'transparent',border:'1px solid var(--border)',color:'var(--muted)',padding:'6px 12px',borderRadius:'5px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:600,fontSize:'11px'}}>CANCEL</button>
-            <button onClick={addTask} style={{background:'var(--gold)',border:'none',color:'#000',padding:'6px 16px',borderRadius:'5px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'11px'}}>ADD TASK</button>
+            <button onClick={addTask} style={{background:'#2563eb',border:'none',color:'#fff',padding:'6px 16px',borderRadius:'5px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'11px'}}>ADD TASK</button>
           </div>
         </div>
       )}
 
       {!adding && (
-        <button onClick={()=>setAdding(true)} style={{display:'flex',alignItems:'center',gap:'5px',background:'transparent',border:'1px dashed var(--border)',borderRadius:'6px',color:'var(--muted)',padding:'8px 12px',cursor:'pointer',fontSize:'11px',fontFamily:'Syne, sans-serif',fontWeight:600,width:'100%',justifyContent:'center',transition:'all 0.15s'}} onMouseEnter={e=>{e.currentTarget.style.borderColor='var(--gold-dim)';e.currentTarget.style.color='var(--gold)'}} onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--muted)'}}>
+        <button onClick={()=>setAdding(true)} style={{display:'flex',alignItems:'center',gap:'5px',background:'transparent',border:'1px dashed var(--border)',borderRadius:'6px',color:'var(--muted)',padding:'8px 12px',cursor:'pointer',fontSize:'11px',fontFamily:'Syne, sans-serif',fontWeight:600,width:'100%',justifyContent:'center'}} onMouseEnter={e=>{e.currentTarget.style.borderColor='#2563eb';e.currentTarget.style.color='#2563eb'}} onMouseLeave={e=>{e.currentTarget.style.borderColor='var(--border)';e.currentTarget.style.color='var(--muted)'}}>
           <Plus size={11}/> ADD TASK TO THIS DEAL
         </button>
       )}
@@ -178,9 +179,14 @@ export default function DealModal({deal, session, onClose, onSaved}){
   const [saving,setSaving]=useState(false)
   const [error,setError]=useState('')
   const [teamMembers,setTeamMembers]=useState([])
+  const [properties,setProperties]=useState([])
+  const [referralSources,setReferralSources]=useState([])
+  const { toast } = useToast()
 
   useEffect(()=>{
     supabase.from('team_members').select('*').order('name').then(({data})=>setTeamMembers(data||[]))
+    supabase.from('properties').select('id, address, city, state').order('address').then(({data})=>setProperties(data||[]))
+    supabase.from('clients').select('id, first_name, last_name, company').eq('client_type', 'Referral Source').order('first_name').then(({data})=>setReferralSources(data||[]))
   },[])
 
   function set(k,v){setForm(f=>({...f,[k]:v}))}
@@ -194,6 +200,8 @@ export default function DealModal({deal, session, onClose, onSaved}){
     setSaving(true);setError('')
     const p={
       borrower_name:str(form.borrower_name),stage:form.stage,expected_close_date:dt(form.expected_close_date),
+      property_id: form.property_id || null,
+      referral_source_id: form.referral_source_id || null,
       property_address:str(form.property_address),city:str(form.city),state_province:str(form.state_province),zip_code:str(form.zip_code),
       property_type:str(form.property_type),total_units:int(form.total_units),sq_ft:num(form.sq_ft),year_built:int(form.year_built),
       loan_amount:num(form.loan_amount),finance_purpose:str(form.finance_purpose),capital_type:str(form.capital_type),debt_equity_type:str(form.debt_equity_type),
@@ -211,20 +219,46 @@ export default function DealModal({deal, session, onClose, onSaved}){
       referral_source:str(form.referral_source),referred_by:str(form.referred_by),referral_notes:str(form.referral_notes),
       notes:str(form.notes),updated_at:new Date().toISOString(),
     }
-    let err
-    if(deal?.id){;({error:err}=await supabase.from('deals').update(p).eq('id',deal.id))}
-    else{;({error:err}=await supabase.from('deals').insert({...p,created_by:session.user.id}))}
+    let err, savedId = deal?.id
+    const oldStage = deal?.stage
+    if(deal?.id){
+      ;({error:err} = await supabase.from('deals').update(p).eq('id',deal.id))
+    } else {
+      const { data: inserted, error: insertErr } = await supabase.from('deals').insert({...p,created_by:session.user.id}).select().single()
+      err = insertErr
+      savedId = inserted?.id
+    }
     if(err){setError(err.message);setSaving(false);return}
+
+    // Log activity
+    if (savedId) {
+      if (!deal?.id) {
+        await logActivity(savedId, session.user.id, session.user.email, 'deal_created', 'Created deal for ' + p.borrower_name)
+      } else if (oldStage !== p.stage) {
+        await logActivity(savedId, session.user.id, session.user.email, 'stage_changed', 'Stage changed from ' + oldStage + ' to ' + p.stage, oldStage, p.stage)
+      } else {
+        await logActivity(savedId, session.user.id, session.user.email, 'deal_updated', 'Updated deal details')
+      }
+    }
+
+    toast(deal?.id ? 'Deal saved' : 'Deal created', 'success')
     onSaved();onClose()
   }
 
+  function propertyLabel(p) {
+    return p.address + (p.city ? (', ' + p.city) : '') + (p.state ? ', ' + p.state : '')
+  }
+  function borrowerLabel(b) {
+    return (b.first_name + ' ' + (b.last_name || '')).trim() + (b.company ? ' \u2014 ' + b.company : '')
+  }
+
   return(
-    <div onClick={e=>{if(e.target===e.currentTarget)onClose()}} style={{position:'fixed',inset:0,zIndex:1000,background:'rgba(0,0,0,0.8)',backdropFilter:'blur(6px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'16px'}}>
-      <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'12px',width:'100%',maxWidth:'900px',maxHeight:'94vh',display:'flex',flexDirection:'column',boxShadow:'0 32px 80px rgba(0,0,0,0.7)'}}>
+    <div onClick={e=>{if(e.target===e.currentTarget)onClose()}} style={{position:'fixed',inset:0,zIndex:1000,background:'rgba(0,0,0,0.4)',backdropFilter:'blur(4px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'16px'}}>
+      <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'12px',width:'100%',maxWidth:'900px',maxHeight:'94vh',display:'flex',flexDirection:'column',boxShadow:'0 24px 60px rgba(0,0,0,0.12)'}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 22px',borderBottom:'1px solid var(--border)',flexShrink:0}}>
           <div>
             <h2 style={{fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'16px',color:'var(--text)',marginBottom:'1px'}}>{deal?'Edit Deal':'New Deal'}</h2>
-            {deal&&<div style={{fontSize:'11px',color:'var(--muted)',fontFamily:'IBM Plex Mono, monospace'}}>{deal.borrower_name}</div>}
+            {deal && <div style={{fontSize:'11px',color:'var(--muted)',fontFamily:'IBM Plex Mono, monospace'}}>{deal.borrower_name}</div>}
           </div>
           <button onClick={onClose} style={{background:'transparent',border:'1px solid var(--border)',color:'var(--muted)',cursor:'pointer',padding:'5px',borderRadius:'6px',display:'flex',alignItems:'center'}}><X size={15}/></button>
         </div>
@@ -232,7 +266,7 @@ export default function DealModal({deal, session, onClose, onSaved}){
         <div style={{overflowY:'auto',flex:1,padding:'16px 22px',display:'flex',flexDirection:'column',gap:'4px'}}>
           <Section title="Summary">
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
-              <F label="Borrower / Client *"><Inp value={form.borrower_name} onChange={e=>set('borrower_name',e.target.value)} placeholder="Larry Li"/></F>
+              <F label="Borrower / Client *"><Inp value={form.borrower_name} onChange={e=>set('borrower_name',e.target.value)} placeholder="Name"/></F>
               <F label="Stage"><Sel value={form.stage} onChange={e=>set('stage',e.target.value)} options={STAGES}/></F>
               <F label="Close Date"><Inp type="date" value={form.expected_close_date} onChange={e=>set('expected_close_date',e.target.value)}/></F>
               <F label="Proceeds / Loan Amount ($)"><Inp type="number" value={form.loan_amount} onChange={e=>set('loan_amount',e.target.value)} placeholder="27500000"/></F>
@@ -240,8 +274,26 @@ export default function DealModal({deal, session, onClose, onSaved}){
               <F label="Capital Type"><Sel value={form.capital_type} onChange={e=>set('capital_type',e.target.value)} options={CAPITAL_TYPES}/></F>
               <F label="Debt / Equity Type"><Sel value={form.debt_equity_type} onChange={e=>set('debt_equity_type',e.target.value)} options={DEBT_EQUITY_TYPES}/></F>
               <F label="Fee Agreement Type"><Sel value={form.fee_agreement_type} onChange={e=>set('fee_agreement_type',e.target.value)} options={FEE_AGREEMENT_TYPES}/></F>
-              <F label="1031 Exchange"><div style={{display:'flex',alignItems:'center',gap:'8px',paddingTop:'6px'}}><input type="checkbox" checked={!!form.x1031_exchange} onChange={e=>set('x1031_exchange',e.target.checked)} style={{width:'14px',height:'14px',accentColor:'var(--gold)',cursor:'pointer'}}/><span style={{fontSize:'12px',color:'var(--muted)'}}>Yes</span></div></F>
+              <F label="1031 Exchange"><div style={{display:'flex',alignItems:'center',gap:'8px',paddingTop:'6px'}}><input type="checkbox" checked={!!form.x1031_exchange} onChange={e=>set('x1031_exchange',e.target.checked)} style={{width:'14px',height:'14px',accentColor:'#2563eb',cursor:'pointer'}}/><span style={{fontSize:'12px',color:'var(--muted)'}}>Yes</span></div></F>
             </div>
+          </Section>
+
+          <Section title="Links">
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px 14px'}}>
+              <F label="Link to Property">
+                <select value={form.property_id} onChange={e=>set('property_id',e.target.value)} style={IS}>
+                  <option value="">No property linked</option>
+                  {properties.map(p=><option key={p.id} value={p.id}>{propertyLabel(p)}</option>)}
+                </select>
+              </F>
+              <F label="Referral Source">
+                <select value={form.referral_source_id} onChange={e=>set('referral_source_id',e.target.value)} style={IS}>
+                  <option value="">No referral source</option>
+                  {referralSources.map(r=><option key={r.id} value={r.id}>{borrowerLabel(r)}</option>)}
+                </select>
+              </F>
+            </div>
+            <div style={{fontSize:'11px',color:'var(--muted)',marginTop:'10px',lineHeight:1.5}}>Linking a property shows this deal on the property card in the Properties tab. Linking a referral source helps you track which deals came from each referrer.</div>
           </Section>
 
           <Section title="Property Details" defaultOpen={false}>
@@ -292,9 +344,9 @@ export default function DealModal({deal, session, onClose, onSaved}){
             </div>
           </Section>
 
-          <Section title="Referral Details" defaultOpen={false}>
+          <Section title="Referral Notes" defaultOpen={false}>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
-              <F label="Referral Source"><Inp value={form.referral_source} onChange={e=>set('referral_source',e.target.value)} placeholder="John Smith"/></F>
+              <F label="Referral Source (free text)"><Inp value={form.referral_source} onChange={e=>set('referral_source',e.target.value)} placeholder="John Smith"/></F>
               <F label="Referred By"><Inp value={form.referred_by} onChange={e=>set('referred_by',e.target.value)} placeholder="Internal or external"/></F>
               <F label="Referral Notes" span={3}><textarea value={form.referral_notes} onChange={e=>set('referral_notes',e.target.value)} rows={2} placeholder="Referral context..." style={{...IS,resize:'vertical',lineHeight:1.5}}/></F>
             </div>
@@ -306,25 +358,30 @@ export default function DealModal({deal, session, onClose, onSaved}){
             </div>
           </Section>
 
-          {/* Tasks section - only shown when editing an existing deal */}
           {deal?.id && (
             <Section title="Tasks" defaultOpen={true}>
               <DealTasks dealId={deal.id} session={session} teamMembers={teamMembers}/>
             </Section>
           )}
 
+          {deal?.id && (
+            <Section title="Activity History" defaultOpen={false}>
+              <ActivityLog dealId={deal.id} />
+            </Section>
+          )}
+
           {!deal?.id && (
             <div style={{padding:'10px 14px',borderRadius:'6px',background:'var(--surface2)',border:'1px solid var(--border)',fontSize:'11px',color:'var(--muted)'}}>
-              Save this deal first, then reopen it to add tasks.
+              Save this deal first, then reopen it to add tasks and see activity history.
             </div>
           )}
 
-          {error&&<div style={{padding:'10px 14px',borderRadius:'6px',background:'rgba(248,81,73,0.08)',border:'1px solid rgba(248,81,73,0.25)',color:'var(--danger)',fontSize:'13px'}}>{error}</div>}
+          {error && <div style={{padding:'10px 14px',borderRadius:'6px',background:'#fef2f2',border:'1px solid #fecaca',color:'#ef4444',fontSize:'13px'}}>{error}</div>}
         </div>
 
         <div style={{padding:'12px 22px',borderTop:'1px solid var(--border)',display:'flex',justifyContent:'flex-end',gap:'10px',flexShrink:0}}>
           <button onClick={onClose} style={{background:'transparent',border:'1px solid var(--border)',color:'var(--text)',padding:'8px 20px',borderRadius:'6px',cursor:'pointer',fontFamily:'Syne, sans-serif',fontWeight:600,fontSize:'12px',letterSpacing:'0.04em'}}>CANCEL</button>
-          <button onClick={handleSave} disabled={saving} style={{background:saving?'var(--gold-dim)':'var(--gold)',border:'none',color:'#000',padding:'8px 24px',borderRadius:'6px',cursor:saving?'not-allowed':'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'12px',letterSpacing:'0.04em'}}>{saving?'SAVING...':deal?'SAVE CHANGES':'ADD DEAL'}</button>
+          <button onClick={handleSave} disabled={saving} style={{background:saving?'#93c5fd':'#2563eb',border:'none',color:'#fff',padding:'8px 24px',borderRadius:'6px',cursor:saving?'not-allowed':'pointer',fontFamily:'Syne, sans-serif',fontWeight:700,fontSize:'12px',letterSpacing:'0.04em'}}>{saving?'SAVING...':deal?'SAVE CHANGES':'ADD DEAL'}</button>
         </div>
       </div>
     </div>
