@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square } from 'lucide-react'
+import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square, MapPin, ExternalLink } from 'lucide-react'
 import { STAGES, PROPERTY_TYPES } from '../lib/constants'
 import ActivityLog, { logActivity } from './ActivityLog'
 import DealLinks from './DealLinks'
@@ -196,6 +196,22 @@ export default function DealModal({deal, session, onClose, onSaved}){
   function str(v){return v?.trim()||null}
   function dt(v){return v||null}
 
+  function fullAddress(){
+    return [form.property_address, form.city, form.state_province, form.zip_code].filter(Boolean).join(', ')
+  }
+
+  function openReonomy(){
+    const q = fullAddress()
+    if(!q){ toast('Add a property address first', 'info'); return }
+    window.open('https://app.reonomy.com/!/search?q=' + encodeURIComponent(q), '_blank', 'noopener')
+  }
+
+  function openMaps(){
+    const q = fullAddress()
+    if(!q){ toast('Add a property address first', 'info'); return }
+    window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q), '_blank', 'noopener')
+  }
+
   async function handleSave(){
     if(!form.borrower_name.trim()){setError('Borrower name is required.');return}
     setSaving(true);setError('')
@@ -252,6 +268,9 @@ export default function DealModal({deal, session, onClose, onSaved}){
     return (b.first_name + ' ' + (b.last_name || '')).trim() + (b.company ? ' \u2014 ' + b.company : '')
   }
 
+  const hasPropAddress = !!form.property_address
+  const extBtn = (enabled) => ({ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--surface2)', color: enabled ? 'var(--text)' : 'var(--muted)', border: '1px solid var(--border)', padding: '6px 11px', borderRadius: '5px', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '10.5px', cursor: enabled ? 'pointer' : 'not-allowed', letterSpacing: '0.04em', opacity: enabled ? 1 : 0.5 })
+
   return(
     <div onClick={e=>{if(e.target===e.currentTarget)onClose()}} style={{position:'fixed',inset:0,zIndex:1000,background:'rgba(0,0,0,0.4)',backdropFilter:'blur(4px)',display:'flex',alignItems:'center',justifyContent:'center',padding:'16px'}}>
       <div style={{background:'var(--surface)',border:'1px solid var(--border)',borderRadius:'12px',width:'100%',maxWidth:'900px',maxHeight:'94vh',display:'flex',flexDirection:'column',boxShadow:'0 24px 60px rgba(0,0,0,0.12)'}}>
@@ -303,6 +322,14 @@ export default function DealModal({deal, session, onClose, onSaved}){
           )}
 
           <Section title="Property Details" defaultOpen={false}>
+            <div style={{display:'flex',gap:'8px',marginBottom:'12px',flexWrap:'wrap'}}>
+              <button onClick={openReonomy} disabled={!hasPropAddress} title={hasPropAddress ? 'Open Reonomy with this address pre-filled' : 'Add a property address to enable'} style={extBtn(hasPropAddress)}>
+                <ExternalLink size={11}/> LOOK UP ON REONOMY
+              </button>
+              <button onClick={openMaps} disabled={!hasPropAddress} title={hasPropAddress ? 'Open Google Maps with this address' : 'Add a property address to enable'} style={extBtn(hasPropAddress)}>
+                <MapPin size={11}/> VIEW ON MAPS
+              </button>
+            </div>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
               <F label="Property Type"><Sel value={form.property_type} onChange={e=>set('property_type',e.target.value)} options={PROPERTY_TYPES}/></F>
               <F label="Address" span={2}><Inp value={form.property_address} onChange={e=>set('property_address',e.target.value)} placeholder="111 San Bruno Ave W"/></F>

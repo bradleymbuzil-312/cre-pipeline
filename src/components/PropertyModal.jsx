@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { X, ExternalLink } from 'lucide-react'
+import { X, ExternalLink, MapPin } from 'lucide-react'
 import { PROPERTY_TYPES } from '../lib/constants'
 import { useToast } from './Toast'
 
@@ -27,10 +27,20 @@ export default function PropertyModal({ property, session, onClose, onSaved }) {
   function int(v) { return v !== '' ? parseInt(v) : null }
   function str(v) { return v?.trim() || null }
 
+  function fullAddress() {
+    return [form.address, form.city, form.state, form.zip].filter(Boolean).join(', ')
+  }
+
   function openReonomySearch() {
-    const q = [form.address, form.city, form.state].filter(Boolean).join(' ')
+    const q = fullAddress()
     if (!q) { toast('Enter an address first', 'info'); return }
     window.open('https://app.reonomy.com/!/search?q=' + encodeURIComponent(q), '_blank', 'noopener')
+  }
+
+  function openGoogleMaps() {
+    const q = fullAddress()
+    if (!q) { toast('Enter an address first', 'info'); return }
+    window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q), '_blank', 'noopener')
   }
 
   async function handleSave() {
@@ -60,8 +70,10 @@ export default function PropertyModal({ property, session, onClose, onSaved }) {
     onSaved(); onClose()
   }
 
+  const hasAddress = !!form.address
   const IS = { width: '100%', background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text)', borderRadius: '6px', padding: '7px 10px', fontSize: '12px', fontFamily: 'DM Sans, sans-serif', boxSizing: 'border-box' }
   const LS = { display: 'block', marginBottom: '4px', fontSize: '10px', fontWeight: 700, color: 'var(--muted)', fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.08em' }
+  const extBtn = (enabled) => ({ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--surface2)', color: enabled ? 'var(--text)' : 'var(--muted)', border: '1px solid var(--border)', padding: '7px 12px', borderRadius: '6px', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '11px', cursor: enabled ? 'pointer' : 'not-allowed', letterSpacing: '0.04em', opacity: enabled ? 1 : 0.5 })
 
   return (
     <div onClick={e => { if (e.target === e.currentTarget) onClose() }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
@@ -72,9 +84,12 @@ export default function PropertyModal({ property, session, onClose, onSaved }) {
         </div>
 
         <div style={{ overflowY: 'auto', flex: 1, padding: '16px 22px' }}>
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
-            <button onClick={openReonomySearch} disabled={!form.address} title={form.address ? 'Open Reonomy with this address pre-filled' : 'Enter an address to enable'} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'var(--surface2)', color: form.address ? 'var(--text)' : 'var(--muted)', border: '1px solid var(--border)', padding: '7px 12px', borderRadius: '6px', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '11px', cursor: form.address ? 'pointer' : 'not-allowed', letterSpacing: '0.04em', opacity: form.address ? 1 : 0.5 }}>
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
+            <button onClick={openReonomySearch} disabled={!hasAddress} title={hasAddress ? 'Open Reonomy with this address pre-filled' : 'Enter an address to enable'} style={extBtn(hasAddress)}>
               <ExternalLink size={12} /> LOOK UP ON REONOMY
+            </button>
+            <button onClick={openGoogleMaps} disabled={!hasAddress} title={hasAddress ? 'Open Google Maps with this address' : 'Enter an address to enable'} style={extBtn(hasAddress)}>
+              <MapPin size={12} /> VIEW ON MAPS
             </button>
           </div>
 
