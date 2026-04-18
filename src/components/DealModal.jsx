@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square, MapPin, ExternalLink } from 'lucide-react'
+import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square, MapPin, ExternalLink, BarChart3 } from 'lucide-react'
 import { STAGES, PROPERTY_TYPES } from '../lib/constants'
 import ActivityLog, { logActivity } from './ActivityLog'
 import DealLinks from './DealLinks'
@@ -218,6 +218,18 @@ export default function DealModal({deal, session, onClose, onSaved}){
     window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q), '_blank', 'noopener')
   }
 
+  async function openCapitalize(){
+    const q = fullAddress()
+    if(!q){ toast('Add a property address first', 'info'); return }
+    try {
+      await navigator.clipboard.writeText(q)
+      toast('Address copied \u2014 paste into Capitalize search', 'info', 4000)
+    } catch (e) {
+      toast('Capitalize opening \u2014 paste the address manually', 'info', 4000)
+    }
+    window.open('https://www.capitalize.io/dashboard/search/', '_blank', 'noopener')
+  }
+
   async function handleSave(){
     if(!form.borrower_name.trim()){setError('Borrower name is required.');return}
     setSaving(true);setError('')
@@ -334,6 +346,9 @@ export default function DealModal({deal, session, onClose, onSaved}){
               </button>
               <button onClick={openMaps} disabled={!hasPropAddress} title={hasPropAddress ? 'Open Google Maps with this address' : 'Add a property address to enable'} style={extBtn(hasPropAddress)}>
                 <MapPin size={11}/> VIEW ON MAPS
+              </button>
+              <button onClick={openCapitalize} disabled={!hasPropAddress} title={hasPropAddress ? 'Copy address and open Capitalize for loan comps' : 'Add a property address to enable'} style={extBtn(hasPropAddress)}>
+                <BarChart3 size={11}/> LOAN COMPS (CAPITALIZE)
               </button>
             </div>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>

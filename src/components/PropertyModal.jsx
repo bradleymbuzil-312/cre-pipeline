@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { X, ExternalLink, MapPin } from 'lucide-react'
+import { X, ExternalLink, MapPin, BarChart3 } from 'lucide-react'
 import { PROPERTY_TYPES } from '../lib/constants'
 import { useToast } from './Toast'
 
@@ -47,6 +47,18 @@ export default function PropertyModal({ property, session, onClose, onSaved }) {
     const q = fullAddress()
     if (!q) { toast('Enter an address first', 'info'); return }
     window.open('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q), '_blank', 'noopener')
+  }
+
+  async function openCapitalize() {
+    const q = fullAddress()
+    if (!q) { toast('Enter an address first', 'info'); return }
+    try {
+      await navigator.clipboard.writeText(q)
+      toast('Address copied \u2014 paste into Capitalize search', 'info', 4000)
+    } catch (e) {
+      toast('Capitalize opening \u2014 paste the address manually', 'info', 4000)
+    }
+    window.open('https://www.capitalize.io/dashboard/search/', '_blank', 'noopener')
   }
 
   async function handleSave() {
@@ -96,6 +108,9 @@ export default function PropertyModal({ property, session, onClose, onSaved }) {
             </button>
             <button onClick={openGoogleMaps} disabled={!hasAddress} title={hasAddress ? 'Open Google Maps with this address' : 'Enter an address to enable'} style={extBtn(hasAddress)}>
               <MapPin size={12} /> VIEW ON MAPS
+            </button>
+            <button onClick={openCapitalize} disabled={!hasAddress} title={hasAddress ? 'Copy address and open Capitalize for loan comps' : 'Enter an address to enable'} style={extBtn(hasAddress)}>
+              <BarChart3 size={12} /> LOAN COMPS (CAPITALIZE)
             </button>
           </div>
 
