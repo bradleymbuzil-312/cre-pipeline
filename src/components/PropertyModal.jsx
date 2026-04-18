@@ -31,10 +31,16 @@ export default function PropertyModal({ property, session, onClose, onSaved }) {
     return [form.address, form.city, form.state, form.zip].filter(Boolean).join(', ')
   }
 
-  function openReonomySearch() {
+  async function openReonomySearch() {
     const q = fullAddress()
     if (!q) { toast('Enter an address first', 'info'); return }
-    window.open('https://app.reonomy.com/!/search?q=' + encodeURIComponent(q), '_blank', 'noopener')
+    try {
+      await navigator.clipboard.writeText(q)
+      toast('Address copied \u2014 paste into Reonomy search', 'info', 4000)
+    } catch (e) {
+      toast('Reonomy opening \u2014 paste the address manually', 'info', 4000)
+    }
+    window.open('https://app.reonomy.com/!/search', '_blank', 'noopener')
   }
 
   function openGoogleMaps() {

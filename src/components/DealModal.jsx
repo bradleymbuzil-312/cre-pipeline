@@ -200,10 +200,16 @@ export default function DealModal({deal, session, onClose, onSaved}){
     return [form.property_address, form.city, form.state_province, form.zip_code].filter(Boolean).join(', ')
   }
 
-  function openReonomy(){
+  async function openReonomy(){
     const q = fullAddress()
     if(!q){ toast('Add a property address first', 'info'); return }
-    window.open('https://app.reonomy.com/!/search?q=' + encodeURIComponent(q), '_blank', 'noopener')
+    try {
+      await navigator.clipboard.writeText(q)
+      toast('Address copied \u2014 paste into Reonomy search', 'info', 4000)
+    } catch (e) {
+      toast('Reonomy opening \u2014 paste the address manually', 'info', 4000)
+    }
+    window.open('https://app.reonomy.com/!/search', '_blank', 'noopener')
   }
 
   function openMaps(){
