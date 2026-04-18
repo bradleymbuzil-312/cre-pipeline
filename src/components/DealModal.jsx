@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { X, ChevronDown, ChevronUp, Plus, Trash2, CheckSquare, Square } from 'lucide-react'
 import { STAGES, PROPERTY_TYPES } from '../lib/constants'
 import ActivityLog, { logActivity } from './ActivityLog'
+import DealLinks from './DealLinks'
 import { useToast } from './Toast'
 
 const FINANCE_PURPOSES = ['Acquisition','Refinance','Construction','Bridge','Mezzanine','Preferred Equity','Recapitalization','Other']
@@ -230,7 +231,6 @@ export default function DealModal({deal, session, onClose, onSaved}){
     }
     if(err){setError(err.message);setSaving(false);return}
 
-    // Log activity
     if (savedId) {
       if (!deal?.id) {
         await logActivity(savedId, session.user.id, session.user.email, 'deal_created', 'Created deal for ' + p.borrower_name)
@@ -295,6 +295,12 @@ export default function DealModal({deal, session, onClose, onSaved}){
             </div>
             <div style={{fontSize:'11px',color:'var(--muted)',marginTop:'10px',lineHeight:1.5}}>Linking a property shows this deal on the property card in the Properties tab. Linking a referral source helps you track which deals came from each referrer.</div>
           </Section>
+
+          {deal?.id && (
+            <Section title="Documents (OneDrive Links)" defaultOpen={true}>
+              <DealLinks dealId={deal.id} session={session} />
+            </Section>
+          )}
 
           <Section title="Property Details" defaultOpen={false}>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
@@ -372,7 +378,7 @@ export default function DealModal({deal, session, onClose, onSaved}){
 
           {!deal?.id && (
             <div style={{padding:'10px 14px',borderRadius:'6px',background:'var(--surface2)',border:'1px solid var(--border)',fontSize:'11px',color:'var(--muted)'}}>
-              Save this deal first, then reopen it to add tasks and see activity history.
+              Save this deal first, then reopen it to add documents, tasks, and see activity history.
             </div>
           )}
 
