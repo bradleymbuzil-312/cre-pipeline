@@ -1,19 +1,24 @@
 export const STAGES = [
-  'Prospecting',
-  'Application / NDA',
+  'Underwriting',
+  'Packaging',
+  'Engagement',
   'LOI / Term Sheet',
   'Due Diligence',
   'Closing',
   'Funded / Closed',
 ]
 
+export const PROSPECTING_STAGES = ['Underwriting', 'Packaging', 'Engagement']
+export const ACTIVE_STAGES = ['LOI / Term Sheet', 'Due Diligence', 'Closing', 'Funded / Closed']
+
 export const STAGE_COLORS = {
-  'Prospecting':       { bg: '#0e1f3d', border: '#1e3d6e', text: '#6b9ff7' },
-  'Application / NDA': { bg: '#1e1030', border: '#3d1e68', text: '#b07ef7' },
-  'LOI / Term Sheet':  { bg: '#2a1800', border: '#6b3a00', text: '#f09a3a' },
-  'Due Diligence':     { bg: '#001e12', border: '#00522e', text: '#3adfa0' },
-  'Closing':           { bg: '#001822', border: '#004466', text: '#3acae8' },
-  'Funded / Closed':   { bg: '#001a08', border: '#005218', text: '#3ad460' },
+  'Underwriting':    { bg: '#eff6ff', border: '#bfdbfe', text: '#1d4ed8' },
+  'Packaging':       { bg: '#f5f3ff', border: '#ddd6fe', text: '#6d28d9' },
+  'Engagement':      { bg: '#ecfeff', border: '#a5f3fc', text: '#0e7490' },
+  'LOI / Term Sheet':{ bg: '#fff7ed', border: '#fed7aa', text: '#c2410c' },
+  'Due Diligence':   { bg: '#fefce8', border: '#fde68a', text: '#a16207' },
+  'Closing':         { bg: '#f0fdfa', border: '#99f6e4', text: '#0f766e' },
+  'Funded / Closed': { bg: '#f0fdf4', border: '#86efac', text: '#15803d' },
 }
 
 export const PROPERTY_TYPES = [
