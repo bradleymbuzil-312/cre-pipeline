@@ -7,11 +7,11 @@ import ImportModal from './ImportModal'
 
 const FILTERS = ['All', 'Follow-up Due', 'Overdue', 'Borrower', 'Referral Source', 'Broker', 'Lender']
 
-export default function Clients({ session }) {
+export default function Clients({ session, defaultType }) {
   const [clients, setClients] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [filter, setFilter] = useState('All')
+  const [filter, setFilter] = useState(defaultType || 'All')
   const [modalOpen, setModalOpen] = useState(false)
   const [editingClient, setEditingClient] = useState(null)
   const [importOpen, setImportOpen] = useState(false)

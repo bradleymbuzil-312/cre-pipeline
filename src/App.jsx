@@ -59,6 +59,7 @@ export default function App() {
          view === 'referrals' ? <Referrals session={session} /> :
          view === 'clients' ? <Clients session={session} /> :
          view === 'lenders' ? <Lenders session={session} /> :
+         view === 'borrowers' ? <Clients session={session} defaultType="Borrower" title="Borrowers" /> :
          view === 'maturity' ? <MaturityWatch session={session} setView={setView} /> :
          view === 'tasks' ? <Tasks session={session} /> :
          <Dashboard session={session} setView={setView} />}

@@ -18,6 +18,7 @@ export default function Header({ session, view, setView, openAccess, openSearch 
     ['active', 'Active'],
     ['properties', 'Properties'],
     ['lenders', 'Lenders'],
+    ['borrowers', 'Borrowers'],
     ['referrals', 'Referrals'],
     ['clients', 'Contacts'],
     ['tasks', 'Tasks'],
