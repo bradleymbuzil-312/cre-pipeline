@@ -22,7 +22,7 @@ const EMPTY = {
   property_address:'',city:'',state_province:'',zip_code:'',
   property_type:'',total_units:'',sq_ft:'',year_built:'',
   loan_amount:'',finance_purpose:'',capital_type:'Debt',debt_equity_type:'',
-  lender_name:'',term_months:'',amortization_months:'',io_months:'',
+  lender_id:'',lender_name:'',term_months:'',amortization_months:'',io_months:'',
   interest_rate_type:'',interest_rate_index:'',base_rate:'',spread_bps:'',
   interest_rate:'',ltv:'',dscr:'',recourse:'',
   maturity_date:'',prepay_penalty_exp:'',prepay_description:'',capital_notes:'',
@@ -182,12 +182,14 @@ export default function DealModal({deal, session, onClose, onSaved}){
   const [teamMembers,setTeamMembers]=useState([])
   const [properties,setProperties]=useState([])
   const [referralSources,setReferralSources]=useState([])
+  const [lenders,setLenders]=useState([])
   const { toast } = useToast()
 
   useEffect(()=>{
     supabase.from('team_members').select('*').order('name').then(({data})=>setTeamMembers(data||[]))
     supabase.from('properties').select('id, address, city, state').order('address').then(({data})=>setProperties(data||[]))
     supabase.from('clients').select('id, first_name, last_name, company').eq('client_type', 'Referral Source').order('first_name').then(({data})=>setReferralSources(data||[]))
+    supabase.from('lenders').select('id, name, type').order('name').then(({data})=>setLenders(data||[]))
   },[])
 
   function set(k,v){setForm(f=>({...f,[k]:v}))}
@@ -240,6 +242,7 @@ export default function DealModal({deal, session, onClose, onSaved}){
       property_address:str(form.property_address),city:str(form.city),state_province:str(form.state_province),zip_code:str(form.zip_code),
       property_type:str(form.property_type),total_units:int(form.total_units),sq_ft:num(form.sq_ft),year_built:int(form.year_built),
       loan_amount:num(form.loan_amount),finance_purpose:str(form.finance_purpose),capital_type:str(form.capital_type),debt_equity_type:str(form.debt_equity_type),
+      lender_id: form.lender_id || null,
       lender_name:str(form.lender_name),term_months:int(form.term_months),amortization_months:int(form.amortization_months),io_months:int(form.io_months),
       interest_rate_type:str(form.interest_rate_type),interest_rate_index:str(form.interest_rate_index),
       base_rate:num(form.base_rate),spread_bps:int(form.spread_bps),interest_rate:num(form.interest_rate),
@@ -365,7 +368,8 @@ export default function DealModal({deal, session, onClose, onSaved}){
 
           <Section title="Capital Details" defaultOpen={false}>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
-              <F label="Capital Source (Lender)"><Inp value={form.lender_name} onChange={e=>set('lender_name',e.target.value)} placeholder="East West Bank"/></F>
+              <F label="Lender (from Lenders DB)"><select value={form.lender_id} onChange={e=>{const id=e.target.value; const l=lenders.find(x=>x.id===id); set('lender_id',id); if(l) set('lender_name',l.name);}} style={IS}><option value="">Select or type below...</option>{lenders.map(l=><option key={l.id} value={l.id}>{l.name}{l.type?' \u00b7 '+l.type:''}</option>)}</select></F>
+              <F label="Capital Source Name"><Inp value={form.lender_name} onChange={e=>set('lender_name',e.target.value)} placeholder="East West Bank"/></F>
               <F label="Term (Months)"><Inp type="number" value={form.term_months} onChange={e=>set('term_months',e.target.value)} placeholder="360"/></F>
               <F label="Amortization (Months)"><Inp type="number" value={form.amortization_months} onChange={e=>set('amortization_months',e.target.value)} placeholder="360"/></F>
               <F label="I/O (Months)"><Inp type="number" value={form.io_months} onChange={e=>set('io_months',e.target.value)} placeholder="24"/></F>

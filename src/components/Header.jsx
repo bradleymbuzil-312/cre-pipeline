@@ -17,9 +17,11 @@ export default function Header({ session, view, setView, openAccess, openSearch 
     ['prospecting', 'Prospecting'],
     ['active', 'Active'],
     ['properties', 'Properties'],
+    ['lenders', 'Lenders'],
     ['referrals', 'Referrals'],
     ['clients', 'Contacts'],
     ['tasks', 'Tasks'],
+    ['maturity', 'Maturity'],
   ]
 
   const isMac = typeof navigator !== 'undefined' && /Mac/.test(navigator.platform)
