@@ -3,7 +3,7 @@ import { supabase } from '../lib/supabase'
 import { X } from 'lucide-react'
 
 const CLIENT_TYPES = ['Borrower', 'Referral Source', 'Broker', 'Lender', 'Other']
-const EMPTY = { first_name: '', last_name: '', company: '', email: '', phone: '', client_type: 'Borrower', referral_source: '', follow_up_date: '', follow_up_note: '', notes: '' }
+const EMPTY = { first_name: '', last_name: '', company: '', email: '', mobile_phone: '', work_phone: '', phone: '', client_type: 'Borrower', referral_source: '', follow_up_date: '', follow_up_note: '', notes: '' }
 
 export default function ClientModal({ client, session, onClose, onSaved }) {
   const [form, setForm] = useState(client ? { ...EMPTY, ...client, follow_up_date: client.follow_up_date || '', follow_up_note: client.follow_up_note || '' } : { ...EMPTY })
@@ -18,7 +18,10 @@ export default function ClientModal({ client, session, onClose, onSaved }) {
     const payload = {
       first_name: form.first_name.trim(), last_name: form.last_name.trim() || null,
       company: form.company.trim() || null, email: form.email.trim() || null,
-      phone: form.phone.trim() || null, client_type: form.client_type,
+      mobile_phone: form.mobile_phone.trim() || null,
+      work_phone: form.work_phone.trim() || null,
+      phone: (form.work_phone.trim() || form.mobile_phone.trim() || form.phone.trim()) || null,
+      client_type: form.client_type,
       referral_source: form.referral_source.trim() || null,
       follow_up_date: form.follow_up_date || null, follow_up_note: form.follow_up_note.trim() || null,
       notes: form.notes.trim() || null, updated_at: new Date().toISOString(),
@@ -47,7 +50,8 @@ export default function ClientModal({ client, session, onClose, onSaved }) {
             <div><label style={labelStyle}>Last Name</label><input value={form.last_name} onChange={e => set('last_name', e.target.value)} style={inputStyle} placeholder="Smith" /></div>
             <div style={{ gridColumn: '1 / -1' }}><label style={labelStyle}>Company</label><input value={form.company} onChange={e => set('company', e.target.value)} style={inputStyle} placeholder="Acme Real Estate LLC" /></div>
             <div><label style={labelStyle}>Email</label><input type="email" value={form.email} onChange={e => set('email', e.target.value)} style={inputStyle} placeholder="john@example.com" /></div>
-            <div><label style={labelStyle}>Phone</label><input value={form.phone} onChange={e => set('phone', e.target.value)} style={inputStyle} placeholder="(310) 555-0100" /></div>
+            <div><label style={labelStyle}>Mobile Phone</label><input value={form.mobile_phone} onChange={e => set('mobile_phone', e.target.value)} style={inputStyle} placeholder="(310) 555-0100" /></div>
+            <div><label style={labelStyle}>Work Phone</label><input value={form.work_phone} onChange={e => set('work_phone', e.target.value)} style={inputStyle} placeholder="(310) 555-0200" /></div>
             <div><label style={labelStyle}>Client Type</label><select value={form.client_type} onChange={e => set('client_type', e.target.value)} style={inputStyle}>{CLIENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
             <div><label style={labelStyle}>Referred By</label><input value={form.referral_source} onChange={e => set('referral_source', e.target.value)} style={inputStyle} placeholder="Name or company" /></div>
             <div style={{ gridColumn: '1 / -1', height: '1px', background: 'var(--border)', margin: '4px 0' }} />

@@ -10,7 +10,8 @@ function exportVCard(client) {
     `N:${client.last_name || ''};${client.first_name || ''};;;`,
     client.company ? `ORG:${client.company}` : '',
     client.email ? `EMAIL;TYPE=INTERNET:${client.email}` : '',
-    client.phone ? `TEL;TYPE=WORK:${client.phone}` : '',
+    client.mobile_phone ? `TEL;TYPE=CELL:${client.mobile_phone}` : (client.phone ? `TEL;TYPE=CELL:${client.phone}` : ''),
+    client.work_phone ? `TEL;TYPE=WORK,VOICE:${client.work_phone}` : '',
     client.notes ? `NOTE:${client.notes.replace(/\n/g, '\\n')}` : '',
     `CATEGORIES:${client.client_type || 'Contact'}`,
     'END:VCARD'
@@ -70,7 +71,9 @@ export default function ClientCard({ client, onEdit, onDelete, onRefresh, sessio
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginBottom: '10px' }}>
         {client.email && <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Mail size={10} color="var(--muted)" /><a href={`mailto:${client.email}`} style={{ fontSize: '11px', color: 'var(--muted)', textDecoration: 'none' }}>{client.email}</a></div>}
-        {client.phone && <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Phone size={10} color="var(--muted)" /><a href={`tel:${client.phone}`} style={{ fontSize: '11px', color: 'var(--muted)', textDecoration: 'none' }}>{client.phone}</a></div>}
+        {client.mobile_phone && <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Phone size={10} color="var(--muted)" /><a href={`tel:${client.mobile_phone}`} style={{ fontSize: '11px', color: 'var(--muted)', textDecoration: 'none' }}>{client.mobile_phone}</a><span style={{ fontSize: '9px', color: 'var(--muted)', opacity: 0.6, fontFamily: 'Syne, sans-serif', fontWeight: 700, letterSpacing: '0.06em' }}>MOBILE</span></div>}
+        {client.work_phone && <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Phone size={10} color="var(--muted)" /><a href={`tel:${client.work_phone}`} style={{ fontSize: '11px', color: 'var(--muted)', textDecoration: 'none' }}>{client.work_phone}</a><span style={{ fontSize: '9px', color: 'var(--muted)', opacity: 0.6, fontFamily: 'Syne, sans-serif', fontWeight: 700, letterSpacing: '0.06em' }}>WORK</span></div>}
+        {!client.mobile_phone && !client.work_phone && client.phone && <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Phone size={10} color="var(--muted)" /><a href={`tel:${client.phone}`} style={{ fontSize: '11px', color: 'var(--muted)', textDecoration: 'none' }}>{client.phone}</a></div>}
         {client.referral_source && <div style={{ fontSize: '11px', color: 'var(--muted)' }}>Referred by: {client.referral_source}</div>}
       </div>
 

@@ -26,7 +26,8 @@ function parseOutlookCSV(text) {
       lastName: row['last name'] || row['surname'] || row['family name'] || row['lastname'] || '',
       company: row['company'] || row['organization'] || row['company name'] || '',
       email: row['e-mail address'] || row['email address'] || row['email'] || row['e-mail'] || '',
-      phone: row['business phone'] || row['mobile phone'] || row['primary phone'] || row['phone'] || '',
+      mobilePhone: row['mobile phone'] || row['mobile'] || '',
+      workPhone: row['business phone'] || row['work phone'] || row['primary phone'] || row['phone'] || '',
       notes: row['notes'] || row['body'] || ''
     }
   }).filter(c => c.firstName || c.lastName || c.email || c.company)
@@ -70,7 +71,9 @@ export default function ImportModal({ session, onClose, onImported }) {
         last_name: c.lastName || null,
         company: c.company || null,
         email: c.email || null,
-        phone: c.phone || null,
+        mobile_phone: c.mobilePhone || null,
+        work_phone: c.workPhone || null,
+        phone: c.workPhone || c.mobilePhone || null,
         notes: c.notes || null,
         client_type: 'Borrower',
         created_by: session.user.id
@@ -143,7 +146,7 @@ export default function ImportModal({ session, onClose, onImported }) {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
                   <thead>
                     <tr style={{ background: 'var(--surface2)' }}>
-                      {['Name', 'Company', 'Email', 'Phone'].map(col => (
+                      {['Name', 'Company', 'Email', 'Mobile', 'Work'].map(col => (
                         <th key={col} style={{ padding: '8px 12px', textAlign: 'left', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '10px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid var(--border)' }}>{col}</th>
                       ))}
                     </tr>
@@ -154,11 +157,12 @@ export default function ImportModal({ session, onClose, onImported }) {
                         <td style={{ padding: '7px 12px', color: 'var(--text)', fontWeight: 500 }}>{[c.firstName, c.lastName].filter(Boolean).join(' ') || '\u2014'}</td>
                         <td style={{ padding: '7px 12px', color: 'var(--muted)' }}>{c.company || '\u2014'}</td>
                         <td style={{ padding: '7px 12px', color: 'var(--muted)' }}>{c.email || '\u2014'}</td>
-                        <td style={{ padding: '7px 12px', color: 'var(--muted)' }}>{c.phone || '\u2014'}</td>
+                        <td style={{ padding: '7px 12px', color: 'var(--muted)' }}>{c.mobilePhone || '\u2014'}</td>
+                        <td style={{ padding: '7px 12px', color: 'var(--muted)' }}>{c.workPhone || '\u2014'}</td>
                       </tr>
                     ))}
                     {preview.length > 50 && (
-                      <tr><td colSpan={4} style={{ padding: '8px 12px', color: 'var(--muted)', fontSize: '11px', textAlign: 'center' }}>+ {preview.length - 50} more</td></tr>
+                      <tr><td colSpan={5} style={{ padding: '8px 12px', color: 'var(--muted)', fontSize: '11px', textAlign: 'center' }}>+ {preview.length - 50} more</td></tr>
                     )}
                   </tbody>
                 </table>
