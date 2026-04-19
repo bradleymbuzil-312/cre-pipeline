@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabase'
 import Auth from './components/Auth'
-import Header from './components/Header'
+import Sidebar from './components/Sidebar'
+import Topbar from './components/Topbar'
 import Pipeline from './components/Pipeline'
 import Clients from './components/Clients'
 import Tasks from './components/Tasks'
@@ -50,8 +51,10 @@ export default function App() {
 
   return (
     <ToastProvider>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <Header session={session} view={view} setView={setView} openAccess={() => setAccessOpen(true)} openSearch={() => setSearchOpen(true)} />
+      <div style={{ display: 'flex', minHeight: '100vh' }}>
+        <Sidebar view={view} setView={setView} openAccess={() => setAccessOpen(true)} />
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+        <Topbar session={session} openSearch={() => setSearchOpen(true)} openAccess={() => setAccessOpen(true)} />
         {view === 'home' ? <Dashboard session={session} setView={setView} /> :
          view === 'prospecting' ? <Pipeline session={session} stages={PROSPECTING_STAGES} title="Prospecting" /> :
          view === 'active' ? <Pipeline session={session} stages={ACTIVE_STAGES} title="Active Deals" /> :
@@ -79,6 +82,7 @@ export default function App() {
         )}
 
         {searchOpen && <GlobalSearch onClose={() => setSearchOpen(false)} setView={setView} />}
+        </div>
       </div>
     </ToastProvider>
   )

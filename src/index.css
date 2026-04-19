@@ -1,70 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;600&family=DM+Sans:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 :root {
-  --bg:           #f0f4f8;
-  --surface:      #ffffff;
-  --surface2:     #f1f5f9;
-  --border:       #e2e8f0;
-  --border-hover: #cbd5e1;
-  --blue:         #2563eb;
-  --blue-dim:     #1d4ed8;
-  --blue-light:   #eff6ff;
-  --blue-muted:   #93c5fd;
-  --text:         #0f172a;
-  --muted:        #64748b;
+  /* mmcc dark theme */
+  --bg:           #0b1220;
+  --surface:      #0f1a2e;
+  --surface2:     #132241;
+  --border:       #1e3256;
+  --border-hover: #2a4470;
+  --text:         #e8eefb;
+  --muted:        #94a3b8;
+  --dim:          #64748b;
+  /* Brand + semantic */
+  --brand:        #3b82f6;
+  --brand2:       #2563eb;
+  --blue:         #3b82f6;
+  --blue-dim:     #2563eb;
+  --blue-light:   #1a2d50;
+  --blue-muted:   #1e3a8a;
   --danger:       #ef4444;
-  --success:      #16a34a;
-  --gold:         #2563eb;
-  --gold-dim:     #1d4ed8;
+  --success:      #10b981;
+  --green:        #10b981;
+  --amber:        #f59e0b;
+  --purple:       #8b5cf6;
+  --teal:         #14b8a6;
+  /* Legacy aliases (many components still reference these) */
+  --gold:         #3b82f6;
+  --gold-dim:     #2563eb;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; }
+
+html, body, #root { margin: 0; padding: 0; min-height: 100vh; }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-input, select, textarea, button { font-family: inherit; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+input, select, textarea, button {
+  font-family: inherit;
+  color: inherit;
+}
+
+input, select, textarea {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+input::placeholder, textarea::placeholder { color: var(--dim); }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--blue) !important;
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+  border-color: var(--brand);
 }
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+/* Scrollbar (dark) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: none;
-  cursor: pointer;
-  opacity: 0.5;
-}
+/* Drag-and-drop styling preserved from old theme */
+.drag-over { background: var(--blue-light) !important; border-color: var(--brand) !important; }
 
-select option { background: #ffffff; color: var(--text); }
-
-/* Drag and drop visual cues */
-.deal-card-dragging { opacity: 0.4; cursor: grabbing; }
-.kanban-column-drop-target { background: #eff6ff !important; border-color: #2563eb !important; border-style: dashed !important; }
-
-/* Mobile responsive */
-@media (max-width: 900px) {
-  .app-header { padding: 8px 12px !important; }
-  .app-header kbd { display: none !important; }
-  .search-label { display: none !important; }
-}
-
-@media (min-width: 901px) {
-  .search-label { display: inline !important; }
-}
-
-@media (max-width: 600px) {
-  .app-header { flex-direction: column !important; align-items: stretch !important; padding: 8px !important; gap: 8px !important; }
-  .app-header > div { justify-content: space-between; }
+/* Mobile responsiveness hint for old components */
+@media (max-width: 768px) {
+  body { font-size: 13px; }
 }
