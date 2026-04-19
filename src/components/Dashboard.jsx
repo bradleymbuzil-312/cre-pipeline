@@ -29,6 +29,11 @@ export default function Dashboard({ session, setView }) {
   const activeDeals = deals.filter(d => d.stage !== 'Funded / Closed')
   const pipelineVolume = activeDeals.reduce((s, d) => s + (d.loan_amount || 0), 0)
   const pendingFees = activeDeals.reduce((s, d) => s + (d.commission_fee || 0), 0)
+  const ytdStart = new Date(new Date().getFullYear(), 0, 1).toISOString().split('T')[0]
+  const ytdFundedDeals = deals.filter(d => d.stage === 'Funded / Closed' && (d.updated_at || '').split('T')[0] >= ytdStart)
+  const ytdClosedVolume = ytdFundedDeals.reduce((s, d) => s + (d.loan_amount || 0), 0)
+  const ytdFeesEarned = ytdFundedDeals.reduce((s, d) => s + (d.commission_fee || 0), 0)
+  const blendedFeeRate = ytdClosedVolume > 0 ? (ytdFeesEarned / ytdClosedVolume) * 100 : 0
   const closingThisMonth = deals.filter(d => d.expected_close_date && d.expected_close_date >= today && d.expected_close_date <= in30 && d.stage !== 'Funded / Closed')
 
   const tasksDueToday = tasks.filter(t => t.due_date === today && t.status !== 'Done')
@@ -48,6 +53,8 @@ export default function Dashboard({ session, setView }) {
 
         {/* KPI Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginBottom: '24px' }}>
+          <KpiCard Icon={CheckCircle} label="YTD Closed Volume" value={formatCurrency(ytdClosedVolume)} sublabel={ytdFundedDeals.length + ' deal' + (ytdFundedDeals.length !== 1 ? 's' : '') + ' funded'} accent />
+          <KpiCard Icon={DollarSign} label="YTD Fees Earned" value={formatCurrency(ytdFeesEarned)} sublabel={'blended ' + blendedFeeRate.toFixed(2) + '%'} />
           <KpiCard Icon={Briefcase} label="Active Deals" value={activeDeals.length} onClick={() => setView('active')} />
           <KpiCard Icon={DollarSign} label="Pipeline Volume" value={formatCurrency(pipelineVolume)} accent />
           <KpiCard Icon={CheckCircle} label="Pending Fees" value={formatCurrency(pendingFees)} />
@@ -158,7 +165,7 @@ function greet() {
   return 'evening'
 }
 
-function KpiCard({ Icon, label, value, accent, highlight, onClick }) {
+function KpiCard({ Icon, label, value, sublabel, accent, highlight, onClick }) {
   return (
     <div onClick={onClick} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '10px', padding: '16px', cursor: onClick ? 'pointer' : 'default', transition: 'all 0.15s' }}
       onMouseEnter={e => { if (onClick) { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(37,99,235,0.08)' } }}
@@ -168,6 +175,7 @@ function KpiCard({ Icon, label, value, accent, highlight, onClick }) {
         <Icon size={14} color={accent || highlight ? '#2563eb' : 'var(--muted)'} />
       </div>
       <div style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'IBM Plex Mono, monospace', color: accent || highlight ? '#2563eb' : 'var(--text)' }}>{value}</div>
+      {sublabel && <div style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'IBM Plex Mono, monospace', marginTop: '4px', letterSpacing: '0.04em' }}>{sublabel}</div>}
     </div>
   )
 }

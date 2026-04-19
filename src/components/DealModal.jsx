@@ -183,13 +183,14 @@ export default function DealModal({deal, session, onClose, onSaved}){
   const [properties,setProperties]=useState([])
   const [referralSources,setReferralSources]=useState([])
   const [lenders,setLenders]=useState([])
+  const [showMatches,setShowMatches]=useState(false)
   const { toast } = useToast()
 
   useEffect(()=>{
     supabase.from('team_members').select('*').order('name').then(({data})=>setTeamMembers(data||[]))
     supabase.from('properties').select('id, address, city, state').order('address').then(({data})=>setProperties(data||[]))
     supabase.from('clients').select('id, first_name, last_name, company').eq('client_type', 'Referral Source').order('first_name').then(({data})=>setReferralSources(data||[]))
-    supabase.from('lenders').select('id, name, type').order('name').then(({data})=>setLenders(data||[]))
+    supabase.from('lenders').select('id, name, type, asset_types, geographies, loan_types, min_loan, max_loan, max_ltv, min_dscr, rate_spread, contact_name, email, phone').order('name').then(({data})=>setLenders(data||[]))
   },[])
 
   function set(k,v){setForm(f=>({...f,[k]:v}))}
@@ -231,6 +232,51 @@ export default function DealModal({deal, session, onClose, onSaved}){
     }
     window.open('https://www.capitalize.io/dashboard/search/', '_blank', 'noopener')
   }
+
+  function scoreLender(lender, deal) {
+  const scores = []
+  const reasons = []
+  const dealLoan = deal.loan_amount ? parseFloat(deal.loan_amount) : null
+  const dealLtv = deal.ltv ? parseFloat(deal.ltv) : null
+  const dealDscr = deal.dscr ? parseFloat(deal.dscr) : null
+  
+  // Loan size in range (25 pts)
+  if (dealLoan && (lender.min_loan || lender.max_loan)) {
+    const min = lender.min_loan || 0
+    const max = lender.max_loan || Infinity
+    if (dealLoan >= min && dealLoan <= max) { scores.push(25); reasons.push('Loan size fits') }
+    else { scores.push(0); reasons.push('Loan size out of range') }
+  }
+  // Asset type (20 pts)
+  if (deal.property_type && lender.asset_types?.length) {
+    if (lender.asset_types.includes(deal.property_type)) { scores.push(20); reasons.push(deal.property_type + ' match') }
+    else { scores.push(0); reasons.push('Asset type mismatch') }
+  }
+  // Geography (20 pts)
+  if (deal.state_province && lender.geographies?.length) {
+    const matched = lender.geographies.some(g => g && deal.state_province.toLowerCase().includes(g.toLowerCase()))
+    if (matched) { scores.push(20); reasons.push(deal.state_province + ' covered') }
+    else { scores.push(0); reasons.push('Geography mismatch') }
+  }
+  // LTV (15 pts)
+  if (dealLtv && lender.max_ltv) {
+    if (dealLtv <= lender.max_ltv) { scores.push(15); reasons.push('LTV ' + dealLtv + '% \u2264 ' + lender.max_ltv + '%') }
+    else { scores.push(0); reasons.push('LTV too high') }
+  }
+  // DSCR (15 pts)
+  if (dealDscr && lender.min_dscr) {
+    if (dealDscr >= lender.min_dscr) { scores.push(15); reasons.push('DSCR ' + dealDscr + ' \u2265 ' + lender.min_dscr) }
+    else { scores.push(0); reasons.push('DSCR too low') }
+  }
+  // Loan type (5 pts)
+  if (deal.debt_equity_type && lender.loan_types?.length) {
+    if (lender.loan_types.includes(deal.debt_equity_type)) { scores.push(5); reasons.push(deal.debt_equity_type + ' lender') }
+  }
+  const total = scores.reduce((s, x) => s + x, 0)
+  const possible = scores.length > 0 ? scores.length * 25 : 100
+  const pct = possible > 0 ? Math.round((total / possible) * 100) : 0
+  return { lender, score: pct, reasons, dataPoints: scores.length }
+}
 
   async function handleSave(){
     if(!form.borrower_name.trim()){setError('Borrower name is required.');return}
@@ -370,6 +416,30 @@ export default function DealModal({deal, session, onClose, onSaved}){
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'10px 14px'}}>
               <F label="Lender (from Lenders DB)"><select value={form.lender_id} onChange={e=>{const id=e.target.value; const l=lenders.find(x=>x.id===id); set('lender_id',id); if(l) set('lender_name',l.name);}} style={IS}><option value="">Select or type below...</option>{lenders.map(l=><option key={l.id} value={l.id}>{l.name}{l.type?' \u00b7 '+l.type:''}</option>)}</select></F>
               <F label="Capital Source Name"><Inp value={form.lender_name} onChange={e=>set('lender_name',e.target.value)} placeholder="East West Bank"/></F>
+              <div style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 0' }}>
+                <button type="button" onClick={() => setShowMatches(s => !s)} disabled={lenders.length === 0} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: showMatches ? '#2563eb' : 'var(--surface2)', color: showMatches ? '#fff' : (lenders.length === 0 ? 'var(--muted)' : 'var(--text)'), border: '1px solid ' + (showMatches ? '#2563eb' : 'var(--border)'), padding: '6px 12px', borderRadius: '5px', fontFamily: 'Syne, sans-serif', fontWeight: 600, fontSize: '11px', cursor: lenders.length === 0 ? 'not-allowed' : 'pointer', letterSpacing: '0.04em' }}>
+                  {showMatches ? 'HIDE MATCHES' : 'MATCH LENDERS'}
+                </button>
+                <span style={{ fontSize: '11px', color: 'var(--muted)' }}>{lenders.length} lender{lenders.length !== 1 ? 's' : ''} in database</span>
+              </div>
+              {showMatches && (
+                <div style={{ gridColumn: '1 / -1', display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px', background: 'var(--surface2)', borderRadius: '6px', border: '1px solid var(--border)' }}>
+                  {(() => {
+                    const ranked = lenders.map(l => scoreLender(l, form)).sort((a, b) => b.score - a.score).slice(0, 5)
+                    if (ranked.length === 0 || ranked[0].dataPoints === 0) return <div style={{ fontSize: '11px', color: 'var(--muted)', textAlign: 'center', padding: '10px' }}>Fill in loan amount, property type, state, LTV, or DSCR to get match scores.</div>
+                    return ranked.map(r => (
+                      <div key={r.lender.id} onClick={() => { set('lender_id', r.lender.id); set('lender_name', r.lender.name); }} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 10px', background: 'var(--surface)', borderRadius: '5px', border: '1px solid ' + (form.lender_id === r.lender.id ? '#2563eb' : 'var(--border)'), cursor: 'pointer' }}>
+                        <div style={{ minWidth: '44px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: '16px', color: r.score >= 75 ? '#16a34a' : r.score >= 50 ? '#c2410c' : 'var(--muted)' }}>{r.score}</div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text)', fontFamily: 'Syne, sans-serif' }}>{r.lender.name}{r.lender.type ? ' \u00b7 ' + r.lender.type : ''}</div>
+                          <div style={{ fontSize: '10px', color: 'var(--muted)', marginTop: '2px', fontFamily: 'IBM Plex Mono, monospace' }}>{r.reasons.slice(0, 4).join(' \u00b7 ')}</div>
+                        </div>
+                        {form.lender_id === r.lender.id && <span style={{ fontSize: '9px', color: '#2563eb', fontFamily: 'Syne, sans-serif', fontWeight: 700, letterSpacing: '0.06em' }}>SELECTED</span>}
+                      </div>
+                    ))
+                  })()}
+                </div>
+              )}
               <F label="Term (Months)"><Inp type="number" value={form.term_months} onChange={e=>set('term_months',e.target.value)} placeholder="360"/></F>
               <F label="Amortization (Months)"><Inp type="number" value={form.amortization_months} onChange={e=>set('amortization_months',e.target.value)} placeholder="360"/></F>
               <F label="I/O (Months)"><Inp type="number" value={form.io_months} onChange={e=>set('io_months',e.target.value)} placeholder="24"/></F>
