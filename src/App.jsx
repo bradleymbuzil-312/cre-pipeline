@@ -11,6 +11,7 @@ import Properties from './components/Properties'
 import Referrals from './components/Referrals'
 import Lenders from './components/Lenders'
 import MaturityWatch from './components/MaturityWatch'
+import Resources from './components/Resources'
 import Dashboard from './components/Dashboard'
 import GlobalSearch from './components/GlobalSearch'
 import { ToastProvider } from './components/Toast'
@@ -64,6 +65,7 @@ export default function App() {
          view === 'lenders' ? <Lenders session={session} /> :
          view === 'borrowers' ? <Clients session={session} defaultType="Borrower" title="Borrowers" /> :
          view === 'maturity' ? <MaturityWatch session={session} setView={setView} /> :
+         view === 'resources' ? <Resources /> :
          view === 'tasks' ? <Tasks session={session} /> :
          <Dashboard session={session} setView={setView} />}
 

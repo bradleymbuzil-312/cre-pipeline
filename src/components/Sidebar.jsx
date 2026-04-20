@@ -22,6 +22,7 @@ const SECTIONS = [
     { view: 'maturity', label: 'Maturity Watch', icon: Clock, countKey: 'maturity' },
   ]},
   { group: 'System', items: [
+    { view: 'resources', label: 'Resources', icon: BookOpen },
     { view: 'settings', label: 'Team Access', icon: Settings, isAction: 'openAccess' },
   ]},
 ]
