@@ -20,6 +20,7 @@ const SECTIONS = [
   ]},
   { group: 'Insights', items: [
     { view: 'maturity', label: 'Maturity Watch', icon: Clock, countKey: 'maturity' },
+    { view: 'calendar', label: 'Calendar', icon: Calendar },
   ]},
   { group: 'System', items: [
     { view: 'resources', label: 'Resources', icon: BookOpen },
