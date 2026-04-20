@@ -79,7 +79,7 @@ export default function Sidebar({ view, setView, openAccess }) {
     }}>
       <div style={{ padding: '0 16px 16px', borderBottom: '1px solid var(--border)', marginBottom: '12px' }}>
         <h1 style={{ margin: 0, fontSize: '16px', color: '#fff', fontWeight: 700, letterSpacing: '-0.01em' }}>CRE Pipeline</h1>
-        <div style={{ fontSize: '10px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '2px' }}>MMCC \u2014 Internal Team</div>
+        <div style={{ fontSize: '10px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '2px' }}>MMCC — Internal Team</div>
       </div>
 
       <nav>
