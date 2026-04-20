@@ -86,7 +86,7 @@ export default function Calendar({ session, setView }) {
             <CalIcon size={18} color="var(--brand)" /> Calendar
           </h1>
           <div style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '4px' }}>
-            {deals.length} maturit{deals.length === 1 ? 'y' : 'ies'} \u00b7 {tasks.length} task{tasks.length !== 1 ? 's' : ''} this month
+            {deals.length} maturit{deals.length === 1 ? 'y' : 'ies'} · {tasks.length} task{tasks.length !== 1 ? 's' : ''} this month
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -129,13 +129,13 @@ export default function Calendar({ session, setView }) {
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                     {dealsHere.slice(0, 2).map(d => (
-                      <div key={d.id} style={{ fontSize: '10px', padding: '2px 4px', borderRadius: '3px', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={d.borrower_name + ' \u00b7 ' + fmtMoney(d.loan_amount)}>
-                        \u25cf {fmtMoney(d.loan_amount) || d.borrower_name}
+                      <div key={d.id} style={{ fontSize: '10px', padding: '2px 4px', borderRadius: '3px', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={d.borrower_name + ' · ' + fmtMoney(d.loan_amount)}>
+                        ● {fmtMoney(d.loan_amount) || d.borrower_name}
                       </div>
                     ))}
                     {tasksHere.slice(0, 2).map(t => (
                       <div key={t.id} style={{ fontSize: '10px', padding: '2px 4px', borderRadius: '3px', background: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={t.title}>
-                        \u2713 {t.title}
+                        ✓ {t.title}
                       </div>
                     ))}
                     {(dealsHere.length + tasksHere.length) > 4 && (
@@ -175,7 +175,7 @@ export default function Calendar({ session, setView }) {
                   <div style={{ fontSize: '13px', color: 'var(--text)', fontWeight: 600 }}>{d.borrower_name}</div>
                   {d.property_address && <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>{d.property_address}{d.city ? ', ' + d.city : ''}{d.state_province ? ', ' + d.state_province : ''}</div>}
                   <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px', fontFamily: 'IBM Plex Mono, monospace' }}>
-                    {fmtMoney(d.loan_amount)} \u00b7 {d.stage}
+                    {fmtMoney(d.loan_amount)} · {d.stage}
                   </div>
                 </div>
               ))}
@@ -196,7 +196,7 @@ export default function Calendar({ session, setView }) {
                     {t.title}
                   </div>
                   <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px' }}>
-                    {t.status}{t.priority ? ' \u00b7 ' + t.priority : ''}
+                    {t.status}{t.priority ? ' · ' + t.priority : ''}
                   </div>
                 </div>
               ))}
