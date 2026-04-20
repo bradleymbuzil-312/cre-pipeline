@@ -17,7 +17,7 @@ const FEE_AGREEMENT_TYPES = ['Exclusive','Non-Exclusive','Right of First Refusal
 const PRIORITIES = ['High','Medium','Low']
 
 const EMPTY = {
-  borrower_name:'',stage:'Engagement',expected_close_date:'',
+  borrower_name:'',stage:'Engagement',closed_at:'',expected_close_date:'',
   property_id:'',referral_source_id:'',
   property_address:'',city:'',state_province:'',zip_code:'',
   property_type:'',total_units:'',sq_ft:'',year_built:'',
@@ -282,7 +282,7 @@ export default function DealModal({deal, session, onClose, onSaved}){
     if(!form.borrower_name.trim()){setError('Borrower name is required.');return}
     setSaving(true);setError('')
     const p={
-      borrower_name:str(form.borrower_name),stage:form.stage,expected_close_date:dt(form.expected_close_date),
+      borrower_name:str(form.borrower_name),stage:form.stage,closed_at:form.stage==='Funded / Closed'?(form.closed_at?dt(form.closed_at):new Date().toISOString().split('T')[0]):(form.closed_at?dt(form.closed_at):null),expected_close_date:dt(form.expected_close_date),
       property_id: form.property_id || null,
       referral_source_id: form.referral_source_id || null,
       property_address:str(form.property_address),city:str(form.city),state_province:str(form.state_province),zip_code:str(form.zip_code),

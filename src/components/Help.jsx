@@ -10,7 +10,7 @@ const TIPS = [
   { icon: Plus, title: 'Creating deals fast', body: 'In the Active or Prospecting pipeline, click + NEW DEAL. Fill in borrower, property, loan amount, and stage. The rest can wait.' },
   { icon: Edit, title: 'Editing cards', body: 'Click any deal card or lender card to open the full editor. Your changes save when you click SAVE CHANGES.' },
   { icon: CalIcon, title: 'Maturity Watch + Calendar', body: 'Loans maturing in the next 12 months show up in Maturity Watch. The Calendar tab lets you see them alongside task deadlines by day.' },
-  { icon: Search, title: 'Lender matching', body: 'In a deal\u2019s Capital Details section, click MATCH LENDERS to rank your lender database by fit. Click a match to auto-fill the lender name.' },
+  { icon: Search, title: 'Lender matching', body: 'In a deal’s Capital Details section, click MATCH LENDERS to rank your lender database by fit. Click a match to auto-fill the lender name.' },
   { icon: Trash2, title: 'Deleting data', body: 'Deletes are permanent and immediate. Back up via the Supabase dashboard if you need history.' },
 ]
 
@@ -73,7 +73,7 @@ export default function Help() {
           About
         </h3>
         <div style={{ fontSize: '12px', color: 'var(--muted)', lineHeight: 1.6 }}>
-          Internal CRE deal pipeline tool for MMCC. Data lives in your team\u2019s Supabase project. Built on React and deployed via Vercel.
+          Internal CRE deal pipeline tool for MMCC. Data lives in your team’s Supabase project. Built on React and deployed via Vercel.
           <br /><br />
           Questions or bugs? Open an issue in the <a href="https://github.com/bradleymbuzil-312/cre-pipeline/issues" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)' }}>GitHub repo</a>.
         </div>

@@ -30,7 +30,7 @@ export default function Dashboard({ session, setView }) {
   const pipelineVolume = activeDeals.reduce((s, d) => s + (d.loan_amount || 0), 0)
   const pendingFees = activeDeals.reduce((s, d) => s + (d.commission_fee || 0), 0)
   const ytdStart = new Date(new Date().getFullYear(), 0, 1).toISOString().split('T')[0]
-  const ytdFundedDeals = deals.filter(d => d.stage === 'Funded / Closed' && (d.updated_at || '').split('T')[0] >= ytdStart)
+  const ytdFundedDeals = deals.filter(d => d.stage === 'Funded / Closed' && (d.closed_at || (d.updated_at || '').split('T')[0]) >= ytdStart)
   const ytdClosedVolume = ytdFundedDeals.reduce((s, d) => s + (d.loan_amount || 0), 0)
   const ytdFeesEarned = ytdFundedDeals.reduce((s, d) => s + (d.commission_fee || 0), 0)
   const blendedFeeRate = ytdClosedVolume > 0 ? (ytdFeesEarned / ytdClosedVolume) * 100 : 0
