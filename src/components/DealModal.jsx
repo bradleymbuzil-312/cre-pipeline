@@ -355,6 +355,7 @@ export default function DealModal({deal, session, onClose, onSaved}){
               <F label="Borrower / Client *"><Inp value={form.borrower_name} onChange={e=>set('borrower_name',e.target.value)} placeholder="Name"/></F>
               <F label="Stage"><Sel value={form.stage} onChange={e=>set('stage',e.target.value)} options={STAGES}/></F>
               <F label="Close Date"><Inp type="date" value={form.expected_close_date} onChange={e=>set('expected_close_date',e.target.value)}/></F>
+              {form.stage==='Funded / Closed' && <F label="Actual Close Date"><Inp type="date" value={form.closed_at} onChange={e=>set('closed_at',e.target.value)}/></F>}
               <F label="Proceeds / Loan Amount ($)"><Inp type="number" value={form.loan_amount} onChange={e=>set('loan_amount',e.target.value)} placeholder="27500000"/></F>
               <F label="Finance Purpose"><Sel value={form.finance_purpose} onChange={e=>set('finance_purpose',e.target.value)} options={FINANCE_PURPOSES}/></F>
               <F label="Capital Type"><Sel value={form.capital_type} onChange={e=>set('capital_type',e.target.value)} options={CAPITAL_TYPES}/></F>

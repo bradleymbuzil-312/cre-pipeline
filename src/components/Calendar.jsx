@@ -128,11 +128,13 @@ export default function Calendar({ session, setView }) {
                     {cell.getDate()}
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                    {dealsHere.slice(0, 2).map(d => (
-                      <div key={d.id} style={{ fontSize: '10px', padding: '2px 4px', borderRadius: '3px', background: 'rgba(239, 68, 68, 0.15)', color: '#fca5a5', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={d.borrower_name + ' · ' + fmtMoney(d.loan_amount)}>
+                    {dealsHere.slice(0, 2).map(d => {
+                      const overdue = d.maturity_date < todayStr
+                      return (
+                      <div key={d.id} style={{ fontSize: '10px', padding: '2px 4px', borderRadius: '3px', background: overdue ? '#ef4444' : 'rgba(239, 68, 68, 0.15)', color: overdue ? '#fff' : '#fca5a5', fontWeight: overdue ? 600 : 400, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={d.borrower_name + ' · ' + fmtMoney(d.loan_amount) + (overdue ? ' · OVERDUE' : '')}>
                         ● {fmtMoney(d.loan_amount) || d.borrower_name}
                       </div>
-                    ))}
+                    )})}
                     {tasksHere.slice(0, 2).map(t => (
                       <div key={t.id} style={{ fontSize: '10px', padding: '2px 4px', borderRadius: '3px', background: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={t.title}>
                         ✓ {t.title}
@@ -174,8 +176,9 @@ export default function Calendar({ session, setView }) {
                 <div key={d.id} style={{ padding: '10px 12px', background: 'var(--surface2)', borderLeft: '3px solid #ef4444', borderRadius: '4px', marginBottom: '6px' }}>
                   <div style={{ fontSize: '13px', color: 'var(--text)', fontWeight: 600 }}>{d.borrower_name}</div>
                   {d.property_address && <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>{d.property_address}{d.city ? ', ' + d.city : ''}{d.state_province ? ', ' + d.state_province : ''}</div>}
-                  <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px', fontFamily: 'IBM Plex Mono, monospace' }}>
-                    {fmtMoney(d.loan_amount)} · {d.stage}
+                  <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '4px', fontFamily: 'IBM Plex Mono, monospace', display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <span>{fmtMoney(d.loan_amount)} · {d.stage}</span>
+                    {d.maturity_date < todayStr && <span style={{ background: '#ef4444', color: '#fff', padding: '1px 6px', borderRadius: '3px', fontSize: '9px', fontWeight: 700, letterSpacing: '0.05em' }}>OVERDUE</span>}
                   </div>
                 </div>
               ))}
