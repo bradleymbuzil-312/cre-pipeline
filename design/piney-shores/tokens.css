@@ -1,0 +1,185 @@
+/* ============================================================================
+ * TRANCHE Group — Design Tokens
+ * Marcus & Millichap Capital Corporation
+ *
+ * Reconstruction of the design system's `colors_and_type.css`, which was not
+ * included in the handoff bundle. Token NAMES are taken verbatim from the
+ * system's adherence config (`_adherence.oxlintrc.json` → x-omelette.tokens);
+ * token VALUES are the literals documented in the deck handoff README and the
+ * design-system README. Every `var(--*)` referenced by the deck resolves here.
+ *
+ * If the authoritative colors_and_type.css is recovered from the design
+ * system, drop it in place of this file — the names are the contract.
+ * ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+ * Typefaces — Aptos (Microsoft). The family is not redistributed here.
+ * `local()` comes first so any machine with Microsoft 365 installed picks up
+ * the real family with no files at all; the `url()` fallback activates when
+ * the TTFs are dropped into ./fonts/. If neither resolves, the declaration is
+ * simply skipped and the humanist fallback stack below takes over.
+ * ------------------------------------------------------------------------ */
+@font-face { font-family: "Aptos"; src: local("Aptos"), url("fonts/Aptos.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos"; src: local("Aptos Italic"), url("fonts/Aptos-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Aptos"; src: local("Aptos SemiBold"), url("fonts/Aptos-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos"; src: local("Aptos Bold"), url("fonts/Aptos-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos"; src: local("Aptos ExtraBold"), url("fonts/Aptos-ExtraBold.ttf") format("truetype"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos"; src: local("Aptos Black"), url("fonts/Aptos-Black.ttf") format("truetype"); font-weight: 900; font-style: normal; font-display: swap; }
+
+@font-face { font-family: "Aptos Display"; src: local("Aptos Display"), url("fonts/Aptos-Display.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos Display"; src: local("Aptos Display Bold"), url("fonts/Aptos-Display-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos Display"; src: local("Aptos Display Italic"), url("fonts/Aptos-Display-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+
+@font-face { font-family: "Aptos Narrow"; src: local("Aptos Narrow"), url("fonts/Aptos-Narrow.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos Narrow"; src: local("Aptos Narrow Bold"), url("fonts/Aptos-Narrow-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos Narrow"; src: local("Aptos Narrow Italic"), url("fonts/Aptos-Narrow-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
+
+@font-face { font-family: "Aptos Mono"; src: local("Aptos Mono"), url("fonts/Aptos-Mono.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos Mono"; src: local("Aptos Mono Bold"), url("fonts/Aptos-Mono-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+
+@font-face { font-family: "Aptos Serif"; src: local("Aptos Serif"), url("fonts/Aptos-Serif.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Aptos Serif"; src: local("Aptos Serif Bold"), url("fonts/Aptos-Serif-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  /* ==== Brand: navy ramp ================================================
+   * --mm-navy is the anchor (PMS 295). The ramp runs dark → light so the
+   * numeric suffixes read consistently; the anchor sits between 700 and 500.
+   */
+  --mm-navy-900: #001A3D;  /* Navy Deep — full-bleed backgrounds, dark cards */
+  --mm-navy-700: #032D67;  /* Navy Mid — secondary dark table row           */
+  --mm-navy:     #002F6C;  /* PMS 295 — body text on paper, rules, headers  */
+  --mm-navy-500: #456EAB;  /* Steel Blue — downside eyebrow, card top rule  */
+  --mm-navy-300: #8FA3BF;  /* Ghost — sub-labels, captions, eyebrow on navy */
+  --mm-navy-100: #C6D2E2;
+  --mm-navy-050: #EEF2F8;  /* Wash — footnote bands, comp-average rows      */
+
+  /* ==== Brand: orange ramp ==============================================
+   * Surgical use only — eyebrows, 2px accent rules, single emphasis
+   * elements. Never a primary surface.
+   */
+  --mm-orange:     #E87722;  /* M&M corporate accent                        */
+  --mm-orange-700: #C0631C;  /* "Best Comp" tag text                        */
+  --mm-orange-300: #F2A874;  /* Accent figures + labels on dark surfaces    */
+  --mm-orange-100: #FBE3CF;  /* "Best Comp" tag background                  */
+
+  /* ==== Surfaces ======================================================== */
+  --paper:   #FAF8F4;  /* warm cream — the default slide surface, not white */
+  --paper-2: #F3EFE8;
+  --white:   #FFFFFF;
+
+  /* ==== Ink ramp ======================================================== */
+  --ink-900: #0E1116;  /* Text Primary — slide-level default                */
+  --ink-700: #1C232C;  /* Table cell text                                   */
+  --ink-500: #2A2F37;  /* Paragraph body                                    */
+  --ink-400: #5A6068;  /* Card body copy, secondary descriptions            */
+  --ink-300: #7C828B;  /* Stat card labels on paper                         */
+  --ink-200: #A8ADB5;  /* Slide footer text                                 */
+  --ink-100: #D9DDE3;
+  --ink-050: #EFF1F4;
+
+  /* ==== Capital stack tiers =============================================
+   * The strata motif, encoding the stack top-down from equity to senior.
+   * Used in the Cover and Contact edge bands and nowhere else.
+   */
+  --tier-equity: #F0720E;  /* Orange Deep */
+  --tier-pref:   #957551;  /* Brass — also the numbered list markers        */
+  --tier-mezz:   #456EAB;  /* Steel Blue */
+  --tier-senior: #032D67;
+  --tier-base:   #001D4A;
+
+  /* ==== Status ========================================================== */
+  --positive: #1F7A4D;
+  --negative: #B3261E;
+
+  /* ==== Structure ======================================================= */
+  --hairline:        rgba(0,26,61,.12);  /* all dividers and table rules    */
+  --hairline-strong: rgba(0,26,61,.24);
+  --rule:            #002F6C;            /* the 2px navy header underline   */
+
+  /* ==== Semantic foreground ============================================= */
+  --fg-1:       #0E1116;
+  --fg-2:       #2A2F37;
+  --fg-3:       #5A6068;
+  --fg-4:       #7C828B;
+  --fg-inverse: #FFFFFF;
+  --fg-brand:   #002F6C;
+  --fg-accent:  #E87722;
+
+  /* ==== Semantic background ============================================= */
+  --bg-1:          #FAF8F4;
+  --bg-2:          #FFFFFF;
+  --bg-3:          #EEF2F8;
+  --bg-brand:      #002F6C;
+  --bg-brand-deep: #001A3D;
+
+  /* ==== Type families ===================================================
+   * Single-family system on Aptos. Fallbacks are humanist sans with close
+   * metrics so the deck degrades gracefully before the TTFs are installed.
+   */
+  --font-display:   "Aptos Display", "Aptos", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:      "Aptos", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-sans:      "Aptos", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-condensed: "Aptos Narrow", "Segoe UI", "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-button:    "Aptos", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono:      "Aptos Mono", "Cascadia Mono", Consolas, "SF Mono", "Roboto Mono", ui-monospace, monospace;
+  --font-serif:     "Aptos Serif", Georgia, "Times New Roman", serif;
+
+  /* ==== Type scale — px, authored against the 1920×1080 slide canvas ==== */
+  --fs-display-xl: 104px;  /* Cover figure          */
+  --fs-display-l:   48px;  /* Cover subhead         */
+  --fs-display-m:   46px;  /* Slide H2              */
+  --fs-display-s:   34px;  /* Cover property name   */
+  --fs-h1:          46px;
+  --fs-h2:          38px;  /* Stat value, large     */
+  --fs-h3:          32px;  /* Card title            */
+  --fs-h4:          23px;  /* Total-row figure      */
+  --fs-body-lg:     21px;  /* Lede paragraph        */
+  --fs-body:      17.5px;  /* Card body, table cell */
+  --fs-body-sm:     15px;  /* Band label            */
+  --fs-caption:     13px;  /* Header meta           */
+  --fs-eyebrow:     14px;  /* Section eyebrow       */
+
+  --lh-display: 1.05;
+  --lh-heading: 1.2;
+  --lh-body:    1.5;
+  --lh-tight:   1.25;
+
+  --tracking-eyebrow: .22em;
+  --tracking-button:  .08em;
+  --tracking-display: -.01em;
+
+  /* ==== Spacing — 8pt scale ============================================= */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 56px;
+  --space-10: 76px;
+
+  /* ==== Radius — the system feels printed, not app-like ================= */
+  --radius-0:    0;
+  --radius-1:    2px;   /* images only */
+  --radius-2:    4px;   /* cards, max  */
+  --radius-3:    8px;
+  --radius-full: 999px;
+
+  /* ==== Elevation — paper-like, one level ============================== */
+  --shadow-1:     0 1px 0 rgba(0,26,61,.08);
+  --shadow-2:     0 1px 0 rgba(0,26,61,.08), 0 4px 12px rgba(0,26,61,.06);
+  --shadow-3:     0 24px 64px rgba(0,26,61,.18);
+  --shadow-inset: inset 0 0 0 1px #002F6C;
+
+  /* ==== Motion — opacity and color only; no scale, no bounce =========== */
+  --ease-standard: cubic-bezier(.2,0,0,1);
+  --ease-out:      cubic-bezier(.2,0,0,1);
+  --dur-fast:  120ms;
+  --dur-base:  200ms;
+  --dur-slow:  320ms;
+}
+
+/* Every numeric span in the deck is tabular — financial tables must align. */
+[style*="--font-mono"] { font-variant-numeric: tabular-nums; }
