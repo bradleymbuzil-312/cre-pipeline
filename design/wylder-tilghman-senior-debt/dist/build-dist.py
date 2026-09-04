@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the distribution asset set for the Wylder Tilghman preferred equity deck.
+"""Build the distribution asset set for the Wylder Tilghman senior debt financing deck.
 
 Copies ../deck to an output directory, resizes every image to the resolution its
 display box actually needs, re-encodes photographs to JPEG, and repoints the
@@ -39,7 +39,7 @@ KEEP_PNG = {"mmcc-2018-white.png"}
 
 JPEG_QUALITY = 84
 SMALL_BOX_PX = 500      # below this width, supersample 2x so zoom stays clean
-DECK = "Wylder Tilghman Island - Preferred Equity Investment.dc.html"
+DECK = "Wylder Tilghman Island - Senior Debt Financing.dc.html"
 
 
 def build(src_deck, out_deck):

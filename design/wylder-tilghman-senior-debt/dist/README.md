@@ -1,6 +1,6 @@
 # Distribution build
 
-`Wylder-Tilghman-Preferred-Equity.pdf` — 2.2 MB, 15 pages, 20 × 11.25 in (16:9),
+`Wylder-Tilghman-Senior-Debt-Financing.pdf` — 2.2 MB, 15 pages, 20 × 11.25 in (16:9),
 one slide per page. Text stays live (selectable and searchable); it is not
 rasterised.
 
