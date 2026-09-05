@@ -49,53 +49,56 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 
 ## Screens / Views (15 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
-1920×1080, `box-sizing:border-box`, ~76–96px padding. Slides 2–14 carry the running footer.
+1920×1080, `box-sizing:border-box`, ~76–96px padding.
 
-1. **Title** (dark, full-bleed `wt-aerial-spring.jpg` + navy scrim). Eyebrow "SENIOR DEBT FINANCING · $12,600,000";
-   H1 "Wylder Hotel Tilghman Island."; italic tagline. Top bar = MMCC white logo + "CONFIDENTIAL · FINANCING
-   PROPOSAL". Footer = Bradley Buzil / date / "wylder" serif wordmark. Right-edge strata bar.
-2. **The Financing** (light). H2 "One fixed-rate first mortgage, fully amortizing." 8-tile stat grid (4×2):
-   Loan Amount $12.60M (100% of capitalisation · $221,053/key); All-In Rate 10.29% (4.54% UST + 5.75% spread);
-   Term & Amortization 30 yrs; Annual Debt Service $1.36M; LTV at Close 60.0%; Stabilized DSCR 1.47x;
-   Stabilized Debt Yield 15.9%; Sponsor Cost Basis $18.68M.
-3. **The Asset** (light, split). Left 44% photo `wt-pier.jpg`. Right = H2, lede, 2×2 facts (Keys 50→57;
-   Site 8.10 ac; Positioning Upper Upscale; Location Tilghman, MD) and two thumbnails.
-4. **The Sponsor** (light, split). Ownership narrative (21551 Tilghman Investors LLC / John Flannigan /
-   Wylder Hotels / Wylder Eastern Shore Mgmt.), 2×2 facts, and four numbered **Sponsor Commitments to the Lender**
-   (completion & cost-overrun guaranty; full carry guaranty; recourse carve-out & environmental indemnity;
-   $10M net-worth covenant), closing on the $2,000,000 of sponsor cash equity outside the project basis.
-5. **Wylder Hotels & Track Record** (light). Brand blurb, three-property portfolio, John Flannigan bio and
-   career timeline, Recognition line.
-6. **Business Plan** (light). Three numbered value-creation levers ($1.43M / $0.85M / SLH Yr 2) against a
-   $3,003,000 · $52,684-per-key programme. Right = RevPAR index 41.5% → ~70%, thesis, NOI and value stats.
-7. **Historical & Proforma Financials** (light). Actual 2023/2024/2025 vs Proforma 2027/2028/2029.
-   Occupancy 27/32/33 → 33/38/40%; ADR $312/291/265 → $330/395/415; RevPAR $83/92/87 → $109/150/166;
-   Revenue $3.48/3.81/3.79M → $4.51/6.02/6.71M; NOI $0.49/0.92/0.66M → $1.26/2.00/2.30M;
-   margin 14.0/24.0/17.6% → 28.0/33.3/34.3%.
-8. **Capital Structure** (light). H2 "One first mortgage. Nothing beside it." Two proportional bars against the
-   $21.0M Year-1 value: Value Above the Loan (blue, $8,400,000 / 40.0%) and Senior Loan (navy, $12,600,000 /
-   60.0%). Right = narrative + LTV-by-basis table (Newmark as-is 61.8%; Yr1 60.0%; Yr2 49.4%; Yr3 44.2%).
-9. **Senior Loan Terms** (dark). Three big-number columns: 10.29% (index 4.54% / spread 5.75% / fixed);
-   30 yrs (debt service $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (loan $12,600,000 / min DSCR 1.20x /
-   prepay 1 yr: 5%). Bottom strip: lender, origination 4.00% + 1.00%, MMCC 1.00%, processing $10,100.
-   Bottom strata bar.
-10. **Debt Service Coverage** (light). 2027/2028/2029 table — NOI, debt service, net cash flow, DSCR, debt yield.
-    Right = stabilized DSCR 1.47x and debt yield 15.9%, plus the Year-1 coverage note ($99,668 shortfall).
-11. **Credit Protections** (dark). LTV-by-basis table plus a highlighted callout ($6.08M of cost above the loan),
-    and three blocks: Basis, Amortization, Sponsor Support.
-12. **Cost Basis & Sponsor Equity** (light). Total cost basis $18,679,659 (acquisition $12,714,782 /
-    PIP $3,003,000 / other $2,961,877), basis per key $327,713 vs loan per key $221,053. Right = the eight-line
-    $2,000,000 sponsor cash equity outside basis, plus 2021–2025 CapEx of $642,693.
-13. **Valuation & Comps** (light). Newmark appraisal (as-is $20.40M / $377,778 per key on 54 keys;
-    as-stabilized $27.80M / $487,719 per key on 57 keys) and the underwritten proforma values. Right = six
-    East Coast waterfront sale comps plus weighted average ($396K/key) and median ($397K/key) of 11 sales.
-14. **Sources & Uses** (light). Sources ($12,600,000 senior loan, $0 sponsor equity) and closing-cost detail;
-    Uses (payoff $10,714,782; origination $504,000 + $126,000; closing $276,072; MMCC $126,000; processing
-    $10,100; cash-out to sponsor $843,046), balanced to $0, plus the net-funding memo ($11,844,000 net proceeds,
-    $1,119,118 to the borrower).
-15. **Next Steps / Contact** (dark, full-bleed `wt-aerial.jpg` + scrim). Stat strip: Loan Amount $12,600,000 /
-    All-In Rate 10.29% / Amortization 30 Years. Footer = Bradley headshot, name, "Senior Director · The TRANCHE
-    Group", cell `310.909.5473`, email `bradley.buzil@marcusmillichap.com`. Top strata bar.
+**Headings.** Interior slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, followed by a plain
+descriptive H2 (Aptos Display 700, 48px). Headlines are declarative statements of fact, not marketing lines — the
+package is read by a lender and by the appraiser on the deal.
+
+**Page numbers.** All 15 pages are numbered. Interior slides carry the number at the right end of the running footer,
+after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
+
+1. **Title** (dark, full-bleed `wt-aerial-spring.jpg`). Eyebrow "SENIOR DEBT FINANCING · $12,600,000"; H1 property
+   name; factual tagline. Header bar = MMCC logo + "CONFIDENTIAL · FINANCING PROPOSAL" + page number.
+2. **Summary of the financing request** — 8-tile grid: loan $12.60M, all-in rate 10.29%, 30-yr term, debt service
+   $1.36M, LTV 60.0%, projected stabilized DSCR 1.47x, debt yield 15.9%, cost basis $18.68M.
+3. **A 50-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts
+   (keys 50→57; 8.10 ac / 352,759 SF site / 27,686 SF improvements; upper upscale; Tilghman, MD), two thumbnails.
+4. **Ownership, operator and credit support** — ownership narrative, 2×2 facts, four Sponsor Commitments to the
+   Lender, closing note on the $2,000,000 of sponsor cash equity funded outside loan proceeds.
+5. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
+6. **Business plan and capital improvement program** — three numbered items (guest room renovation $1.43M;
+   additional revenue sources $0.85M; brand affiliation, SLH Year 2) against the $3,003,000 / $52,684-per-key
+   program. Right = RevPAR index 41.5% → 70% target, thesis, NOI 1.8× and RevPAR $87→$166.
+7. **Historical operations and underwritten projections** — actual 2023/2024/2025 vs projected 2027/2028/2029.
+   2026 is a transition year and is not presented.
+8. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
+   estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%). Right = loan
+   measures table and the estimated-value disclaimer.
+9. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
+   $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (loan $12,600,000 / min DSCR 1.20x / prepay 1 year · 5%).
+   Bottom strip: lender, origination 4.00% + 1.00%, MMCC 1.00%, processing $10,100.
+10. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
+    after debt service is deliberately not shown. Right = projected stabilized DSCR and debt yield, Year-1 note.
+11. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
+    separating cost incurred to date from cost remaining to be funded, and three blocks (cost basis, amortization,
+    sponsor support).
+12. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
+    and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053. Right = the
+    $2,000,000 sponsor cash equity itemized (a component of the incurred figure, not additive) and 2021–2025 CapEx.
+13. **Estimated as-is value and comparable waterfront sales** — estimated as-is value $21,000,000 ($368,421 per key,
+    $758.51 per SF), senior loan and LTV, with the disclaimer. Right = six East Coast waterfront sales plus weighted
+    average ($396K/key) and median ($397K/key) of 11 sales, with a comparability caveat.
+14. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
+    uses balanced to $0, plus the net-funding memo.
+15. **Contact and next steps** (dark, full-bleed `wt-aerial.jpg`) — stat strip, contact block, page number in header.
+
+### Valuation language
+No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The single value
+point is an **estimated as-is value of $21,000,000**, carried on slides 2, 8 and 13 and labelled on slides 8 and 13
+with: "Estimated as-is value is management's estimate prepared for underwriting purposes only. It is not an
+appraisal, and no third-party valuation conclusion is represented." This is deliberate — the package is distributed
+to the appraiser engaged on the transaction, and must not anchor that appraiser to a prior conclusion.
 
 ## Interactions & Behavior
 - Slide navigation via `deck-stage`: arrow keys, click nav, thumbnail rail, print-to-PDF (one page/slide). No per-element interactivity — this is a linear presentation.
@@ -129,7 +132,15 @@ All are real property/brand photography. If rebuilding in a codebase with its ow
 > (Loan Analysis, Sources and Uses, Pro Forma, Total Cost Basis, Borrower Equity, Sales Comps, STR Summary).
 > Sources and uses balance to $0.00. Do not change numbers without an updated model.
 >
-> Open items carried from the model: Year-1 (2027) DSCR is 0.93x against a 1.20x minimum, a $99,668 shortfall,
-> and no interest reserve is funded in the sources and uses; the $12,600,000 loan is 60.0% of the $21.0M Year-1
-> proforma value but 61.8% of the $20.4M Newmark as-is appraisal, above the 60% maximum LTV per the LOI; and the
-> Newmark appraisal date and appraiser are not carried in the model, so slide 13 cites neither.
+> **Open items requiring sponsor or lender input before distribution:**
+>
+> 1. **The $3,003,000 capital improvement program is not funded in the sources and uses.** Uses comprise the loan
+>    payoff, fees, closing costs and cash-out only. The package describes the program but states no funding source,
+>    because the model identifies none. A lender will ask; the answer must come from the sponsor.
+> 2. **Projected Year-1 (2027) DSCR is 0.93x against a 1.20x minimum.** Max loan by DSCR in Year 1 is $9,730,166,
+>    some $2,869,834 below the $12,600,000 request, and no interest reserve is funded in the sources and uses. The
+>    deck discloses the sub-minimum coverage and attributes any shortfall to the sponsor carry guaranty.
+> 3. **The $21,000,000 estimated as-is value is management's, not an appraisal.** It equals the Year-1 proforma
+>    value in the model (NOI capitalized at 5.999%). It is disclaimed as such wherever it appears.
+> 4. **Key count.** The model's Pro Forma tab is headed "54 rooms" while Loan Analysis uses 50 current / 57 at
+>    stabilization. The package uses 50→57 throughout, and all per-key figures are computed on 57 keys.
