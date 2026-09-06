@@ -47,7 +47,7 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 
 **Motif:** a vertical/horizontal "strata" bar (stacked orange `#F0720E` + blue `#456EAB` segments) on the title, asset, sponsor, terms and contact slides — the capital-stack metaphor. Every instance is split **60% orange / 40% blue**, matching the loan / value-above-loan share of the Year-1 value.
 
-## Screens / Views (15 slides)
+## Screens / Views (16 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
 1920×1080, `box-sizing:border-box`, ~76–96px padding.
 
@@ -55,7 +55,7 @@ Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` bac
 descriptive H2 (Aptos Display 700, 48px). Headlines are declarative statements of fact, not marketing lines — the
 package is read by a lender and by the appraiser on the deal.
 
-**Page numbers.** All 15 pages are numbered. Interior slides carry the number at the right end of the running footer,
+**Page numbers.** All 16 pages are numbered. Interior slides carry the number at the right end of the running footer,
 after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
 
 1. **Title** (dark, full-bleed `wt-aerial-spring.jpg`). Eyebrow "SENIOR DEBT FINANCING · $12,600,000"; H1 property
@@ -70,32 +70,39 @@ after a hairline divider; the cover and closing slides carry it in the header ba
 6. **Business plan and capital improvement program** — three numbered items (guest room renovation $1.43M;
    additional revenue sources $0.85M; brand affiliation, SLH Year 2) against the $3,003,000 / $52,684-per-key
    program. Right = RevPAR index 41.5% → 70% target, thesis, NOI 1.8× and RevPAR $87→$166.
-7. **Historical operations and underwritten projections** — actual 2023/2024/2025 vs projected 2027/2028/2029.
-   2026 is a transition year and is not presented.
-8. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
+7. **Estimated values and underwritten projections** — a three-value band across the top of the page:
+   estimated as-is $21,000,000 ($368,421/key), upon completion $25,500,000 ($447,368/key) and upon stabilization
+   $28,500,000 ($500,000/key), disclaimed immediately beneath as management's estimates, not appraisals. Below,
+   projected 2027/2028/2029 operations and a stabilized-NOI takeaway strip.
+8. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 operations at left; STR STAR
+   benchmarking (YTD December 2025) at right showing the property against its four-property, 364-room competitive
+   set, the submarket and the Maryland market, with the 41.5 RevPAR index called out. 2026 is a transition year and
+   is not presented.
+
+9. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
    estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%). Right = loan
    measures table and the estimated-value disclaimer.
-9. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
+10. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
    $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (loan $12,600,000 / min DSCR 1.20x / prepay 1 year · 5%).
    Bottom strip: lender, origination 4.00% + 1.00%, MMCC 1.00%, processing $10,100.
-10. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
+11. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
     after debt service is deliberately not shown. Right = projected stabilized DSCR and debt yield, Year-1 note.
-11. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
+12. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
     separating cost incurred to date from cost remaining to be funded, and three blocks (cost basis, amortization,
     sponsor support).
-12. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
+13. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
     and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053. Right = the
     $2,000,000 sponsor cash equity itemized (a component of the incurred figure, not additive) and 2021–2025 CapEx.
-13. **Estimated as-is value and comparable waterfront sales** — estimated as-is value $21,000,000 ($368,421 per key,
+14. **Estimated as-is value and comparable waterfront sales** — estimated as-is value $21,000,000 ($368,421 per key,
     $758.51 per SF), senior loan and LTV, with the disclaimer. Right = six East Coast waterfront sales plus weighted
     average ($396K/key) and median ($397K/key) of 11 sales, with a comparability caveat.
-14. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
+15. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
     uses balanced to $0, plus the net-funding memo.
-15. **Contact and next steps** (dark, full-bleed `wt-aerial.jpg`) — stat strip, contact block, page number in header.
+16. **Contact and next steps** (dark, full-bleed `wt-aerial.jpg`) — stat strip, contact block, page number in header.
 
 ### Valuation language
 No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The single value
-point is an **estimated as-is value of $21,000,000**, carried on slides 2, 8 and 13 and labelled on slides 8 and 13
+point is an **estimated as-is value of $21,000,000**, carried on slides 2, 7, 9 and 14 and labelled on slides 7, 9 and 14
 with: "Estimated as-is value is management's estimate prepared for underwriting purposes only. It is not an
 appraisal, and no third-party valuation conclusion is represented." This is deliberate — the package is distributed
 to the appraiser engaged on the transaction, and must not anchor that appraiser to a prior conclusion.
