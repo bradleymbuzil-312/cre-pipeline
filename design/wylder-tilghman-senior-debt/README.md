@@ -151,9 +151,9 @@ All are real property/brand photography. If rebuilding in a codebase with its ow
 >
 > **Open items requiring sponsor or lender input before distribution:**
 >
-> 1. **The $3,003,000 capital improvement program is not funded in the sources and uses.** Uses comprise the loan
->    payoff, fees, closing costs and cash-out only. The package describes the program but states no funding source,
->    because the model identifies none. A lender will ask; the answer must come from the sponsor.
+> 1. **The $3,003,000 capital improvement program is funded by the sponsor outside this financing** and is not
+>    drawn from loan proceeds. Stated on slides 6, 8, 14, 15 and 18 so the absence of a PIP line in the sources and
+>    uses is explained where it is visible. Confirmed by the sponsor 6 September 2026.
 > 2. **Projected Year-1 (2027) DSCR is 0.93x against a 1.20x minimum.** Max loan by DSCR in Year 1 is $9,730,166,
 >    some $2,869,834 below the $12,600,000 request, and no interest reserve is funded in the sources and uses. The
 >    deck discloses the sub-minimum coverage and attributes any shortfall to the sponsor carry guaranty.
