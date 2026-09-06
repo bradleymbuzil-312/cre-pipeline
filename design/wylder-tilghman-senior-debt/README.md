@@ -47,7 +47,7 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 
 **Motif:** a vertical/horizontal "strata" bar (stacked orange `#F0720E` + blue `#456EAB` segments) on the title, asset, sponsor, terms and contact slides — the capital-stack metaphor. Every instance is split **60% orange / 40% blue**, matching the loan / value-above-loan share of the Year-1 value.
 
-## Screens / Views (19 slides)
+## Screens / Views (20 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
 1920×1080, `box-sizing:border-box`, ~76–96px padding.
 
@@ -55,7 +55,7 @@ Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` bac
 descriptive H2 (Aptos Display 700, 48px). Headlines are declarative statements of fact, not marketing lines — the
 package is read by a lender and by the appraiser on the deal.
 
-**Page numbers.** All 19 pages are numbered. Interior slides carry the number at the right end of the running footer,
+**Page numbers.** All 20 pages are numbered. Interior slides carry the number at the right end of the running footer,
 after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
 
 1. **Title** — eyebrow "SENIOR DEBT FINANCING · $12,600,000", H1 property name, factual tagline.
@@ -68,46 +68,52 @@ after a hairline divider; the cover and closing slides carry it in the header ba
 5. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
 6. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
    $52,684-per-key program; RevPAR index 41.5% → 70% target, NOI 1.8× and RevPAR $87→$166.
-7. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
+7. **Small Luxury Hotels affiliation and distribution** — the case at left (SLH member hotels bookable through
+   Hilton.com, the Hilton app and Hilton Honors; the sponsor's existing SLH relationship through Wylder Windham,
+   the sister hotel in the Catskills; the American Express Fine Hotels & Resorts designation Windham carries and
+   which is the plan here), membership economics and commission by channel at right. Affiliation is targeted on
+   completion of the renovation and is stated as subject to application, inspection, board approval and an
+   executed brand affiliate agreement.
+8. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
    ($368,421/key), upon completion $25,500,000 ($447,368/key), upon stabilization $28,500,000 ($500,000/key),
    disclaimed immediately beneath. Below, projected 2027/2028/2029 operations and a stabilized-NOI takeaway.
-8. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
+9. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
    RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right
    (keys, occupancy and rate range, RevPAR index target, no assumed market growth, capital program, expense ratio,
    brand and affiliation).
-9. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
+10. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
    (YTD December 2025) at right against the four-property, 364-room competitive set, submarket and Maryland market,
    with the 41.5 RevPAR index called out. 2026 is a transition year and is not presented.
-10. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
+11. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
     3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline showing nothing
     under construction within 25 miles.
-11. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
+12. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
     estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%), plus loan measures
     and the estimated-value disclaimer.
-12. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
+13. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
     $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (min DSCR 1.20x / prepay 1 year · 5%). Fee strip.
-13. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
+14. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
     after debt service is deliberately not shown.
-14. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
+15. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
     separating cost incurred to date from cost remaining to be funded, and three supporting blocks.
-15. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
+16. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
     and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053. Right = the
     $2,000,000 sponsor cash equity itemized (a component of the incurred figure, not additive) and 2021–2025 CapEx.
-16. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
+17. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
     ($221,053/key), total project cost basis ($327,713/key), the three estimated values and the comparable-sale
     weighted average and median on one scale, with the disclaimer and two summary statistics.
-17. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
+18. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
     average and median of eleven sales at left; eight local Eastern Shore transactions at right, with a note
     distinguishing them (7–28 keys, historic inns and mid-century motels without F&B, marina or event facilities)
     so the lower local pricing is addressed rather than left to be discovered.
-18. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
+19. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
     uses balanced to $0, plus the net-funding memo.
-19. **Contact and next steps** — stat strip, contact block, page number in the header bar.
+20. **Contact and next steps** — stat strip, contact block, page number in the header bar.
 
 ### Valuation language
 No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The value points
 are an **estimated as-is value of $21,000,000**, **upon completion of $25,500,000** and **upon stabilization of
-$28,500,000**, carried on slides 7, 11 and 16 and labelled with: "Estimated values are management's estimates
+$28,500,000**, carried on slides 8, 12 and 17 and labelled with: "Estimated values are management's estimates
 prepared for underwriting purposes only. They are not appraisals, and no third-party valuation conclusion is
 represented." This is deliberate — the package is distributed to the appraiser engaged on the transaction, and must
 not anchor that appraiser to a prior conclusion.
