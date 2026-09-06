@@ -1,7 +1,7 @@
 # Handoff: Wylder Hotel Tilghman Island — Senior Debt Financing Deck
 
 ## Overview
-A 25-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) from **New Day Commercial Capital** on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
+A 26-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) from **New Day Commercial Capital** on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
 
 The deck carries **no equity offering of any kind** — the capitalization is the single first mortgage.
 
@@ -47,7 +47,7 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 
 **Motif:** a vertical/horizontal "strata" bar (stacked orange `#F0720E` + blue `#456EAB` segments) on the title, asset, sponsor, terms and contact slides — the capital-stack metaphor. Every instance is split **60% orange / 40% blue**, matching the loan / value-above-loan share of the Year-1 value.
 
-## Screens / Views (25 slides)
+## Screens / Views (26 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
 1920×1080, `box-sizing:border-box`, ~48–96px padding.
 
@@ -55,7 +55,7 @@ Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` bac
 descriptive H2 (Aptos Display 700, 44–48px). Headlines are declarative statements of fact, not marketing lines — the
 package is read by a lender and by the appraiser on the deal.
 
-**Page numbers.** All 25 pages are numbered. Interior slides carry the number at the right end of the running footer,
+**Page numbers.** All 26 pages are numbered. Interior slides carry the number at the right end of the running footer,
 after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
 
 1. **Title** — eyebrow "SENIOR DEBT FINANCING · $12,600,000", H1 property name, factual tagline.
@@ -63,7 +63,14 @@ after a hairline divider; the cover and closing slides carry it in the header ba
    $1.36M, LTV 60.0%, projected stabilized DSCR 1.47x, debt yield 15.9%, cost basis $18.68M.
 3. **A 57-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
    two thumbnails.
-4. **Ownership and operating structure** — ownership narrative, 2×2 facts (ownership, principal, operator/brand,
+4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities),
+   each with a photograph and a six-row fact card. Reconciles the key bridge explicitly: 50 rooms in service, 4 out
+   of service to be restored, 3 from the rebuilt three-bedroom house = 57. Carries site (8.10 acres, three
+   parcels), 1,100 ft of water frontage, Village Mixed zoning (hotel permitted, legally conforming), 69 parking
+   spaces, Tickler's at 128 seats, the 2,000 SF ballroom within 3,722 SF of event space (5,252 on completion), and
+   the $40 amenity fee at 95.9% capture in 2025.
+
+5. **Ownership and operating structure** — ownership narrative, 2×2 facts (ownership, principal, operator/brand,
    manager), and four Structure and Alignment points: owner-operated with no third-party management agreement,
    continuous ownership since 2017 with $642,693 of capital invested 2021–2025, single-asset ownership entity,
    and the three-property Wylder platform. Closing note on monthly property-level reporting.
@@ -73,37 +80,37 @@ after a hairline divider; the cover and closing slides carry it in the header ba
    still appear on slide 18 (Sponsor Support), the $2,000,000 still appears on slides 18 and 19, and slide 17
    still relies on the carry guaranty to answer year-one coverage — remove those too only on instruction, since
    slide 17 loses its answer to the 0.93x DSCR and slide 19 loses a full column.
-5. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
-6. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
+6. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
+7. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
    $52,684-per-key program, funded by the sponsor outside this financing. Item 01 quantifies the seven added keys
    (four returned from out-of-service, three in the back house — 12.3% more sellable inventory); item 02 quantifies
    the 25-slip marina at $250,000 of cost against roughly $146,000 a year of departmental profit.
-7. **The renovation is designed, priced and scheduled** — a Gantt of the seven renovation items across
+8. **The renovation is designed, priced and scheduled** — a Gantt of the seven renovation items across
    September 2026 to April 2027 with exact start and completion dates, alongside a full-height photograph of the
    completed model room and a dark callout explaining what it establishes: the guest-room specification is built
    and inspectable, so the $25,000 per key is priced against a room that exists rather than a drawing.
 
-8. **Small Luxury Hotels affiliation and distribution** — Hilton.com / Hilton app / Hilton Honors distribution, the
+9. **Small Luxury Hotels affiliation and distribution** — Hilton.com / Hilton app / Hilton Honors distribution, the
    existing relationship through Wylder Windham, and the American Express Fine Hotels & Resorts designation. Right
    column carries membership economics ($100,222 over the four-year term, 0.49% of stabilized revenue).
-9. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
+10. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
    ($368,421/key), upon completion $25,500,000 ($447,368/key), upon stabilization $28,500,000 ($500,000/key),
    disclaimed immediately beneath. Below, projected 2027/2028/2029 operations and a stabilized-NOI takeaway.
-10. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
+11. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
    RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right.
-11. **Extended cash flow, fiscal 2030 through fiscal 2040** — an eleven-year projection on a *more conservative*
+12. **Extended cash flow, fiscal 2030 through fiscal 2040** — an eleven-year projection on a *more conservative*
     basis than the sponsor model: occupancy flat at 43.0%, 3.0% rate growth, no market growth, and a 3.0%
     management fee and 4.0% replacement reserve deducted as separate lines. Full departmental build to NOI, then
     debt service, DSCR (1.43x → 2.00x) and debt yield (15.4% → 21.6%). The ~15% shortfall against the sponsor case
     at the common point is stated on the page rather than left to be discovered.
-12. **Departmental revenue and margins against industry benchmarks** — revenue by department at stabilization vs the
+13. **Departmental revenue and margins against industry benchmarks** — revenue by department at stabilization vs the
     resort segment; F&B against outlet comparables (per seat, per SF, per occupied room); the marina and the seven
     added keys shown as $580,000 of revenue and $444,000 of departmental profit *not present in any historical
     period*; margins and departmental cost ratios against the resort and independent segments.
-13. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
+14. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
     (YTD December 2025) at right against the four-property, 364-room competitive set. 2026 is a transition year and
     is not presented.
-14. **The competitive market, supply and demand** — the five-property, 404-room market set with 2025 occupancy, ADR
+15. **The competitive market, supply and demand** — the five-property, 404-room market set with 2025 occupancy, ADR
     and RevPAR and the subject's 44% RevPAR index; penetration against the market for 2024 and 2025 (RevPAR index
     48% → 44%, with the rate-driven cause stated); the supply/demand/ADR/RevPAR series 2019–2025 with CAGRs and TTM
     March 2026; and market seasonality by peak/shoulder/trough. Notes explicitly that this set and the STR set on
@@ -111,40 +118,40 @@ after a hairline divider; the cover and closing slides carry it in the header ba
 
     CAGRs run 2019–2025, not 2015–2025: the 2015 panel carried only 98 rooms, which produced a 15.2% "supply CAGR"
     that contradicted the flat-supply narrative on the same page.
-15. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
+16. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
     3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline.
-16. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
+17. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
     estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%).
-17. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
+18. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
     $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (min DSCR 1.20x / prepay 1 year · 5%). Fee strip.
-18. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
+19. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
     after debt service is deliberately not shown.
-19. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
+20. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
     separating cost incurred to date from cost remaining to be funded, and three supporting blocks.
-20. **Total project cost basis and capital improvement plan** — the sponsor's cost basis schedule reproduced in
+21. **Total project cost basis and capital improvement plan** — the sponsor's cost basis schedule reproduced in
     full. Left: acquisition ($10,714,782 plus $2,000,000 sponsor cash equity = $12,714,782) and other costs
     (working capital, interest and carry, origination, closing, fees = $2,961,877), totalling $18,679,659.
     Right: the capital improvement plan itemized across eight lines to $3,003,000, four per-key tiles, and the
     $642,693 of capital already invested 2021–2025. Sponsor-funded, outside the loan.
-21. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
+22. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
     ($221,053/key), total project cost basis ($327,713/key), the three estimated values and **both** comparable
     sets — the East Coast waterfront sales and the recent resort trades — on one scale, so the two sets reconcile
     on the page rather than implying two different positions.
-22. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
+23. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
     average and median of eleven sales at left; eight local Eastern Shore transactions at right, with a note
     distinguishing them so the lower local pricing is addressed rather than left to be discovered.
-23. **Recent transaction evidence and local market activity** — eight independent resort and waterfront trades
+24. **Recent transaction evidence and local market activity** — eight independent resort and waterfront trades
     closed January 2025 to March 2026 averaging 44 keys (weighted average $463K/key, median $332K/key); at right,
     the Tilghman Island Inn under contract at $260K/key, the Robert Morris Inn closed and relisted, and the
     Tidewater Inn coming to market, all distinguished on product tier and income base.
-24. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
+25. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
     uses balanced to $0, plus the net-funding memo.
-25. **Contact and next steps** — stat strip, contact block, page number in the header bar.
+26. **Contact and next steps** — stat strip, contact block, page number in the header bar.
 
 ### Valuation language
 No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The value points
 are an **estimated as-is value of $21,000,000**, **upon completion of $25,500,000** and **upon stabilization of
-$28,500,000**, carried on slides 9, 16 and 21 and labeled with: "Estimated values are management's estimates
+$28,500,000**, carried on slides 10, 17 and 22 and labeled with: "Estimated values are management's estimates
 prepared for underwriting purposes only. They are not appraisals, and no third-party valuation conclusion is
 represented." This is deliberate — the package is distributed to the appraiser engaged on the transaction, and must
 not anchor that appraiser to a prior conclusion.

@@ -27,7 +27,7 @@ SPEC = {
     "wt-pier.png":          ((845, 1080), "cover"),
     "wt-lobby.png":         ((768, 1080), "cover"),
     "wt-suite.jpg":         ((766, 654), "cover"),   # hero on slide 07; thumbnail on 03
-    "wt-pool.png":          ((455, 152), "cover"),
+    "wt-pool.png":          ((425, 290), "cover"),   # thumbnails on slides 03 and 04
     "flannigan.png":        ((90, 90), "cover"),
     "buzil.jpg":            ((106, 106), "cover"),
     "mmcc-2018-white.png":  ((227, 60), "fill"),
