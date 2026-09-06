@@ -47,7 +47,7 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 
 **Motif:** a vertical/horizontal "strata" bar (stacked orange `#F0720E` + blue `#456EAB` segments) on the title, asset, sponsor, terms and contact slides — the capital-stack metaphor. Every instance is split **60% orange / 40% blue**, matching the loan / value-above-loan share of the Year-1 value.
 
-## Screens / Views (16 slides)
+## Screens / Views (19 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
 1920×1080, `box-sizing:border-box`, ~76–96px padding.
 
@@ -55,57 +55,67 @@ Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` bac
 descriptive H2 (Aptos Display 700, 48px). Headlines are declarative statements of fact, not marketing lines — the
 package is read by a lender and by the appraiser on the deal.
 
-**Page numbers.** All 16 pages are numbered. Interior slides carry the number at the right end of the running footer,
+**Page numbers.** All 19 pages are numbered. Interior slides carry the number at the right end of the running footer,
 after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
 
-1. **Title** (dark, full-bleed `wt-aerial-spring.jpg`). Eyebrow "SENIOR DEBT FINANCING · $12,600,000"; H1 property
-   name; factual tagline. Header bar = MMCC logo + "CONFIDENTIAL · FINANCING PROPOSAL" + page number.
+1. **Title** — eyebrow "SENIOR DEBT FINANCING · $12,600,000", H1 property name, factual tagline.
 2. **Summary of the financing request** — 8-tile grid: loan $12.60M, all-in rate 10.29%, 30-yr term, debt service
    $1.36M, LTV 60.0%, projected stabilized DSCR 1.47x, debt yield 15.9%, cost basis $18.68M.
-3. **A 50-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts
-   (keys 50→57; 8.10 ac / 352,759 SF site / 27,686 SF improvements; upper upscale; Tilghman, MD), two thumbnails.
+3. **A 50-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
+   two thumbnails.
 4. **Ownership, operator and credit support** — ownership narrative, 2×2 facts, four Sponsor Commitments to the
    Lender, closing note on the $2,000,000 of sponsor cash equity funded outside loan proceeds.
 5. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
-6. **Business plan and capital improvement program** — three numbered items (guest room renovation $1.43M;
-   additional revenue sources $0.85M; brand affiliation, SLH Year 2) against the $3,003,000 / $52,684-per-key
-   program. Right = RevPAR index 41.5% → 70% target, thesis, NOI 1.8× and RevPAR $87→$166.
-7. **Estimated values and underwritten projections** — a three-value band across the top of the page:
-   estimated as-is $21,000,000 ($368,421/key), upon completion $25,500,000 ($447,368/key) and upon stabilization
-   $28,500,000 ($500,000/key), disclaimed immediately beneath as management's estimates, not appraisals. Below,
-   projected 2027/2028/2029 operations and a stabilized-NOI takeaway strip.
-8. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 operations at left; STR STAR
-   benchmarking (YTD December 2025) at right showing the property against its four-property, 364-room competitive
-   set, the submarket and the Maryland market, with the 41.5 RevPAR index called out. 2026 is a transition year and
-   is not presented.
-
-9. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
-   estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%). Right = loan
-   measures table and the estimated-value disclaimer.
-10. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
-   $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (loan $12,600,000 / min DSCR 1.20x / prepay 1 year · 5%).
-   Bottom strip: lender, origination 4.00% + 1.00%, MMCC 1.00%, processing $10,100.
-11. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
-    after debt service is deliberately not shown. Right = projected stabilized DSCR and debt yield, Year-1 note.
-12. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
-    separating cost incurred to date from cost remaining to be funded, and three blocks (cost basis, amortization,
-    sponsor support).
-13. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
+6. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
+   $52,684-per-key program; RevPAR index 41.5% → 70% target, NOI 1.8× and RevPAR $87→$166.
+7. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
+   ($368,421/key), upon completion $25,500,000 ($447,368/key), upon stabilization $28,500,000 ($500,000/key),
+   disclaimed immediately beneath. Below, projected 2027/2028/2029 operations and a stabilized-NOI takeaway.
+8. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
+   RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right
+   (keys, occupancy and rate range, RevPAR index target, no assumed market growth, capital program, expense ratio,
+   brand and affiliation).
+9. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
+   (YTD December 2025) at right against the four-property, 364-room competitive set, submarket and Maryland market,
+   with the 41.5 RevPAR index called out. 2026 is a transition year and is not presented.
+10. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
+    3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline showing nothing
+    under construction within 25 miles.
+11. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
+    estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%), plus loan measures
+    and the estimated-value disclaimer.
+12. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
+    $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (min DSCR 1.20x / prepay 1 year · 5%). Fee strip.
+13. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
+    after debt service is deliberately not shown.
+14. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
+    separating cost incurred to date from cost remaining to be funded, and three supporting blocks.
+15. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
     and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053. Right = the
     $2,000,000 sponsor cash equity itemized (a component of the incurred figure, not additive) and 2021–2025 CapEx.
-14. **Estimated as-is value and comparable waterfront sales** — estimated as-is value $21,000,000 ($368,421 per key,
-    $758.51 per SF), senior loan and LTV, with the disclaimer. Right = six East Coast waterfront sales plus weighted
-    average ($396K/key) and median ($397K/key) of 11 sales, with a comparability caveat.
-15. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
+16. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
+    ($221,053/key), total project cost basis ($327,713/key), the three estimated values and the comparable-sale
+    weighted average and median on one scale, with the disclaimer and two summary statistics.
+17. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
+    average and median of eleven sales at left; eight local Eastern Shore transactions at right, with a note
+    distinguishing them (7–28 keys, historic inns and mid-century motels without F&B, marina or event facilities)
+    so the lower local pricing is addressed rather than left to be discovered.
+18. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
     uses balanced to $0, plus the net-funding memo.
-16. **Contact and next steps** (dark, full-bleed `wt-aerial.jpg`) — stat strip, contact block, page number in header.
+19. **Contact and next steps** — stat strip, contact block, page number in the header bar.
 
 ### Valuation language
-No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The single value
-point is an **estimated as-is value of $21,000,000**, carried on slides 2, 7, 9 and 14 and labelled on slides 7, 9 and 14
-with: "Estimated as-is value is management's estimate prepared for underwriting purposes only. It is not an
-appraisal, and no third-party valuation conclusion is represented." This is deliberate — the package is distributed
-to the appraiser engaged on the transaction, and must not anchor that appraiser to a prior conclusion.
+No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The value points
+are an **estimated as-is value of $21,000,000**, **upon completion of $25,500,000** and **upon stabilization of
+$28,500,000**, carried on slides 7, 11 and 16 and labelled with: "Estimated values are management's estimates
+prepared for underwriting purposes only. They are not appraisals, and no third-party valuation conclusion is
+represented." This is deliberate — the package is distributed to the appraiser engaged on the transaction, and must
+not anchor that appraiser to a prior conclusion.
+
+### Market data
+Comparable sales, competitive-set composition, drive-to demand, visitation and new-supply figures are presented as
+market facts. Talbot County visitation is attributed to Talbot County Economic Development and Tourism; competitive
+set performance is attributed to STR. No brokerage or valuation document is cited or reproduced.
 
 ## Interactions & Behavior
 - Slide navigation via `deck-stage`: arrow keys, click nav, thumbnail rail, print-to-PDF (one page/slide). No per-element interactivity — this is a linear presentation.
