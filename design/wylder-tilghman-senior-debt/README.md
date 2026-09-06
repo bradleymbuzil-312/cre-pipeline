@@ -91,8 +91,13 @@ after a hairline divider; the cover and closing slides carry it in the header ba
     (YTD December 2025) at right against the four-property, 364-room competitive set. 2026 is a transition year and
     is not presented.
 13. **The competitive market, supply and demand** — the five-property, 404-room market set with 2025 occupancy, ADR
-    and RevPAR and the subject's 44% RevPAR index; the 2015–2025 supply/demand/ADR/RevPAR trend with CAGRs and TTM
-    March 2026. Notes explicitly that this set and the STR set on page 12 are differently constituted.
+    and RevPAR and the subject's 44% RevPAR index; penetration against the market for 2024 and 2025 (RevPAR index
+    48% → 44%, with the rate-driven cause stated); the supply/demand/ADR/RevPAR series 2019–2025 with CAGRs and TTM
+    March 2026; and market seasonality by peak/shoulder/trough. Notes explicitly that this set and the STR set on
+    page 12 are differently constituted.
+
+    CAGRs run 2019–2025, not 2015–2025: the 2015 panel carried only 98 rooms, which produced a 15.2% "supply CAGR"
+    that contradicted the flat-supply narrative on the same page.
 14. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
     3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline.
 15. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
@@ -106,15 +111,16 @@ after a hairline divider; the cover and closing slides carry it in the header ba
 19. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
     and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053.
 20. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
-    ($221,053/key), total project cost basis ($327,713/key), the three estimated values and the comparable-sale
-    weighted average and median on one scale.
+    ($221,053/key), total project cost basis ($327,713/key), the three estimated values and **both** comparable
+    sets — the East Coast waterfront sales and the recent resort trades — on one scale, so the two sets reconcile
+    on the page rather than implying two different positions.
 21. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
     average and median of eleven sales at left; eight local Eastern Shore transactions at right, with a note
     distinguishing them so the lower local pricing is addressed rather than left to be discovered.
 22. **Recent transaction evidence and local market activity** — eight independent resort and waterfront trades
     closed January 2025 to March 2026 averaging 44 keys (weighted average $463K/key, median $332K/key); at right,
-    the Tilghman Island Inn under contract at $260K/key and the Tidewater Inn coming to market, both distinguished
-    on product tier and income base.
+    the Tilghman Island Inn under contract at $260K/key, the Robert Morris Inn closed and relisted, and the
+    Tidewater Inn coming to market, all distinguished on product tier and income base.
 23. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
     uses balanced to $0, plus the net-funding memo.
 24. **Contact and next steps** — stat strip, contact block, page number in the header bar.
@@ -133,6 +139,11 @@ The deck carries **two** operating projections and says so on the page. Slides 8
 April 30, which deducts a management fee and a replacement reserve as separate lines and lands roughly 15% below
 the sponsor case at the common stabilized point. Both are shown because the loan covers in both; presenting only
 the higher one would invite exactly the question the second projection answers.
+
+### Figures
+Every per-key figure runs on 57 keys and every column total was re-derived from its components during review. The
+$000s table on slide 10 carries an explicit "columns may not foot due to rounding" note because 5 of its 11 columns
+differ by $1K from the sum of the rounded components.
 
 ### Market data
 Comparable sales, competitive-set composition, market supply and demand, drive-to demand, visitation, departmental
