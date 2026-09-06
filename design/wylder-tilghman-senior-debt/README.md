@@ -1,9 +1,9 @@
 # Handoff: Wylder Hotel Tilghman Island — Senior Debt Financing Deck
 
 ## Overview
-A 15-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) from **New Day Commercial Capital** on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
+A 24-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) from **New Day Commercial Capital** on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
 
-The deck carries **no equity offering of any kind** — the capitalisation is the single first mortgage.
+The deck carries **no equity offering of any kind** — the capitalization is the single first mortgage.
 
 ## About the Design Files
 The files in `deck/` are a **design reference built in HTML** — a working prototype of the intended look, content, and slide flow, not production code to ship as-is. The task is to **recreate this deck in the target environment** using its established patterns. If the goal is a web app, rebuild the slides as components in the codebase's framework (React/Vue/etc.). If the goal is a distributable presentation, the HTML itself is already the deliverable and can be exported to PDF/PPTX from the design tool.
@@ -47,81 +47,98 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 
 **Motif:** a vertical/horizontal "strata" bar (stacked orange `#F0720E` + blue `#456EAB` segments) on the title, asset, sponsor, terms and contact slides — the capital-stack metaphor. Every instance is split **60% orange / 40% blue**, matching the loan / value-above-loan share of the Year-1 value.
 
-## Screens / Views (20 slides)
+## Screens / Views (24 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
-1920×1080, `box-sizing:border-box`, ~76–96px padding.
+1920×1080, `box-sizing:border-box`, ~48–96px padding.
 
 **Headings.** Interior slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, followed by a plain
-descriptive H2 (Aptos Display 700, 48px). Headlines are declarative statements of fact, not marketing lines — the
+descriptive H2 (Aptos Display 700, 44–48px). Headlines are declarative statements of fact, not marketing lines — the
 package is read by a lender and by the appraiser on the deal.
 
-**Page numbers.** All 20 pages are numbered. Interior slides carry the number at the right end of the running footer,
+**Page numbers.** All 24 pages are numbered. Interior slides carry the number at the right end of the running footer,
 after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
 
 1. **Title** — eyebrow "SENIOR DEBT FINANCING · $12,600,000", H1 property name, factual tagline.
 2. **Summary of the financing request** — 8-tile grid: loan $12.60M, all-in rate 10.29%, 30-yr term, debt service
    $1.36M, LTV 60.0%, projected stabilized DSCR 1.47x, debt yield 15.9%, cost basis $18.68M.
-3. **A 50-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
+3. **A 57-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
    two thumbnails.
 4. **Ownership, operator and credit support** — ownership narrative, 2×2 facts, four Sponsor Commitments to the
    Lender, closing note on the $2,000,000 of sponsor cash equity funded outside loan proceeds.
 5. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
 6. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
-   $52,684-per-key program; RevPAR index 41.5% → 70% target, NOI 1.8× and RevPAR $87→$166.
-7. **Small Luxury Hotels affiliation and distribution** — the case at left (SLH member hotels bookable through
-   Hilton.com, the Hilton app and Hilton Honors; the sponsor's existing SLH relationship through Wylder Windham,
-   the sister hotel in the Catskills; the American Express Fine Hotels & Resorts designation Windham carries and
-   which is the plan here), membership economics and commission by channel at right. Affiliation is targeted on
-   completion of the renovation and is stated as subject to application, inspection, board approval and an
-   executed brand affiliate agreement.
+   $52,684-per-key program, funded by the sponsor outside this financing. Item 01 quantifies the seven added keys
+   (four returned from out-of-service, three in the back house — 12.3% more sellable inventory); item 02 quantifies
+   the 25-slip marina at $250,000 of cost against roughly $146,000 a year of departmental profit.
+7. **Small Luxury Hotels affiliation and distribution** — Hilton.com / Hilton app / Hilton Honors distribution, the
+   existing relationship through Wylder Windham, and the American Express Fine Hotels & Resorts designation. Right
+   column carries membership economics ($100,222 over the four-year term, 0.49% of stabilized revenue).
 8. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
    ($368,421/key), upon completion $25,500,000 ($447,368/key), upon stabilization $28,500,000 ($500,000/key),
    disclaimed immediately beneath. Below, projected 2027/2028/2029 operations and a stabilized-NOI takeaway.
 9. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
-   RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right
-   (keys, occupancy and rate range, RevPAR index target, no assumed market growth, capital program, expense ratio,
-   brand and affiliation).
-10. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
-   (YTD December 2025) at right against the four-property, 364-room competitive set, submarket and Maryland market,
-   with the 41.5 RevPAR index called out. 2026 is a transition year and is not presented.
-11. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
-    3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline showing nothing
-    under construction within 25 miles.
-12. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
-    estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%), plus loan measures
-    and the estimated-value disclaimer.
-13. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
+   RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right.
+10. **Extended cash flow, fiscal 2030 through fiscal 2040** — an eleven-year projection on a *more conservative*
+    basis than the sponsor model: occupancy flat at 43.0%, 3.0% rate growth, no market growth, and a 3.0%
+    management fee and 4.0% replacement reserve deducted as separate lines. Full departmental build to NOI, then
+    debt service, DSCR (1.43x → 2.00x) and debt yield (15.4% → 21.6%). The ~15% shortfall against the sponsor case
+    at the common point is stated on the page rather than left to be discovered.
+11. **Departmental revenue and margins against industry benchmarks** — revenue by department at stabilization vs the
+    resort segment; F&B against outlet comparables (per seat, per SF, per occupied room); the marina and the seven
+    added keys shown as $580,000 of revenue and $444,000 of departmental profit *not present in any historical
+    period*; margins and departmental cost ratios against the resort and independent segments.
+12. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
+    (YTD December 2025) at right against the four-property, 364-room competitive set. 2026 is a transition year and
+    is not presented.
+13. **The competitive market, supply and demand** — the five-property, 404-room market set with 2025 occupancy, ADR
+    and RevPAR and the subject's 44% RevPAR index; the 2015–2025 supply/demand/ADR/RevPAR trend with CAGRs and TTM
+    March 2026. Notes explicitly that this set and the STR set on page 12 are differently constituted.
+14. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
+    3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline.
+15. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
+    estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%).
+16. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
     $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (min DSCR 1.20x / prepay 1 year · 5%). Fee strip.
-14. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
+17. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
     after debt service is deliberately not shown.
-15. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
+18. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
     separating cost incurred to date from cost remaining to be funded, and three supporting blocks.
-16. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
-    and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053. Right = the
-    $2,000,000 sponsor cash equity itemized (a component of the incurred figure, not additive) and 2021–2025 CapEx.
-17. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
+19. **Cost Basis and Sponsor Equity** — total project cost basis $18,679,659 split into $12,714,782 incurred to date
+    and $5,964,877 remaining to be funded; cost basis per key $327,713 vs loan per key $221,053.
+20. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
     ($221,053/key), total project cost basis ($327,713/key), the three estimated values and the comparable-sale
-    weighted average and median on one scale, with the disclaimer and two summary statistics.
-18. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
+    weighted average and median on one scale.
+21. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
     average and median of eleven sales at left; eight local Eastern Shore transactions at right, with a note
-    distinguishing them (7–28 keys, historic inns and mid-century motels without F&B, marina or event facilities)
-    so the lower local pricing is addressed rather than left to be discovered.
-19. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
+    distinguishing them so the lower local pricing is addressed rather than left to be discovered.
+22. **Recent transaction evidence and local market activity** — eight independent resort and waterfront trades
+    closed January 2025 to March 2026 averaging 44 keys (weighted average $463K/key, median $332K/key); at right,
+    the Tilghman Island Inn under contract at $260K/key and the Tidewater Inn coming to market, both distinguished
+    on product tier and income base.
+23. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
     uses balanced to $0, plus the net-funding memo.
-20. **Contact and next steps** — stat strip, contact block, page number in the header bar.
+24. **Contact and next steps** — stat strip, contact block, page number in the header bar.
 
 ### Valuation language
 No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The value points
 are an **estimated as-is value of $21,000,000**, **upon completion of $25,500,000** and **upon stabilization of
-$28,500,000**, carried on slides 8, 12 and 17 and labelled with: "Estimated values are management's estimates
+$28,500,000**, carried on slides 8, 15 and 20 and labeled with: "Estimated values are management's estimates
 prepared for underwriting purposes only. They are not appraisals, and no third-party valuation conclusion is
 represented." This is deliberate — the package is distributed to the appraiser engaged on the transaction, and must
 not anchor that appraiser to a prior conclusion.
 
+### The two projections
+The deck carries **two** operating projections and says so on the page. Slides 8–9 are the sponsor model
+(calendar 2027–2029). Slide 10 is an independent, more conservative eleven-year view on fiscal years ending
+April 30, which deducts a management fee and a replacement reserve as separate lines and lands roughly 15% below
+the sponsor case at the common stabilized point. Both are shown because the loan covers in both; presenting only
+the higher one would invite exactly the question the second projection answers.
+
 ### Market data
-Comparable sales, competitive-set composition, drive-to demand, visitation and new-supply figures are presented as
-market facts. Talbot County visitation is attributed to Talbot County Economic Development and Tourism; competitive
-set performance is attributed to STR. No brokerage or valuation document is cited or reproduced.
+Comparable sales, competitive-set composition, market supply and demand, drive-to demand, visitation, departmental
+comparables and industry benchmarks are presented as market facts. Talbot County visitation is attributed to Talbot
+County Economic Development and Tourism; competitive set performance is attributed to STR. No brokerage, appraisal
+or valuation document is cited or reproduced anywhere in the package.
 
 ## Interactions & Behavior
 - Slide navigation via `deck-stage`: arrow keys, click nav, thumbnail rail, print-to-PDF (one page/slide). No per-element interactivity — this is a linear presentation.
