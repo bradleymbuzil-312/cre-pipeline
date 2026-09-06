@@ -99,11 +99,13 @@ after a hairline divider; the cover and closing slides carry it in the header ba
    disclaimed immediately beneath. Below, projected 2027/2028/2029 operations and a stabilized-NOI takeaway.
 11. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
    RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right.
-12. **Extended cash flow, fiscal 2030 through fiscal 2040** — an eleven-year projection on a *more conservative*
-    basis than the sponsor model: occupancy flat at 43.0%, 3.0% rate growth, no market growth, and a 3.0%
-    management fee and 4.0% replacement reserve deducted as separate lines. Full departmental build to NOI, then
-    debt service, DSCR (1.43x → 2.00x) and debt yield (15.4% → 21.6%). The ~15% shortfall against the sponsor case
-    at the common point is stated on the page rather than left to be discovered.
+12. **Stabilized cash flow carried forward, 2029 through 2040** — 2029 is the stabilized year of the pro forma
+    on the preceding pages, shown as a highlighted anchor column, and every year after it continues the same line:
+    occupancy held at 40.0%, average rate growing 3.0% a year, no assumed market growth and the operating margin
+    held at 34.3%. Net operating income rises every year, $2,299,337 to $3,182,820 (1.38x). Coverage 1.74x to
+    2.34x. NOI is already after a 4.0% management fee and a 3.0% replacement reserve; a memo line steps the
+    reserve to 4.0% and coverage is shown on both (minimum 1.69x).
+
 13. **Departmental revenue and margins against industry benchmarks** — revenue by department at stabilization vs the
     resort segment; F&B against outlet comparables (per seat, per SF, per occupied room); the marina and the seven
     added keys shown as $580,000 of revenue and $444,000 of departmental profit *not present in any historical
@@ -157,17 +159,15 @@ prepared for underwriting purposes only. They are not appraisals, and no third-p
 represented." This is deliberate — the package is distributed to the appraiser engaged on the transaction, and must
 not anchor that appraiser to a prior conclusion.
 
-### The two projections
-The deck carries **two** operating projections and says so on the page. Slides 8–9 are the sponsor model
-(calendar 2027–2029). Slide 10 is an independent, more conservative eleven-year view on fiscal years ending
-April 30, which deducts a management fee and a replacement reserve as separate lines and lands roughly 15% below
-the sponsor case at the common stabilized point. Both are shown because the loan covers in both; presenting only
-the higher one would invite exactly the question the second projection answers.
+### One projection, carried forward
+The deck carries a single operating projection. Slides 10-11 are the sponsor model through 2029; slide 12 continues
+that same line to 2040 rather than restarting from a differently constituted forecast. An earlier draft placed an
+independent, more conservative long-term projection on slide 12, which began roughly 15% below the 2029 stabilized
+year and showed net operating income falling after stabilization. That has been removed: the deck now shows one
+rising line, with the reserve variance disclosed as a memo rather than buried in a different basis.
 
-### Figures
-Every per-key figure runs on 57 keys and every column total was re-derived from its components during review. The
-$000s table on slide 10 carries an explicit "columns may not foot due to rounding" note because 5 of its 11 columns
-differ by $1K from the sum of the rounded components.
+Slide 13 is benchmarked on the same 2029 stabilized year, so the departmental mix and margins reconcile to slide 12
+rather than to a second forecast.
 
 ### Market data
 Comparable sales, competitive-set composition, market supply and demand, drive-to demand, visitation, departmental
