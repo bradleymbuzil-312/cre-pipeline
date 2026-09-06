@@ -63,8 +63,16 @@ after a hairline divider; the cover and closing slides carry it in the header ba
    $1.36M, LTV 60.0%, projected stabilized DSCR 1.47x, debt yield 15.9%, cost basis $18.68M.
 3. **A 57-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
    two thumbnails.
-4. **Ownership, operator and credit support** — ownership narrative, 2×2 facts, four Sponsor Commitments to the
-   Lender, closing note on the $2,000,000 of sponsor cash equity funded outside loan proceeds.
+4. **Ownership and operating structure** — ownership narrative, 2×2 facts (ownership, principal, operator/brand,
+   manager), and four Structure and Alignment points: owner-operated with no third-party management agreement,
+   continuous ownership since 2017 with $642,693 of capital invested 2021–2025, single-asset ownership entity,
+   and the three-property Wylder platform. Closing note on monthly property-level reporting.
+
+   **The guaranty schedule and the $2,000,000 sponsor-equity note were deliberately removed from this page.**
+   Credit support is not volunteered in the marketing package; it is a negotiated term. Note that the guaranties
+   still appear on slide 18 (Sponsor Support), the $2,000,000 still appears on slides 18 and 19, and slide 17
+   still relies on the carry guaranty to answer year-one coverage — remove those too only on instruction, since
+   slide 17 loses its answer to the 0.93x DSCR and slide 19 loses a full column.
 5. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
 6. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
    $52,684-per-key program, funded by the sponsor outside this financing. Item 01 quantifies the seven added keys
