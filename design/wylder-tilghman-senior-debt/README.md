@@ -64,7 +64,8 @@ after a hairline divider; the cover and closing slides carry it in the header ba
 3. **A 57-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
    two thumbnails.
 4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities),
-   each with a photograph and a six-row fact card. Reconciles the key bridge explicitly: 50 rooms in service, 4 out
+   each with a photograph and a six-row fact card. The F&B thumbnail is the property signage naming
+   Tickler's Crab Shack and Bar Mumbo (`wt-fb-signs.jpg`). Reconciles the key bridge explicitly: 50 rooms in service, 4 out
    of service to be restored, 3 from the rebuilt three-bedroom house = 57. Carries site (8.10 acres, three
    parcels), 1,100 ft of water frontage, Village Mixed zoning (hotel permitted, legally conforming), 69 parking
    spaces, Tickler's at 128 seats, the 2,000 SF ballroom within 3,722 SF of event space (5,252 on completion), and
