@@ -26,7 +26,7 @@ SPEC = {
     "wt-aerial.png":        ((1920, 1080), "cover"),
     "wt-pier.png":          ((845, 1080), "cover"),
     "wt-lobby.png":         ((768, 1080), "cover"),
-    "wt-suite.jpg":         ((455, 152), "cover"),
+    "wt-suite.jpg":         ((766, 654), "cover"),   # hero on slide 07; thumbnail on 03
     "wt-pool.png":          ((455, 152), "cover"),
     "flannigan.png":        ((90, 90), "cover"),
     "buzil.jpg":            ((106, 106), "cover"),
@@ -39,6 +39,7 @@ KEEP_PNG = {"mmcc-2018-white.png"}
 
 JPEG_QUALITY = 84
 SMALL_BOX_PX = 500      # below this width, supersample 2x so zoom stays clean
+MID_BOX_PX = 1000       # 500-1000px: 1.5x, so hero photos survive zoom and print
 DECK = "Wylder Tilghman Island - Senior Debt Financing.dc.html"
 
 
@@ -59,7 +60,8 @@ def build(src_deck, out_deck):
 
         # cover and fill both need the larger of the two axis ratios; never upscale
         scale = max(bw / sw, bh / sh)
-        scale = min(scale * (2 if bw < SMALL_BOX_PX else 1), 1.0)
+        boost = 2 if bw < SMALL_BOX_PX else (1.5 if bw < MID_BOX_PX else 1)
+        scale = min(scale * boost, 1.0)
         target = (max(1, round(sw * scale)), max(1, round(sh * scale)))
         if target != (sw, sh):
             im = im.resize(target, Image.LANCZOS)
