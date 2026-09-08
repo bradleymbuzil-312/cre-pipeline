@@ -81,7 +81,11 @@ after a hairline divider; the cover and closing slides carry it in the header ba
    still appear on slide 18 (Sponsor Support), the $2,000,000 still appears on slides 18 and 19, and slide 17
    still relies on the carry guaranty to answer year-one coverage — remove those too only on instruction, since
    slide 17 loses its answer to the 0.93x DSCR and slide 19 loses a full column.
-6. **Operator background and brand portfolio** — brand blurb, three-property portfolio, principal's career record.
+6. **Operator background and brand portfolio** — brand blurb, two-property portfolio (Tilghman Island and
+   Wylder Windham), a Proof Case block on Windham carrying the SLH membership and Amex Fine Hotels &
+   Resorts designation that slide 9 relies on, recognition, and the principal's career record.
+   Wylder Hope Valley was removed at the sponsor's direction; the California and three-property
+   references on slides 5 and 6 were corrected with it.
 7. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
    $52,684-per-key program, funded by the sponsor outside this financing. Item 01 quantifies the seven added keys
    (four returned from out-of-service, three in the back house — 12.3% more sellable inventory); item 02 quantifies
