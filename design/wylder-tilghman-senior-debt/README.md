@@ -1,7 +1,7 @@
 # Handoff: Wylder Hotel Tilghman Island — Senior Debt Financing Deck
 
 ## Overview
-A 26-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) from **New Day Commercial Capital** on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
+A 26-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
 
 The deck carries **no equity offering of any kind** — the capitalization is the single first mortgage.
 
@@ -11,7 +11,7 @@ The files in `deck/` are a **design reference built in HTML** — a working prot
 The deck is a single self-contained Design Component (`.dc.html`) rendered through a lightweight slide-shell web component (`deck-stage.js`) and a runtime (`support.js`). All styling is **inline** on each element; the only shared stylesheet is the design system's `colors_and_type.css` (design tokens + `@font-face`).
 
 ## Fidelity
-**High-fidelity (hifi).** Final colors, typography, spacing, copy, and figures. Recreate pixel-for-pixel using the exact tokens below. Every figure reconciles to the financial model `Wylder Tighman Island_ Financials_ New Day L 9.4.26.xlsx`; do not alter numbers without an updated model.
+**High-fidelity (hifi).** Final colors, typography, spacing, copy, and figures. Recreate pixel-for-pixel using the exact tokens below. Every figure reconciles to the sponsor's financial model dated September 4, 2026; do not alter numbers without an updated model.
 
 ## How to Run the Reference
 Open `deck/Wylder Tilghman Island - Senior Debt Financing.dc.html` through a local static server (relative paths to `_ds/`, `assets/`, `deck-stage.js`, `support.js` must resolve). Arrow keys / on-screen nav move between slides; the shell handles scaling, a thumbnail rail, speaker notes, and print-to-PDF (one page per slide).
@@ -207,7 +207,7 @@ All are real property/brand photography. If rebuilding in a codebase with its ow
 - `deck/_ds/.../fonts/` — Aptos font files
 - `deck/assets/` — imagery and logo
 
-> Data note: every figure reconciles to `Wylder Tighman Island_ Financials_ New Day L 9.4.26.xlsx`
+> Data note: every figure reconciles to the sponsor's financial model dated September 4, 2026
 > (Loan Analysis, Sources and Uses, Pro Forma, Total Cost Basis, Borrower Equity, Sales Comps, STR Summary).
 > Sources and uses balance to $0.00. Do not change numbers without an updated model.
 >
