@@ -24,11 +24,12 @@ from PIL import Image
 SPEC = {
     "wt-aerial-spring.png": ((1920, 1080), "cover"),
     "wt-aerial.png":        ((1920, 1080), "cover"),
-    "wt-pier.png":          ((845, 1080), "cover"),
+    "wt-pier.png":          ((845, 1080), "cover"),   # hero on slide 03; thumbnail on 04
     "wt-lobby.png":         ((768, 1080), "cover"),
-    "wt-suite.jpg":         ((766, 654), "cover"),   # hero on slide 07; thumbnail on 03
-    "wt-pool.png":          ((425, 290), "cover"),   # thumbnails on slides 03 and 04
-    "wt-fb-signs.jpg":      ((425, 290), "cover"),   # F&B thumbnail on slide 04
+    "wt-suite.jpg":         ((766, 654), "cover"),    # hero on slide 09; thumbnails on 03 and 04
+    "wt-dogwood-aerial.jpg": ((1760, 330), "cover"),  # full-width band on slide 05
+    "wt-pool.png":          ((455, 290), "cover"),    # thumbnails on slides 03 and 04
+    "wt-fb-signs.jpg":      ((425, 290), "cover"),    # F&B thumbnail on slide 04
     "flannigan.png":        ((90, 90), "cover"),
     "buzil.jpg":            ((106, 106), "cover"),
     "mmcc-2018-white.png":  ((227, 60), "fill"),

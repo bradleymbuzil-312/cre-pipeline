@@ -1,20 +1,42 @@
-# Handoff: Wylder Hotel Tilghman Island — Senior Debt Financing Deck
+# Handoff: Wylder Hotel Tilghman Island — Senior Debt & Preferred Equity Deck
 
 ## Overview
-A 26-slide institutional financing package supporting a **$12,600,000 senior loan** (first mortgage) on the Wylder Hotel Tilghman Island (Talbot County, MD). The loan refinances the existing $10,714,782 loan, funds closing and origination costs, and returns $843,046 of cash to the sponsor. Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
+A 28-slide institutional financing package supporting a **$17,970,734 capitalization** of the Wylder Hotel Tilghman
+Island (Talbot County, MD):
 
-The deck carries **no equity offering of any kind** — the capitalization is the single first mortgage.
+| Tranche | Amount | Share | Terms |
+|---|---|---|---|
+| Senior loan (first mortgage) | $12,840,000 | 71.45% | 8.79% floating (30-day SOFR 3.79% + 5.00%), 3-yr term, full-term interest-only, ADS $1,128,636 |
+| Acquisition loan — 21441 Dogwood Cove | $770,000 | 4.28% | 8.79%, 30-yr amortization, $72,955 annual P&I, 70% of purchase price |
+| Preferred equity | $4,360,734 | 24.27% | 17.0% total — 10% current pay / 7% accrued PIK, 3-yr hold |
+| **Total** | **$17,970,734** | **100%** | **No common equity at close** |
+
+Proceeds retire the existing $10,714,782 loan, buy the adjacent parcel at 21441 Dogwood Cove ($1,100,000), fund
+$3,303,000 of capital improvements, and establish $2,137,664 of reserves and working capital. Financing costs are
+$715,288 (3.98% of total capitalization). Nothing is distributed to the sponsor.
+
+Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
 
 ## About the Design Files
-The files in `deck/` are a **design reference built in HTML** — a working prototype of the intended look, content, and slide flow, not production code to ship as-is. The task is to **recreate this deck in the target environment** using its established patterns. If the goal is a web app, rebuild the slides as components in the codebase's framework (React/Vue/etc.). If the goal is a distributable presentation, the HTML itself is already the deliverable and can be exported to PDF/PPTX from the design tool.
+The files in `deck/` are a **design reference built in HTML** — a working prototype of the intended look, content and
+slide flow, not production code to ship as-is. The task is to **recreate this deck in the target environment** using
+its established patterns. If the goal is a distributable presentation, the HTML itself is already the deliverable and
+exports to PDF one slide per page.
 
-The deck is a single self-contained Design Component (`.dc.html`) rendered through a lightweight slide-shell web component (`deck-stage.js`) and a runtime (`support.js`). All styling is **inline** on each element; the only shared stylesheet is the design system's `colors_and_type.css` (design tokens + `@font-face`).
+The deck is a single self-contained Design Component (`.dc.html`) rendered through a lightweight slide-shell web
+component (`deck-stage.js`) and a runtime (`support.js`). All styling is **inline** on each element; the only shared
+stylesheet is the design system's `colors_and_type.css` (design tokens + `@font-face`).
 
 ## Fidelity
-**High-fidelity (hifi).** Final colors, typography, spacing, copy, and figures. Recreate pixel-for-pixel using the exact tokens below. Every figure reconciles to the sponsor's financial model dated September 4, 2026; do not alter numbers without an updated model.
+**High-fidelity (hifi).** Final colors, typography, spacing, copy and figures. Every figure reconciles to the
+sponsor's financial model dated **October 6, 2026** (`Wylder Tilghman Island - Financials - 10.6.26 w Acq pref.xlsx`);
+do not alter numbers without an updated model.
 
 ## How to Run the Reference
-Open `deck/Wylder Tilghman Island - Senior Debt Financing.dc.html` through a local static server (relative paths to `_ds/`, `assets/`, `deck-stage.js`, `support.js` must resolve). Arrow keys / on-screen nav move between slides; the shell handles scaling, a thumbnail rail, speaker notes, and print-to-PDF (one page per slide).
+Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `deck-stage.js`, `support.js` must
+resolve — `file://` fails CORS) and open
+`Wylder Tilghman Island - Senior Debt Financing.dc.html`. Arrow keys / on-screen nav move between slides; the shell
+handles scaling, a thumbnail rail, speaker notes and print-to-PDF.
 
 Canvas is **1920×1080** per slide (16:9).
 
@@ -25,201 +47,194 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 - `--mm-navy-900` `#001A3D` — deepest navy; dark-slide backgrounds, headline ink on cream
 - `--mm-navy` `#002F6C` — primary brand navy (PMS 295); rules, totals
 - `--mm-navy-700` `#1A4280`, `--mm-navy-300` / `--mm-navy-100` — lighter navy tints for secondary text on dark
-- `--mm-orange` `#E87722` — accent; eyebrows, key figures, the senior loan bar
+- `--mm-orange` `#E87722` — accent; eyebrows, key figures
 - `--mm-orange-700` `#C0631C`, `--mm-orange-100` `#FBE3CF`
 - `--paper` `#FAF8F4` — warm cream; default light-slide surface
 - `--ink-900` `#0E1116`, `--ink-700` `#2A2F37`, `--ink-500` `#5A6068`, `--ink-400` — body text on cream
 - `--hairline` `rgba(0,26,61,.12)` — 1px structural dividers
-- Capital-stack tier colors used literally: senior loan `#032D67`, accent `#E87722`, value-above-loan blue-gray `#456EAB`, brass `#957551`
+- Capital-stack tier colors used literally: senior loan `#032D67`, accent `#E87722`, preferred equity `#456EAB`,
+  acquisition loan brass `#957551`
 
 **Typography** — Microsoft **Aptos** family, loaded from the design system `fonts/` via `@font-face` (no CDN).
 - `--font-display` "Aptos Display" — H1/H2 headlines (700), italic taglines
 - `--font-body` "Aptos" — body copy, ledes, captions
-- `--font-condensed` "Aptos Narrow" — eyebrows, ALL-CAPS labels, table headers (700, letter-spacing .14–.30em, uppercase)
+- `--font-condensed` "Aptos Narrow" — eyebrows, ALL-CAPS labels, table headers (700, letter-spacing .14–.30em)
 - `--font-mono` "Aptos Mono" — all currency, percentages, dates, phone (tabular-nums)
 - `--font-serif` "Aptos Serif" — used only for the "wylder" wordmark on the title slide
 
-**Type sizes in use (px, at 1920×1080):** title H1 104; section H2 50–56; big stat/hero figures 96–104; stat-grid values 54; table body 17–22; eyebrow 17; labels 13–15.
+**Type sizes in use (px, at 1920×1080):** title H1 104; section H2 41–52; big stat/hero figures 92–104; stat-grid
+values 46–54; table body 13–22; eyebrow 17; labels 12–15.
 
-**Running footer:** every interior slide (2–14) carries a footer rule — `Wylder Hotel Tilghman Island · Senior Debt Financing` left, `MMCC · The TRANCHE Group` right — in `--font-condensed` 14px/700, `.2em` tracking, uppercase, `--ink-400` on light slides and `rgba(255,255,255,.38)` on dark. The title and contact slides carry their own footers instead.
+**Running footer:** every interior slide (2–27) carries a footer rule —
+`Wylder Hotel Tilghman Island · Senior Debt & Preferred Equity` left, `MMCC · The TRANCHE Group` right, then the page
+number after a hairline divider — in `--font-condensed` 14px/700, `.2em` tracking, uppercase, `--ink-400` on light
+slides and `rgba(255,255,255,.38)` on dark. The cover (01) and contact (28) slides carry the page number in the
+header bar beside the confidentiality label instead.
 
-**Rules & borders:** section headers sit above a `1px solid var(--mm-navy)` rule; tables use 2px navy top/bottom borders with 1px `--hairline` interior lines. Corners 0–2px (printed feel, not app-like). No gradients except the photo-overlay scrims on dark hero slides. No shadows except soft photo scrims.
+**Rules & borders:** section headers sit above a `1px solid var(--mm-navy)` rule; tables use 2px navy top/bottom
+borders with 1px `--hairline` interior lines. Corners 0–2px (printed feel, not app-like). No gradients except the
+photo-overlay scrims on dark hero slides. No shadows except soft photo scrims.
 
-**Motif:** a vertical/horizontal "strata" bar (stacked orange `#F0720E` + blue `#456EAB` segments) on the title, asset, sponsor, terms and contact slides — the capital-stack metaphor. Every instance is split **60% orange / 40% blue**, matching the loan / value-above-loan share of the Year-1 value.
+**A design-system CSS rule caps `<p>` width at ~479px.** Every paragraph needs an explicit `max-width:none` (or a
+`ch` value) or it wraps narrow.
 
-## Screens / Views (26 slides)
+**Motif:** a strata bar (stacked segments in the tranche colors) on the title, loan-terms and contact slides — the
+capital-stack metaphor. On the loan-terms slide it is split 71.45% / 4.28% / 24.27%, matching the three tranches.
+
+## Screens / Views (28 slides)
 Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Each slide is
-1920×1080, `box-sizing:border-box`, ~48–96px padding.
+1920×1080, `box-sizing:border-box`, ~44–96px padding. Interior slides open with a 64×3px `--mm-orange` rule in place
+of a text eyebrow, followed by a plain descriptive H2. Headlines are declarative statements of fact, not marketing
+lines.
 
-**Headings.** Interior slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, followed by a plain
-descriptive H2 (Aptos Display 700, 44–48px). Headlines are declarative statements of fact, not marketing lines — the
-package is read by a lender and by the appraiser on the deal.
-
-**Page numbers.** All 26 pages are numbered. Interior slides carry the number at the right end of the running footer,
-after a hairline divider; the cover and closing slides carry it in the header bar beside the confidentiality label.
-
-1. **Title** — eyebrow "SENIOR DEBT FINANCING · $12,600,000", H1 property name, factual tagline.
-2. **Summary of the financing request** — 8-tile grid: loan $12.60M, all-in rate 10.29%, 30-yr term, debt service
-   $1.36M, LTV 60.0%, projected stabilized DSCR 1.47x, debt yield 15.9%, cost basis $18.68M.
-3. **A 57-key waterfront resort on 8.10 acres in Talbot County, Maryland** — photo split, lede, 2×2 facts,
-   two thumbnails.
-4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities),
-   each with a photograph and a six-row fact card. The F&B thumbnail is the property signage naming
-   Tickler's Crab Shack and Bar Mumbo (`wt-fb-signs.jpg`). Reconciles the key bridge explicitly: 50 rooms in service, 4 out
-   of service to be restored, 3 from the rebuilt three-bedroom house = 57. Carries site (8.10 acres, three
-   parcels), 1,100 ft of water frontage, Village Mixed zoning (hotel permitted, legally conforming), 69 parking
-   spaces, Tickler's at 128 seats, the 2,000 SF ballroom within 3,722 SF of event space (5,252 on completion), and
-   the $40 amenity fee at 95.9% capture in 2025.
-
-5. **Ownership and operating structure** — ownership narrative, 2×2 facts (ownership, principal, operator/brand,
-   manager), and four Structure and Alignment points: owner-operated with no third-party management agreement,
-   continuous ownership since 2017 with $642,693 of capital invested 2021–2025, single-asset ownership entity,
-   and the three-property Wylder platform. Closing note on monthly property-level reporting.
-
-   **The guaranty schedule and the $2,000,000 sponsor-equity note were deliberately removed from this page.**
-   Credit support is not volunteered in the marketing package; it is a negotiated term. Note that the guaranties
-   still appear on slide 18 (Sponsor Support), the $2,000,000 still appears on slides 18 and 19, and slide 17
-   still relies on the carry guaranty to answer year-one coverage — remove those too only on instruction, since
-   slide 17 loses its answer to the 0.93x DSCR and slide 19 loses a full column.
-6. **Operator background and brand portfolio** — brand blurb, two-property portfolio (Tilghman Island and
-   Wylder Windham), a Proof Case block on Windham carrying the SLH membership and Amex Fine Hotels &
-   Resorts designation that slide 9 relies on, recognition, and the principal's career record.
-   Wylder Hope Valley was removed at the sponsor's direction; the California and three-property
-   references on slides 5 and 6 were corrected with it.
-7. **Business plan and capital improvement program** — three numbered items against the $3,003,000 /
-   $52,684-per-key program, funded by the sponsor outside this financing. Item 01 quantifies the seven added keys
-   (four returned from out-of-service, three in the back house — 12.3% more sellable inventory); item 02 quantifies
-   the 25-slip marina at $250,000 of cost against roughly $146,000 a year of departmental profit.
-8. **The renovation is designed, priced and scheduled** — a Gantt of the seven renovation items across
-   September 2026 to April 2027 with exact start and completion dates, alongside a full-height photograph of the
-   completed model room and a dark callout explaining what it establishes: the guest-room specification is built
-   and inspectable, so the $25,000 per key is priced against a room that exists rather than a drawing.
-
-9. **Small Luxury Hotels affiliation and distribution** — Hilton.com / Hilton app / Hilton Honors distribution, the
-   existing relationship through Wylder Windham, and the American Express Fine Hotels & Resorts designation. Right
-   column carries membership economics ($100,222 over the four-year term, 0.49% of stabilized revenue).
-10. **Estimated values and underwritten projections** — three-value band across the top: estimated as-is $21,000,000
-   ($368,421/key), upon completion $25,500,000 ($447,368/key), upon stabilization $28,500,000 ($500,000/key),
-   disclaimed immediately beneath. Below, projected 2027/2028/2029 operations and a stabilized-NOI takeaway.
-11. **Pro forma cash flow and underwriting assumptions** — available and occupied room nights, occupancy, ADR,
-   RevPAR, rooms and other revenue, operating expenses and NOI for 2027–2029 at left; the assumption set at right.
-12. **Stabilized cash flow carried forward, 2029 through 2040** — 2029 is the stabilized year of the pro forma
-    on the preceding pages, shown as a highlighted anchor column, and every year after it continues the same line:
-    occupancy held at 40.0%, average rate growing 3.0% a year, no assumed market growth and the operating margin
-    held at 34.3%. Net operating income rises every year, $2,299,337 to $3,182,820 (1.38x). Coverage 1.74x to
-    2.34x. NOI is already after a 4.0% management fee and a 3.0% replacement reserve; a memo line steps the
-    reserve to 4.0% and coverage is shown on both (minimum 1.69x).
-
-13. **Departmental revenue and margins against industry benchmarks** — revenue by department at stabilization vs the
-    resort segment; F&B against outlet comparables (per seat, per SF, per occupied room); the marina and the seven
-    added keys shown as $580,000 of revenue and $444,000 of departmental profit *not present in any historical
-    period*; margins and departmental cost ratios against the resort and independent segments.
-14. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking
-    (YTD December 2025) at right against the four-property, 364-room competitive set. 2026 is a transition year and
-    is not presented.
-15. **The competitive market, supply and demand** — the five-property, 404-room market set with 2025 occupancy, ADR
-    and RevPAR and the subject's 44% RevPAR index; penetration against the market for 2024 and 2025 (RevPAR index
-    48% → 44%, with the rate-driven cause stated); the supply/demand/ADR/RevPAR series 2019–2025 with CAGRs and TTM
-    March 2026; and market seasonality by peak/shoulder/trough. Notes explicitly that this set and the STR set on
-    page 12 are differently constituted.
-
-    CAGRs run 2019–2025, not 2015–2025: the 2015 panel carried only 98 rooms, which produced a 15.2% "supply CAGR"
-    that contradicted the flat-supply narrative on the same page.
-16. **Drive-to demand, visitation and new supply** — metropolitan areas within a half-day drive (36.9M people within
-    3.5 hours), Talbot County visitation and visitor spending, and the submarket new-supply pipeline.
-17. **A single first mortgage at 60.0% of estimated as-is value** — two proportional bars against the $21,000,000
-    estimated as-is value: implied equity $8,400,000 (40.0%) and senior loan $12,600,000 (60.0%).
-18. **Summary of senior loan terms** (dark) — 10.29% (index 4.54% / spread 5.75% / fixed); 30 yrs (debt service
-    $1,359,403 / constant 10.789% / no IO); 60.0% max LTV (min DSCR 1.20x / prepay 1 year · 5%). Fee strip.
-19. **Projected debt service coverage, 2027 through 2029** — NOI, debt service, DSCR and debt yield. Net cash flow
-    after debt service is deliberately not shown.
-20. **Loan measured against cost basis, value and sponsor support** (dark) — loan coverage measures, a callout
-    separating cost incurred to date from cost remaining to be funded, and three supporting blocks.
-21. **Total project cost basis and capital improvement plan** — the sponsor's cost basis schedule reproduced in
-    full. Left: acquisition ($10,714,782 plus $2,000,000 sponsor cash equity = $12,714,782) and other costs
-    (working capital, interest and carry, origination, closing, fees = $2,961,877), totalling $18,679,659.
-    Right: the capital improvement plan itemized across eight lines to $3,003,000, four per-key tiles, and the
-    $642,693 of capital already invested 2021–2025. Sponsor-funded, outside the loan.
-22. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
-    ($221,053/key), total project cost basis ($327,713/key), the three estimated values and **both** comparable
-    sets — the East Coast waterfront sales and the recent resort trades — on one scale, so the two sets reconcile
-    on the page rather than implying two different positions.
-23. **Comparable hotel sales, resort and local** — eight East Coast waterfront resort trades plus the weighted
-    average and median of eleven sales at left; eight local Eastern Shore transactions at right, with a note
-    distinguishing them so the lower local pricing is addressed rather than left to be discovered.
-24. **Recent transaction evidence and local market activity** — eight independent resort and waterfront trades
-    closed January 2025 to March 2026 averaging 44 keys (weighted average $463K/key, median $332K/key); at right,
-    the Tilghman Island Inn under contract at $260K/key, the Robert Morris Inn closed and relisted, and the
-    Tidewater Inn coming to market, all distinguished on product tier and income base.
-25. **Sources and uses of funds at closing** — sources ($12,600,000, $0 sponsor equity) and closing-cost detail;
-    uses balanced to $0, plus the net-funding memo.
-26. **Contact and next steps** — stat strip, contact block, page number in the header bar.
+1. **Title** — eyebrow "SENIOR DEBT & PREFERRED EQUITY · $17,970,734", H1 property name, factual tagline, dated
+   October 7, 2026.
+2. **Summary of the capitalization** — lede plus an 8-tile grid: total capitalization $17.97M, senior loan $12.84M
+   ($221,379/key on 58 keys), all-in rate 8.79% floating, 3-yr full-term IO, LTV at close 60.0%, stabilized DSCR
+   2.37x, stabilized debt yield 20.8%, preferred equity $4.36M.
+3. **A 57-key waterfront resort on 8.10 acres, with an adjacent parcel under contract** — photo split, lede, 2×2
+   facts (50 → 58 keys, 8.10 ac expanding to ~11, Upper Upscale, Tilghman MD), two thumbnails.
+4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities), each
+   with a photograph and a six-row fact card. Reconciles the key bridge explicitly: 50 rooms in service, 4 out of
+   service to be restored, 3 from the rebuilt three-bedroom house = 57 hotel keys, 58 with Dogwood Cove. Marina
+   reads 23 slips today · 25 added under the capital plan · 24 at Dogwood Cove.
+5. **Adjacent acquisition — 21441 Dogwood Cove** — full-width aerial of the hotel and the parcel, then three
+   columns: Transaction ($1,100,000 purchase, fee simple, $15,000 deposit, 45-day close, $300,000 renovation,
+   $1,400,000 all in), What It Adds (24 slips, ±3 acres, 4-bedroom residence, 1 key, ±11.1 acres and 72 slips on
+   completion) and Why It Matters (it was part of the hotel until a bankruptcy sale roughly ten years ago; the
+   $770,000 acquisition loan at 70% LTV funds it; $976,214 of stabilized revenue exists in no historical period).
+6. **Ownership and operating structure** — ownership narrative, 2×2 facts, and four Structure and Alignment points.
+   The single-asset-entity point now reads that 21551 Tilghman Investors LLC will also hold the Dogwood Cove parcel.
+7. **Operator background and brand portfolio** — brand blurb, the two-property portfolio, a Proof Case block on
+   Wylder Windham, recognition, and the principal's career record.
+8. **Business plan and capital improvement program** — three numbered items against the $3.3M / $56,948-per-key
+   program; at right the RevPAR index (41.4% → 79% at stabilization), a "What Drives the Plan" list and two stat
+   tiles (NOI 2026→2030 2.7x; RevPAR 2025→2030 $87→$196).
+9. **The renovation is designed, priced and scheduled** — a Gantt of the seven renovation items across September 21,
+   2026 to April 1, 2027 with exact start and completion dates, alongside a full-height photograph of the completed
+   model room.
+10. **Small Luxury Hotels affiliation and distribution** — Hilton distribution, the existing Windham relationship,
+    the Amex Fine Hotels & Resorts designation and membership economics.
+11. **Estimated values and underwritten projections** — three-value band: as-is $21,400,000 ($368,966/key), upon
+    completion $26,000,000 ($448,276/key), upon stabilization $29,500,000 ($508,621/key). Below, 2026–2030
+    operations and a stabilized-NOI takeaway (2028: $2,670,611 at a 37.7% margin).
+12. **Pro forma cash flow and underwriting assumptions** — room nights, occupancy, ADR, RevPAR, rooms/other revenue,
+    operating expenses and NOI for 2026–2030 at left; the assumption set at right.
+13. **Stabilized cash flow carried forward, 2030 through 2041** — 2030 is the last year of the pro forma, shown as a
+    highlighted anchor column; every year after continues the same line (occupancy 43.0%, rate +3.0%/yr, margin
+    38.1%). Debt service is the **permanent takeout basis** ($973,890 + $72,955), since the senior loan carries a
+    three-year term. Minimum coverage 2.92x; $28.9M of aggregate cash flow after debt service 2031–2041.
+14. **Departmental revenue and margins against industry benchmarks** — revenue by department at the 2028 stabilized
+    year; F&B against outlet comparables; the marina, seven added keys and Dogwood Cove house shown as $976,214 of
+    revenue and $851,926 of departmental profit *not present in any historical period*; margins and departmental
+    cost ratios against the resort and independent segments.
+15. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 at left; STR benchmarking (YTD
+    December 2025) at right against the four-property, 364-room set.
+16. **The competitive market, supply and demand** — the five-property, 404-room market set; penetration (RevPAR
+    index 48% → 44%, target 83%); the supply/demand series 2019–2025 with CAGRs and TTM March 2026; seasonality.
+17. **Drive-to demand, visitation and new supply.**
+18. **A three-tranche capitalization of $17,970,734** — a proportional stacked bar (senior 71.45%, acquisition
+    4.28%, preferred 24.27%), a Capital Measures table and a Tranche Terms table.
+19. **Preferred equity terms and position** (dark) — instrument, position in the stack, equity beneath the
+    preferred at each value point, and a three-year roll-forward (beginning balance, 7% PIK accrual, ending
+    balance, 10% current pay, combined obligations, NOI, coverage 0.69x → 1.39x → 1.57x).
+20. **Summary of senior loan terms** (dark) — 8.79% all-in (SOFR 3.79% + 5.00%, floating); 3 yrs full-term IO (ADS
+    $1,128,636, constant 8.790%); 60.0% LTV at close ($12,840,000, $221,379/key, 58 keys). Bottom strip carries the
+    acquisition loan and the fee schedule (2.00% origination, 1.00% MMCC, $10,100 processing).
+21. **Projected debt service coverage, 2026 through 2030** — NOI, senior debt service, acquisition P&I, total debt
+    service, DSCR senior (1.00x → 2.71x), DSCR all debt (0.94x → 2.55x) and senior debt yield (8.80% → 23.84%), with
+    the renovation-year coverage and permanent-takeout blocks at right.
+22. **The capitalization measured against cost basis and value** (dark) — ten coverage measures, a callout breaking
+    the $17,970,734 into its four uses groups, and four supporting blocks (cost basis, interest-only structure,
+    preferred equity, sponsor support).
+23. **Total project cost basis and the renovation plan** — the full $17,970,734 basis in four groups (acquisition
+    and payoff $11,814,782, capital improvements $3,303,000, reserves and working capital $2,137,664, financing
+    costs $715,288) at left; the hotel capital plan itemized to $3,003,000 plus the $300,000 Dogwood Cove
+    renovation, four per-key tiles and the exact start/completion dates at right.
+24. **Estimated value positioned against market evidence** — per-key positioning table placing the senior loan
+    ($221,379/key), cost basis ($309,840/key), the three estimated values and **both** comparable sets on one scale.
+25. **Comparable hotel sales, resort and local.**
+26. **Recent transaction evidence and local market activity.**
+27. **Sources and uses of funds at closing** — three sources plus $0 common equity, twelve uses, closing detail
+    ($155,658) and the proceeds narrative. Sources less uses = $0.
+28. **Contact and next steps** — stat strip (total capitalization, senior all-in rate, preferred equity), contact
+    block, page number in the header bar.
 
 ### Valuation language
 No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package. The value points
-are an **estimated as-is value of $21,000,000**, **upon completion of $25,500,000** and **upon stabilization of
-$28,500,000**, carried on slides 10, 17 and 22 and labeled with: "Estimated values are management's estimates
-prepared for underwriting purposes only. They are not appraisals, and no third-party valuation conclusion is
-represented." This is deliberate — the package is distributed to the appraiser engaged on the transaction, and must
-not anchor that appraiser to a prior conclusion.
+are an **estimated as-is value of $21,400,000**, **upon completion of $26,000,000** and **upon stabilization of
+$29,500,000**, carried on slides 11, 18, 19, 22 and 24 and labeled: "Values are stated for underwriting purposes and
+are subject to completion of the renovation and stabilization of operations." The word *appraisal* does not appear
+anywhere in the deck. This is deliberate — the package is distributed to the appraiser engaged on the transaction and
+must not anchor that appraiser to a prior conclusion.
 
 ### One projection, carried forward
-The deck carries a single operating projection. Slides 10-11 are the sponsor model through 2029; slide 12 continues
-that same line to 2040 rather than restarting from a differently constituted forecast. An earlier draft placed an
-independent, more conservative long-term projection on slide 12, which began roughly 15% below the 2029 stabilized
-year and showed net operating income falling after stabilization. That has been removed: the deck now shows one
-rising line, with the reserve variance disclosed as a memo rather than buried in a different basis.
+The deck carries a single operating projection. Slides 11–12 are the sponsor model 2026–2030; slide 13 continues that
+same line to 2041 rather than restarting from a differently constituted forecast. Slide 14 is benchmarked on the same
+2028 stabilized year, so the departmental mix and margins reconcile to slides 11–13.
 
-Slide 13 is benchmarked on the same 2029 stabilized year, so the departmental mix and margins reconcile to slide 12
-rather than to a second forecast.
+### Key count convention
+The **hotel** is 50 keys today and 57 on completion of the renovation. The **financing basis** is **58 keys** — the
+57 hotel keys plus the Dogwood Cove residence, which the model carries as one key at a $1,500 nightly rate and 35%
+occupancy. Every per-key figure in the package is computed on 58; where the comparables are discussed, the subject is
+compared on its 57 hotel keys. Both conventions are stated wherever they appear.
 
 ### Market data
 Comparable sales, competitive-set composition, market supply and demand, drive-to demand, visitation, departmental
 comparables and industry benchmarks are presented as market facts. Talbot County visitation is attributed to Talbot
-County Economic Development and Tourism; competitive set performance is attributed to STR. No brokerage, appraisal
-or valuation document is cited or reproduced anywhere in the package.
+County Economic Development and Tourism; competitive-set performance is attributed to STR. No brokerage, appraisal or
+valuation document is cited or reproduced anywhere in the package, and no lender is named.
 
 ## Interactions & Behavior
-- Slide navigation via `deck-stage`: arrow keys, click nav, thumbnail rail, print-to-PDF (one page/slide). No per-element interactivity — this is a linear presentation.
-- Entrance/transition animations are the shell's; for a static/print build they are frozen to final frame.
-- No forms, data fetching, or app state.
-
-## State Management
-None. Static content deck. If rebuilt as app components, the only "state" is the current slide index (owned by the slide shell).
+Slide navigation via `deck-stage`: arrow keys, click nav, thumbnail rail, print-to-PDF (one page/slide). No
+per-element interactivity, no forms, no data fetching. If rebuilt as app components the only "state" is the current
+slide index.
 
 ## Assets (in `deck/assets/`)
 - `wt-aerial-spring.png` — hero aerial (title slide)
 - `wt-aerial.png` — aerial (contact slide)
-- `wt-pier.png` — waterfront at dusk (asset slide, left)
-- `wt-suite.jpg` — renovated guest room (asset thumbnail)
-- `wt-pool.png` — waterfront pool (asset thumbnail)
-- `wt-lobby.png` — renovated interior/lobby (The Sponsor slide photo panel)
-- `flannigan.png` — John Flannigan headshot, square-cropped for circular display (Track Record slide)
-- `mmcc-2018-white.png` — Marcus & Millichap Capital Corporation logo, white
-- `buzil.jpg` — Bradley M. Buzil headshot (contact slide)
-All are real property/brand photography. If rebuilding in a codebase with its own brand system, reuse the MMCC brand assets there.
+- `wt-pier.png` — waterfront at dusk (asset slide, left; thumbnail on slide 04)
+- `wt-suite.jpg` — completed model guest room (slides 03, 04 and the renovation slide)
+- `wt-pool.png` — waterfront pool (thumbnails on slides 03 and 04)
+- `wt-fb-signs.jpg` — property signage naming Tickler's Crab Shack and Bar Mumbo (slide 04)
+- `wt-dogwood-aerial.jpg` — aerial of the hotel and the adjacent Dogwood Cove parcel (slide 05)
+- `wt-lobby.png` — renovated interior/lobby (sponsor slide)
+- `flannigan.png` — John Flannigan headshot
+- `mmcc-2018-white.png` — MMCC logo, white (the only asset with real transparency)
+- `buzil.jpg` — Bradley M. Buzil headshot
 
 ## Files
-- `deck/Wylder Tilghman Island - Senior Debt Financing.dc.html` — the deck (all 15 slides, inline-styled)
+- `deck/Wylder Tilghman Island - Senior Debt Financing.dc.html` — the deck (all 28 slides, inline-styled)
 - `deck/deck-stage.js` — slide-shell web component (scaling, nav, print)
 - `deck/support.js` — Design Component runtime
 - `deck/_ds/tranche-group-design-system-.../colors_and_type.css` — design tokens + Aptos `@font-face`
-- `deck/_ds/.../fonts/` — Aptos font files
 - `deck/assets/` — imagery and logo
+- `dist/build-dist.py` — asset-optimizing distribution build (see `dist/README.md`)
+- `dist/Wylder-Tilghman-Senior-Debt-Financing.pdf` — the 28-page export
 
-> Data note: every figure reconciles to the sponsor's financial model dated September 4, 2026
-> (Loan Analysis, Sources and Uses, Pro Forma, Total Cost Basis, Borrower Equity, Sales Comps, STR Summary).
-> Sources and uses balance to $0.00. Do not change numbers without an updated model.
+> **Data note.** Every figure reconciles to the sponsor's financial model dated October 6, 2026 (Loan Analysis,
+> Sources and Uses, Pro Forma, Total Cost Basis (Hotel), Acquisition & CapEx, Borrower Equity, 5-Yr CapEx History,
+> Sales Comps, STR Summary). Sources and uses balance to $0. Do not change numbers without an updated model.
 >
 > **Open items requiring sponsor or lender input before distribution:**
 >
-> 1. **The $3,003,000 capital improvement program is funded by the sponsor outside this financing** and is not
->    drawn from loan proceeds. Stated on slides 6, 8, 14, 15 and 18 so the absence of a PIP line in the sources and
->    uses is explained where it is visible. Confirmed by the sponsor 6 September 2026.
-> 2. **Projected Year-1 (2027) DSCR is 0.93x against a 1.20x minimum.** Max loan by DSCR in Year 1 is $9,730,166,
->    some $2,869,834 below the $12,600,000 request, and no interest reserve is funded in the sources and uses. The
->    deck discloses the sub-minimum coverage and attributes any shortfall to the sponsor carry guaranty.
-> 3. **The $21,000,000 estimated as-is value is management's, not an appraisal.** It equals the Year-1 proforma
->    value in the model (NOI capitalized at 5.999%). It is disclaimed as such wherever it appears.
-> 4. **Key count.** The model's Pro Forma tab is headed "54 rooms" while Loan Analysis uses 50 current / 57 at
->    stabilization. The package uses 50→57 throughout, and all per-key figures are computed on 57 keys.
+> 1. **2026 combined coverage is 0.69x.** The renovation year does not cover its obligations. The capitalization
+>    funds a 12-month interest and carry reserve of $1,201,591 and a 12-month preferred current-pay reserve of
+>    $436,073 to carry that period; coverage clears 1.00x in 2027 and reaches 1.57x in 2028. Disclosed on slides 19
+>    and 21.
+> 2. **Zero common equity at close.** The preferred is sized cash-neutral. The sponsor's residual equity is
+>    $3,429,266 at the as-is value and $11,529,266 at the stabilized value.
+> 3. **The RevPAR index target moved materially.** The plan now reaches 83% of the five-property market set's RevPAR
+>    at stabilization (79% of the four-property STR set), against 70% in the prior model. The entire gain is still
+>    attributed to the renovation, the added keys, the expanded marina, the adjacent parcel and the brand
+>    affiliation, with no assumed growth in the underlying market.
+> 4. **Slip counts are inconsistent between sources.** The capital plan line reads "Marina · 25 new slips"; the Pro
+>    Forma revenue line reads "Slips Revenue (incl. 20 add'l slips)"; the Dogwood Cove PSA adds 24. The package uses
+>    25 for the capital plan and 24 for Dogwood Cove, for 72 on completion, and does not restate a count alongside
+>    the revenue line. Confirm with the sponsor.
+> 5. **Three undistributed expense lines run below segment** and are flagged rather than smoothed: administrative
+>    and general 6.2%, sales and marketing 4.3%, property operation and maintenance 2.4% of revenue at
+>    stabilization.
+> 6. **Sponsor support on slide 22** (completion and cost-overrun guaranty, carry guaranty, recourse carve-outs,
+>    environmental indemnity, $10,000,000 minimum net-worth covenant) carries over from the prior lender LOI, which
+>    is no longer in the package. Confirm it still reflects the intended terms.
