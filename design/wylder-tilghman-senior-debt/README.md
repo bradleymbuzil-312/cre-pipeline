@@ -97,10 +97,10 @@ lines.
 4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities), each
    with a photograph and a six-row fact card. Reconciles the key bridge explicitly: 50 rooms in service, 4 out of
    service to be restored, 3 from the rebuilt three-bedroom house = 57 hotel keys, 58 with Dogwood Cove. Marina
-   reads 23 slips today · 25 added under the capital plan · 24 at Dogwood Cove.
+   reads 23 slips today · 24 with the Dogwood Cove acquisition · 47 on completion.
 5. **Adjacent acquisition — 21441 Dogwood Cove** — full-width aerial of the hotel and the parcel, then three
    columns: Transaction ($1,100,000 purchase, fee simple, $15,000 deposit, 45-day close, $300,000 renovation,
-   $1,400,000 all in), What It Adds (24 slips, ±3 acres, 4-bedroom residence, 1 key, ±11.1 acres and 72 slips on
+   $1,400,000 all in), What It Adds (24 slips, ±3 acres, 4-bedroom residence, 1 key, ±11.1 acres and 47 marina slips on
    completion) and Why It Matters (it was part of the hotel until a bankruptcy sale roughly ten years ago; the
    $770,000 acquisition loan at 70% LTV funds it; $976,214 of stabilized revenue exists in no historical period).
 6. **Ownership and operating structure** — ownership narrative, 2×2 facts, and four Structure and Alignment points.
@@ -228,10 +228,11 @@ slide index.
 >    at stabilization (79% of the four-property STR set), against 70% in the prior model. The entire gain is still
 >    attributed to the renovation, the added keys, the expanded marina, the adjacent parcel and the brand
 >    affiliation, with no assumed growth in the underlying market.
-> 4. **Slip counts are inconsistent between sources.** The capital plan line reads "Marina · 25 new slips"; the Pro
->    Forma revenue line reads "Slips Revenue (incl. 20 add'l slips)"; the Dogwood Cove PSA adds 24. The package uses
->    25 for the capital plan and 24 for Dogwood Cove, for 72 on completion, and does not restate a count alongside
->    the revenue line. Confirm with the sponsor.
+> 4. **Slip count convention.** The marina is **23 slips today and 47 on completion** — the 24 slips that come
+>    with the Dogwood Cove acquisition are the expansion. Confirmed by the sponsor. The capital plan line that
+>    previously read "Marina · 25 new slips" now reads "Marina replacement and expansion" so no second count is
+>    asserted; the Pro Forma revenue line is still headed "Slips Revenue (incl. 20 add'l slips)" in the model and
+>    the package does not restate a count alongside it.
 > 5. **Three undistributed expense lines run below segment** and are flagged rather than smoothed: administrative
 >    and general 6.2%, sales and marketing 4.3%, property operation and maintenance 2.4% of revenue at
 >    stabilization.
