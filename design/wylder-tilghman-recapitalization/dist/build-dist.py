@@ -42,7 +42,7 @@ KEEP_PNG = {"mmcc-2018-white.png"}
 JPEG_QUALITY = 84
 SMALL_BOX_PX = 500      # below this width, supersample 2x so zoom stays clean
 MID_BOX_PX = 1000       # 500-1000px: 1.5x, so hero photos survive zoom and print
-DECK = "Wylder Tilghman Island - Senior Debt Financing.dc.html"
+DECK = "Wylder Tilghman Island - Recapitalization.dc.html"
 
 
 def build(src_deck, out_deck):

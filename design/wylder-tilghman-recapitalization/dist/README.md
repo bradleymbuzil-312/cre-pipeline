@@ -1,6 +1,6 @@
 # Distribution build
 
-`Wylder-Tilghman-Senior-Debt-Financing.pdf` — 2.9 MB, 28 pages, 20 × 11.25 in (16:9),
+`Wylder-Tilghman-Recapitalization.pdf` — 2.9 MB, 30 pages, 20 × 11.25 in (16:9),
 one slide per page. Text stays live (selectable and searchable); it is not
 rasterized.
 
@@ -32,8 +32,8 @@ with genuine transparency (81% non-opaque), so it stays PNG.
 ```
 python3 build-dist.py            # writes ./_dist-deck
 cd _dist-deck && python3 -m http.server 8732
-# then print http://127.0.0.1:8732/Wylder%20Tilghman%20Island%20-%20Senior%20Debt%20Financing.dc.html
-# to PDF at 1920x1080, pages 1-28
+# then print http://127.0.0.1:8732/Wylder%20Tilghman%20Island%20-%20Recapitalization.dc.html
+# to PDF at 1920x1080, pages 1-30
 ```
 
 `build-dist.py` regenerates the optimized asset set into a scratch copy of
