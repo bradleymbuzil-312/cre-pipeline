@@ -16,7 +16,7 @@ all passing). The model is the source; the deck and summary quote it.
 | | |
 |---|---|
 | LP equity (gross / net cash invested) | $13,255,085 / $12,989,984 |
-| Basis | 61.94% of the $21.4M estimated as-is value · $232,545 per key on 57 keys |
+| Basis | 61.94% of the $21.4M estimated as-is value · $228,536 per key on 58 keys |
 | Equity ownership | GP 51% / LP 49% — distributions follow the waterfall, not the percentages |
 | Preferred return | 12.0% cumulative, compounded quarterly (12.55% effective) |
 | Waterfall | 100% LP to pref and capital → 100% LP to 2.0x and a 20% IRR → 20/80 to $30.0M → 50/50 above |
@@ -33,8 +33,10 @@ all passing). The model is the source; the deck and summary quote it.
   to match the deck on this point; the model's figures, formulas and cached values are untouched
   (only `xl/sharedStrings.xml` was rewritten — 7 labels, 0 of 2,575 numeric cells and 0 of 2,182
   formulas changed).
-- **Per-key figures are on the 57 hotel keys** post-renovation. The Dogwood Cove residence is an
-  additional whole-home product, not a key; its revenue is in the projections.
+- **Per-key figures are on 58 keys** — the 57 hotel keys post-renovation plus the Dogwood Cove residence,
+  which is the 58th key and is operated as a whole-home suite. The model's own key input was set to 58 to
+  match (`Inputs!B49`; only that cell and the per-key cell it feeds changed, 2 of 2,575 numeric cells).
+- **The Dogwood Cove parcel closes November 18, 2026**, shortly after the recapitalization.
 - **The renovation program is $3,303,000** — $3,003,000 for the hotel plan plus $300,000 for the
   Dogwood Cove residence, both held back by the senior lender and drawn against the work.
 - **The marina is 23 slips today and 47 on completion**; the 24 slips that come with the Dogwood

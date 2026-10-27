@@ -14,11 +14,11 @@ sale value.
 
 | | Amount | Note |
 |---|---|---|
-| LP equity (gross) | $13,255,085 | 61.94% of as-is value · $232,545 per key on 57 keys |
+| LP equity (gross) | $13,255,085 | 61.94% of as-is value · $228,536 per key on 58 keys |
 | LP net cash invested | $12,989,984 | After the 2.00% origination fee retained at funding |
 | Senior loan (month 3) | $7,000,000 | SOFR + 600, interest-only, 2.00% origination, balance held flat |
 | **Total capital** | **$20,255,085** | Less $2,070,384 returned to the LP at the refinance |
-| **Net capital in the asset** | **$18,184,701** | $319,030 per key |
+| **Net capital in the asset** | **$18,184,701** | $313,529 per key |
 
 **The waterfall.** Tier 1 — operating cash flow 100% to the LP until the accrued preferred return is
 current; capital events 100% to the LP until the preferred return **and** all invested capital are repaid.
@@ -109,25 +109,26 @@ slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, follow
 2. **Summary of the recapitalization** — lede plus an 8-tile grid: LP equity $13.26M, GP/LP equity 51%/49%,
    preferred return 12.0%, equity multiple 2.06x, projected IRR 37.3%, GP share of cash 11.0%, debt at
    closing $0, cash before the sale $8.04M.
-3. **A 57-key waterfront resort on 8.10 acres, with an adjacent parcel under contract** — photo split, lede,
+3. **A 58-key waterfront resort on 8.10 acres, with an adjacent parcel under contract** — photo split, lede,
    2×2 facts, two thumbnails.
 4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities),
    each with a photograph and a fact card. Key bridge: 50 rooms in service, 4 out of service to be restored,
-   3 from the rebuilt three-bedroom house = 57. Marina 23 slips today · 24 with the acquisition · 47 on
-   completion.
+   3 from the rebuilt three-bedroom house = 57 hotel keys, 58 with Dogwood Cove. Marina 23 slips today · 24
+   with the acquisition · 47 on completion.
 5. **Adjacent acquisition — 21441 Dogwood Cove** — full-width aerial, then Transaction ($1,100,000 purchase
-   funded by LP equity at closing with no acquisition debt, fee simple, $15,000 deposit, 45-day close,
+   funded by LP equity at closing with no acquisition debt, fee simple, $15,000 deposit, closing
+   November 18, 2026,
    $300,000 renovation held back by the senior lender), What It Adds, and Why It Matters.
 6. **Ownership and operating structure** — the GP. Ownership narrative, 2×2 facts and four Structure and
    Alignment points.
 7. **Operator background and brand portfolio.**
 8. **Business plan and capital improvement program** — three numbered items against the $3.3M /
-   $57,947-per-key program; RevPAR index, drivers list and two stat tiles at right.
+   $56,948-per-key program; RevPAR index, drivers list and two stat tiles at right.
 9. **The renovation is designed, priced and scheduled** — Gantt across September 21, 2026 to April 1, 2027
    with exact dates, alongside the completed model room.
 10. **Small Luxury Hotels affiliation and distribution.**
-11. **Estimated values and underwritten projections** — as-is $21,400,000 ($375,439/key), upon completion
-    $26,000,000 ($456,140/key), upon stabilization $29,500,000 ($517,544/key); 2026–2030 operations.
+11. **Estimated values and underwritten projections** — as-is $21,400,000 ($368,966/key), upon completion
+    $26,000,000 ($448,276/key), upon stabilization $29,500,000 ($508,621/key); 2026–2030 operations.
 12. **Pro forma cash flow and underwriting assumptions** — 2026–2030 at left, the assumption set at right.
 13. **Stabilized cash flow carried forward, 2030 through 2041** — 2030 is the first full year after the
     projected October 2029 sale, so this page is what a **buyer** underwrites at exit. Debt service is the
@@ -172,12 +173,12 @@ completion of $26,000,000** and **upon stabilization of $29,500,000**, labeled: 
 underwriting purposes and are subject to completion of the renovation and stabilization of operations."
 
 ### Key count convention
-The **hotel** is 50 keys today and 57 on completion of the renovation. **All per-key figures in this package
-are stated on 57 keys**, matching the model (`Inputs!B49` = 57, `LP equity per key` = $232,545). The Dogwood
-Cove residence is operated as an additional whole-home product and its revenue ($191,625 a year from
-stabilization, at a $1,500 nightly rate and 35% occupancy) is in the projections, but it is not counted as a
-key. The marina is **23 slips today and 47 on completion** — the 24 slips that come with the Dogwood Cove
-acquisition are the expansion.
+The **hotel** is 50 keys today and 57 on completion of the renovation; the Dogwood Cove residence is the
+**58th key**, operated as a whole-home suite at a $1,500 nightly rate and 35% occupancy ($191,625 a year from
+stabilization, in the projections). **All per-key figures in this package are stated on 58 keys** — the deck,
+the LP summary and the model agree (`Inputs!B49` = 58, `LP equity per key` = $228,536). The marina is
+**23 slips today and 47 on completion** — the 24 slips that come with the Dogwood Cove acquisition are the
+expansion, which closes **November 18, 2026**.
 
 ### Market data
 Comparable sales, competitive-set composition, market supply and demand, drive-to demand, visitation,
