@@ -5,6 +5,13 @@ A 30-slide institutional equity package marketing a **$13,255,085 limited partne
 equity in Wylder Hotel Tilghman Island (Talbot County, MD). The LP funds the entire closing; a senior
 refinance follows in month three.
 
+**Equity ownership is GP 51% / LP 49%** — and ownership is deliberately not the same thing as capital. The
+LP contributes 100% of the equity and holds 49% of it; the GP holds 51% and contributes none. The waterfall
+sits ahead of the ownership split, so the GP's majority interest is fully subordinated and has no effect
+until the LP has been made whole. In the base case the GP receives **11.0% of total equity cash
+($3,309,883 of $30,117,321)** against its 51% interest, and it receives nothing at all below a $25,278,210
+sale value.
+
 | | Amount | Note |
 |---|---|---|
 | LP equity (gross) | $13,255,085 | 61.94% of as-is value · $232,545 per key on 57 keys |
@@ -16,15 +23,16 @@ refinance follows in month three.
 **The waterfall.** Tier 1 — operating cash flow 100% to the LP until the accrued preferred return is
 current; capital events 100% to the LP until the preferred return **and** all invested capital are repaid.
 Tier 2 — 100% to the LP until it has received 2.0x net cash invested *and* earned at least a 20% IRR; the GP
-receives nothing before that. Tier 3 — 20% LP / 80% GP on proceeds up to a $30,000,000 gross sale value.
-Tier 4 — 50/50 above $30,000,000. Preferred return 12.0% compounded quarterly (12.55% effective annual),
+receives nothing before that. Tier 3 — 20% LP / 80% GP on proceeds up to a $30,000,000 gross sale value (the promote, above the GP's 51%
+pro rata). Tier 4 — 50/50 above $30,000,000 (marginally below it). Preferred return 12.0% compounded quarterly (12.55% effective annual),
 cumulative, on the gross capital account. **No GP capital account, no minimum multiple, no GP guaranty.**
 
 **Base case** — a month-36 sale at the $29,500,000 stabilized value: **2.06x / 37.3% IRR**, $26,807,438 of
 total LP distributions, $13,817,455 of net profit, of which $8,038,602 (62% of net cash invested) is
 returned before the sale month. GP distributions $3,309,883.
 
-GP = Wylder Hotels (John Flannigan), operator and sponsor. LP = recapitalization equity investor.
+GP = Wylder Hotels (John Flannigan), operator, sponsor and managing member, holding 51% of the equity.
+LP = recapitalization equity investor, holding 49% and contributing all of the capital.
 Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
 
 ## About the Design Files
@@ -98,9 +106,9 @@ slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, follow
 
 1. **Title** — eyebrow "RECAPITALIZATION · $13,255,085 LP EQUITY", H1 property name, factual tagline, dated
    October 27, 2026.
-2. **Summary of the recapitalization** — lede plus an 8-tile grid: LP equity $13.26M, preferred return 12.0%,
-   equity multiple 2.06x, projected IRR 37.3%, promote to the GP None, debt at closing $0, cash before the
-   sale $8.04M, capital back at month 3 $2.07M.
+2. **Summary of the recapitalization** — lede plus an 8-tile grid: LP equity $13.26M, GP/LP equity 51%/49%,
+   preferred return 12.0%, equity multiple 2.06x, projected IRR 37.3%, GP share of cash 11.0%, debt at
+   closing $0, cash before the sale $8.04M.
 3. **A 57-key waterfront resort on 8.10 acres, with an adjacent parcel under contract** — photo split, lede,
    2×2 facts, two thumbnails.
 4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities),
@@ -129,20 +137,26 @@ slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, follow
 16. **The competitive market, supply and demand.**
 17. **Drive-to demand, visitation and new supply.**
 18. **A $13,255,085 LP recapitalization of the equity** — a proportional bar of total capital (LP 65.44% /
-    senior 34.56%), Capital Measures, and The Parties.
+    senior 34.56%), an Equity Ownership block (GP 51% / LP 49%, with the capital-versus-ownership
+    distinction stated), Capital Measures, and The Parties.
 19. **Sources and uses of funds at closing** — LP equity is the only source; seven uses to $13,255,085;
     closing detail $130,100. Sources less uses = $0.
 20. **A $7,000,000 senior refinance in month three** — terms at left, allocation of proceeds at right, with
     the $2,070,384 return of capital highlighted.
-21. **The distribution waterfall** (dark) — four tiers with LP/GP split bars, base-case dollars per tier, and
-    a bottom strip (preferred return, effective annual, GP capital account, base-case LP/GP totals).
+21. **The GP holds 51% of the equity and is paid last** (dark) — four tiers with LP/GP split bars and
+    base-case dollars per tier, over a lede stating that the ownership split has no effect until the LP is
+    made whole. Bottom strip: GP equity interest 51%, GP share of base-case cash 11.0%, preferred return
+    12.0%/12.55%, and the $25.3M sale value below which the GP receives nothing.
 22. **Projected investor returns** (dark) — 2.06x / 37.3% / 36 months, with supporting rows and a bottom
     strip (cash returned before the sale, from the refinance, from operations, unpaid capital after sale).
 23. **LP distributions across the hold period** — by calendar year 2026–2029 plus a Total column (operating
-    cash flow, capital events, pref accrued, tiers 1–3, total), with the LP capital account trajectory.
+    cash flow, capital events, pref accrued, tiers 1–3, total), the LP capital account trajectory, and the
+    LP/GP equity cash split at five sale values (100.0%/0.0% at $21.4M through 82.7%/17.3% at $35.0M).
 24. **Sensitivity to sale value and sale month** — multiple and IRR grids across 11 sale values × 4 sale
     months, plus the gross sale value needed for LP 1.00x and 2.00x at each hold.
-25. **The downside and what protects it** (dark) — ten downside measures and four structural protections.
+25. **The downside and what protects it** (dark) — twelve downside measures (including the GP's 51% interest
+    against its 11.0% share of base-case cash) and five structural protections, among them "A Majority
+    Interest, Paid Last".
 26. **Total basis and the renovation plan** — the $18,184,701 net capital in four groups, the capital plan
     itemized, four per-key tiles and the exact start/completion dates.
 27. **Estimated value positioned against market evidence** — per-key positioning placing LP equity, net
@@ -196,15 +210,21 @@ STR. No brokerage, appraisal or valuation document is cited or reproduced, and n
 >    pages 24 and 25.
 > 2. **The GP falls short of its $5.0M target in the base case** at $3,309,883. The model's own sensitivity
 >    puts $5.0M at roughly $32.6M at month 36 or $29.4M at month 48. The deck does not present the GP target;
->    expect it in negotiation.
-> 3. **The 80% GP share in tier 3 is aggressive** relative to institutional feedback (the model's own note).
+>    expect it in negotiation. Note the tension with the 51% ownership: a majority holder taking 11.0% of the
+>    cash is the point of the subordination, but it is also why the $5.0M target is not met here.
+> 3. **The GP's 51% interest carries control, not just economics.** An LP funding 100% of the capital while
+>    holding a 49% minority interest needs the operating agreement to carry its protections — major-decision
+>    consents, removal rights on a GP default, and the subordination itself. The deck presents the economics;
+>    counsel must paper the governance. Tax allocations of a 51% interest with no capital account also need
+>    to be set by counsel.
+> 4. **The 80% GP share in tier 3 is aggressive** relative to institutional feedback (the model's own note).
 >    The deck presents it as drafted.
-> 4. **The $30.0M tier 4 hurdle is a gross sale value test.** Definitive documents should define it (gross
+> 5. **The $30.0M tier 4 hurdle is a gross sale value test.** Definitive documents should define it (gross
 >    versus net of costs) because the definition shifts the split.
-> 5. **Working capital appears twice.** $250,000 is a closing use funded by LP equity and $500,000 is held
+> 6. **Working capital appears twice.** $250,000 is a closing use funded by LP equity and $500,000 is held
 >    back at the refinance, so the deck shows $750,000 of total working capital on page 26. The model's input
 >    label reads "funded $250K, held back $250K" while its arithmetic subtracts the full $500,000 from refinance
 >    proceeds. Confirm which is intended.
-> 6. **Sale costs are modeled at 2.0% of value** and exclude Maryland transfer and recordation taxes, which
+> 7. **Sale costs are modeled at 2.0% of value** and exclude Maryland transfer and recordation taxes, which
 >    require local verification.
-> 7. **Legal ownership, control and tax allocation of the promote** are to be set by counsel.
+> 8. **Legal ownership, control and tax allocation of the promote** are to be set by counsel.
