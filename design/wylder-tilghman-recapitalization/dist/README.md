@@ -1,6 +1,6 @@
 # Distribution build
 
-`Wylder-Tilghman-Recapitalization.pdf` — 2.9 MB, 30 pages, 20 × 11.25 in (16:9),
+The deck exports to `../package/Wylder Tilghman Island - Recapitalization.pdf` — 3.1 MB, 30 pages, 20 × 11.25 in (16:9),
 one slide per page. Text stays live (selectable and searchable); it is not
 rasterized.
 

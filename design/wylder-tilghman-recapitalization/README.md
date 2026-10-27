@@ -156,7 +156,7 @@ slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, follow
     months, plus the gross sale value needed for LP 1.00x and 2.00x at each hold.
 25. **The downside and what protects it** (dark) — twelve downside measures (including the GP's 51% interest
     against its 11.0% share of base-case cash) and five structural protections, among them "A Majority
-    Interest, Paid Last".
+    Interest, Paid Last", which also carries the LP's major-decision approval rights.
 26. **Total basis and the renovation plan** — the $18,184,701 net capital in four groups, the capital plan
     itemized, four per-key tiles and the exact start/completion dates.
 27. **Estimated value positioned against market evidence** — per-key positioning placing LP equity, net
@@ -191,13 +191,25 @@ STR. No brokerage, appraisal or valuation document is cited or reproduced, and n
 `wt-dogwood-aerial.jpg` (slide 5), `wt-lobby.png` (sponsor), `flannigan.png`, `buzil.jpg`,
 `mmcc-2018-white.png` (the only asset with real transparency).
 
+## The send-together package
+
+`package/` holds the three documents that go to an investor as a set — the deck PDF, the LP equity
+summary and the GP/LP model — with its own manifest and the list of conventions applied across all
+three. `scripts/crosscheck.py` asserts that every shared figure reconciles and that no appraiser or
+appraisal is named in any of them; run it after any change to the deck, the summary or the model.
+
+```
+python3 -I scripts/crosscheck.py     # 30 assertions; exits non-zero on a mismatch
+```
+
 ## Files
 - `deck/Wylder Tilghman Island - Recapitalization.dc.html` — the deck (all 30 slides, inline-styled)
 - `deck/deck-stage.js` — slide-shell web component (scaling, nav, print)
 - `deck/support.js` — Design Component runtime
 - `deck/_ds/tranche-group-design-system-.../colors_and_type.css` — design tokens + Aptos `@font-face`
 - `dist/build-dist.py` — asset-optimizing distribution build (see `dist/README.md`)
-- `dist/Wylder-Tilghman-Recapitalization.pdf` — the 30-page export
+- `package/` — the three send-together documents plus their manifest
+- `scripts/crosscheck.py` — cross-document reconciliation; `scripts/scrub_model.py` — label scrub
 
 > **Data note.** Capital, waterfall and return figures reconcile to the GP/LP model v4 dated 27 October 2026;
 > operating figures reconcile to the 10.6.26 financial model. Sources and uses balance to $0. Do not change
