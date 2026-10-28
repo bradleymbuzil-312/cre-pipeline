@@ -70,6 +70,19 @@ for label, want, tok in [('Tier 1 to LP', cell(S,'E14'), '$14,483,289'),
     print(f'  {"OK " if ok else "!! "}{label:34s} {want:,.2f} -> {tok}')
     if not ok: fails.append(label)
 
+print('\n── the estimates exclude the acquisition; the acquisition is valued separately ──')
+for label, dk, sm in [
+    ('values exclude the parcel', 'do not include the adjacent Dogwood Cove parcel',
+     'do not include the adjacent Dogwood Cove parcel'),
+    ('EBITDA from the parcel', '$300,000', '$300,000'),
+    ('7.0% cap rate', '7.0% Cap Rate', '7.0%'),
+    ('implied value', '$4.3M', '$4.3M'),
+    ('all-in cost', '$1,400,000', '$1.4M'),
+]:
+    okd, oks = norm(dk) in dk_flat, sm in summ
+    print(f'  {"OK " if okd and oks else "!! "}{label:34s} deck {"y" if okd else "n"}  summary {"y" if oks else "n"}')
+    if not (okd and oks): fails.append(label)
+
 print('\n── banned terms (standing instruction) ──')
 for name, text in (('deck', deck), ('summary', summ)):
     hits = [w for w in ('CBRE', 'LWHA', 'Newmark', 'appraisal', 'Appraisal', 'appraiser', 'New Day')

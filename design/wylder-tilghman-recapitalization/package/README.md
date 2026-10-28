@@ -37,6 +37,10 @@ all passing). The model is the source; the deck and summary quote it.
   which is the 58th key and is operated as a whole-home suite. The model's own key input was set to 58 to
   match (`Inputs!B49`; only that cell and the per-key cell it feeds changed, 2 of 2,575 numeric cells).
 - **The Dogwood Cove parcel closes November 18, 2026**, shortly after the recapitalization.
+- **The estimated values are for the hotel and exclude the adjacent parcel.** Stated in both the deck
+  (pages 5, 11, 18, 24, 25, 26, 27) and the LP summary. Page 5 values the parcel separately: ~$300,000 of
+  EBITDA at a 7.0% cap is ~$4.3M against a $1.4M all-in cost, roughly $2.9M above cost — none of it in any
+  value, coverage or return figure elsewhere in the package.
 - **The renovation program is $3,303,000** — $3,003,000 for the hotel plan plus $300,000 for the
   Dogwood Cove residence, both held back by the senior lender and drawn against the work.
 - **The marina is 23 slips today and 47 on completion**; the 24 slips that come with the Dogwood

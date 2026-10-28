@@ -166,6 +166,16 @@ slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, follow
 29. **Recent transaction evidence and local market activity.**
 30. **Contact and next steps** — stat strip (LP equity, preferred return, equity multiple), contact block.
 
+### The estimated values exclude the acquisition
+The estimated as-is, as-complete and stabilized values are **for the hotel**. They do not include the
+adjacent Dogwood Cove parcel, and every basis, coverage and return figure in the package is measured against
+them — so the parcel's value is upside the numbers do not carry. This is stated on pages 5, 11, 18, 24, 25,
+26 and 27 and in the LP summary. Page 5 sizes it: capitalizing the **~$300,000 of EBITDA the parcel itself
+produces** (marina and room revenue) at **7.0%** implies **~$4.3M of value** against a **$1.4M all-in
+cost** — roughly **$2.9M above cost**, 3.1x on cost. The $300,000 is conservative against the model's own
+components (the Dogwood Cove house carries $191,625 of revenue at stabilization and the marina $341,332 of
+departmental profit, of which 24 of 47 slips are attributable to the parcel).
+
 ### Valuation language
 No appraiser, appraisal firm or third-party valuation conclusion is named anywhere in the package, and the
 word *appraisal* does not appear. The value points are an **estimated as-is value of $21,400,000**, **upon
