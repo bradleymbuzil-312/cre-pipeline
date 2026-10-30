@@ -140,7 +140,9 @@ its projected multiple and IRR.
 6. Ownership and operating structure — the sponsor.
 7. Operator background and brand portfolio.
 8. Business plan and capital improvement program — the $3.3M / $56,948-per-key program.
-9. The renovation is designed, priced and scheduled — Gantt, September 21, 2026 to April 1, 2027.
+9. The renovation is designed, priced and scheduled — Gantt, November 1, 2026 to April 30, 2027.
+   The axis and bars are computed from real dates in `scripts/build/v7_reno.py`, which also
+   feeds the start/completion rows on page 24 — change the dates there, not in the markup.
 10. Small Luxury Hotels affiliation and distribution.
 11. Estimated values and underwritten projections.
 12. Pro forma cash flow and underwriting assumptions.
@@ -280,8 +282,8 @@ three and would disclose cross-tranche economics if sent alongside them.
 >    in sources and uses. Confirm at closing; both would come out of the $130,100 closing line.
 > 6. **Year-one coverage is 0.94x** and is carried entirely by the twelve-month interest and carry
 >    reserve. If the renovation runs past the twelve months the reserve funds, coverage has no other
->    source. The schedule runs September 21, 2026 to April 1, 2027, so there is roughly five months of
->    slack — confirm that is acceptable to the senior lender.
+>    source. The schedule runs November 1, 2026 to April 30, 2027 — six months against a twelve-month
+>    reserve, so roughly six months of slack. Confirm that is acceptable to the senior lender.
 > 7. **The LP loses money below roughly $21,000,000** and the partnership receives nothing below
 >    $12,783,904. Neither figure appears in the common equity package, by instruction. The sponsor and
 >    counsel should be aware of both; a subscription document will have to disclose the downside even

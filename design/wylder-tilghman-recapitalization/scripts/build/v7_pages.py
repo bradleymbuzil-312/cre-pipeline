@@ -2,6 +2,7 @@
 """Total basis (shared) and the tranche-specific pages for each of the three packages."""
 from v7_lib import *
 from figs_v7 import *
+from v7_reno import BASIS_DATES, fmt as _rfmt
 
 # ═════════════════════════════════════════════ TOTAL BASIS (shared)
 ACQ = [('Acquisition and capital expenses', 10_714_782),
@@ -56,10 +57,9 @@ def total_basis(t='senior'):
      + stat('Stabilized / key', f'${VAL["stab"]/KEYS:,.0f}', 'April 2029', br=False, pad='14px 0 0 14px')
      + '      </div>\n'
      + '      <div style="height:14px;"></div>\n' + sub('Start and Completion Dates', fs='13.5px')
-     + row('Rooms, house, FF&amp;E and exterior work', 'Sep 21, 2026 &rarr; Mar 15, 2027', pad=5, fs='15px')
-     + row('Marina replacement and expansion', 'Nov 1, 2026 &rarr; Dec 15, 2026', pad=5, fs='15px')
-     + row('Event space upgrade', 'Jan 2, 2027 &rarr; Jan 31, 2027', pad=5, fs='15px')
-     + row('Punch list to completion', 'Mar 1, 2027 &rarr; Apr 1, 2027', pad=5, fs='15px', kind='sub')
+     + ''.join(row(lab, f'{_rfmt(a)} &rarr; {_rfmt(b)}', pad=5, fs='15px',
+                   kind=('sub' if lab.startswith('Punch') else ''))
+               for lab, a, b in BASIS_DATES)
      + para('The renovation program is funded at close from the capitalization. The schedule by trade is '
             'on page 9. Per-key figures are stated on 58 keys &mdash; the 57 hotel keys post-renovation '
             'plus the Dogwood Cove residence. The estimated values are for the hotel and exclude the '
