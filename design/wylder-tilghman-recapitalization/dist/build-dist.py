@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build the distribution asset set for the Wylder Tilghman senior debt financing deck.
+"""Build the distribution asset set for the three Wylder Tilghman capitalization packages.
 
 Copies ../deck to an output directory, resizes every image to the resolution its
 display box actually needs, re-encodes photographs to JPEG, and repoints the
-deck's src attributes. Leaves the masters in ../deck untouched.
+src attributes in all three deck files. Leaves the masters in ../deck untouched.
 
     python3 build-dist.py /tmp/dist-deck
 
@@ -27,7 +27,7 @@ SPEC = {
     "wt-pier.png":          ((845, 1080), "cover"),   # hero on slide 03; thumbnail on 04
     "wt-lobby.png":         ((768, 1080), "cover"),
     "wt-suite.jpg":         ((766, 654), "cover"),    # hero on slide 09; thumbnails on 03 and 04
-    "wt-dogwood-aerial.jpg": ((1760, 330), "cover"),  # full-width band on slide 05
+    "wt-dogwood-aerial.jpg": ((1760, 259), "cover"),  # full-width band on slide 05
     "wt-pool.png":          ((455, 290), "cover"),    # thumbnails on slides 03 and 04
     "wt-fb-signs.jpg":      ((425, 290), "cover"),    # F&B thumbnail on slide 04
     "flannigan.png":        ((90, 90), "cover"),
@@ -42,7 +42,9 @@ KEEP_PNG = {"mmcc-2018-white.png"}
 JPEG_QUALITY = 84
 SMALL_BOX_PX = 500      # below this width, supersample 2x so zoom stays clean
 MID_BOX_PX = 1000       # 500-1000px: 1.5x, so hero photos survive zoom and print
-DECK = "Wylder Tilghman Island - Recapitalization.dc.html"
+DECKS = ["Wylder Tilghman Island - Senior Debt.dc.html",
+          "Wylder Tilghman Island - Preferred Equity.dc.html",
+          "Wylder Tilghman Island - Common Equity.dc.html"]
 
 
 def build(src_deck, out_deck):
@@ -82,15 +84,26 @@ def build(src_deck, out_deck):
         after += os.path.getsize(out)
         print(f"  {name:24} {sw}x{sh} -> {target[0]}x{target[1]}")
 
-    html = os.path.join(out_deck, DECK)
-    with open(html, encoding="utf-8") as fh:
-        s = fh.read()
-    for old, new in renames.items():
-        if f"assets/{old}" not in s:
-            raise SystemExit(f"deck does not reference assets/{old}")
-        s = s.replace(f"assets/{old}", f"assets/{new}")
-    with open(html, "w", encoding="utf-8") as fh:
-        fh.write(s)
+    seen = set()
+    for deck in DECKS:
+        html = os.path.join(out_deck, deck)
+        if not os.path.exists(html):
+            raise SystemExit(f"missing deck: {deck}")
+        with open(html, encoding="utf-8") as fh:
+            s = fh.read()
+        for old, new in renames.items():
+            if f"assets/{old}" in s:
+                seen.add(old)
+                s = s.replace(f"assets/{old}", f"assets/{new}")
+        with open(html, "w", encoding="utf-8") as fh:
+            fh.write(s)
+    missing = set(renames) - seen
+    if missing:
+        raise SystemExit(f"no deck references: {sorted(missing)}")
+    # drop the superseded single-package deck from the distribution copy
+    for stale in os.listdir(out_deck):
+        if stale.endswith(".dc.html") and stale not in DECKS:
+            os.remove(os.path.join(out_deck, stale))
 
     print(f"\nassets {before / 1048576:.2f} MB -> {after / 1048576:.2f} MB "
           f"({100 - after / before * 100:.0f}% smaller)")

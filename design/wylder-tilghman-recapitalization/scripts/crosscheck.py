@@ -1,113 +1,93 @@
 # -*- coding: utf-8 -*-
-"""Check the deck PDF, the LP summary and the model agree, and that none names an appraiser."""
-import re, sys, pymupdf, docx, openpyxl
+"""Verify the three capitalization packages.
+
+Each package must (a) carry its own economics, (b) carry none of the other two tranches'
+economics, (c) name no source document, and (d) in the common equity package, show no exit
+level at which the recipient loses money.
+
+    python3 scripts/crosscheck.py
+"""
+import re
+import sys
+
+import pymupdf
+
 P = "/home/user/cre-pipeline/design/wylder-tilghman-recapitalization/package"
-pdf = f"{P}/Wylder Tilghman Island - Recapitalization.pdf"
-doc = f"{P}/Wylder Tilghman Island - LP Equity Summary.docx"
-xls = f"{P}/Wylder Tilghman Island - GP-LP Model v4.xlsx"
+PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf"),
+        "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf"),
+        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf")}
 
-d = pymupdf.open(pdf)
-deck = re.sub(r'\s+', ' ', ''.join(p.get_text() for p in d)).replace('’', "'")
-norm = lambda t: re.sub(r'[^A-Za-z0-9.$%/&-]', '', t).lower()
-dk_flat = norm(deck)
+# Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
+norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
 
-def doc_paras(c):
-    for p in c.paragraphs: yield p.text
-    for t in c.tables:
-        for row in t.rows:
-            for cell in row.cells: yield from doc_paras(cell)
-summ = re.sub(r'\s+', ' ', '\n'.join(doc_paras(docx.Document(doc)))).replace('’', "'")
-
-wb = openpyxl.load_workbook(xls, data_only=True)
-S, I = wb['Summary'], wb['Inputs']
-def cell(ws, a):
-    import openpyxl.utils.cell as u
-    col, row = u.coordinate_from_string(a)
-    return ws.cell(row, u.column_index_from_string(col)).value
+# ── each tranche's own economics: rate, fees, participation, returns
+OWN = {
+ "senior": ["$10,000,000", "12.00%", "SOFR", "8.21%", "3.79%", "interest-only",
+            "$8,600,000", "$9,800,000", "$3,600,000", "5.00%", "$940,000",
+            "$14,540,000", "$4,740,000", "1.48x", "15.6%", "57.46%", "46.73%"],
+ "pref": ["$3,904,044", "17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "10.00%",
+          "$1,880,000", "$7,526,610", "$3,700,647", "1.97x", "31.5%", "64.97%"],
+ "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
+            "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
+            "2.33x", "32.6%", "63.64%"]}
+# ── what the other two must never see
+SECRET = {
+ "senior": ["12.00%", "SOFR", "8.21%", "$8,600,000", "$9,800,000", "$3,600,000", "$940,000",
+            "$14,540,000", "$4,740,000", "1.48x", "15.6%", "$364,000", "$1,228,000",
+            "$4,164,000", "$5,028,000", "$14,828,000"],
+ "pref": ["17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "$78,081", "$1,880,000",
+          "$7,526,610", "$3,700,647", "1.97x", "31.5%", "$728,000", "$2,456,000",
+          "$2,548,647", "$4,276,647", "$8,102,610"],
+ "common": ["$1,823,062", "$1,041,750", "$2,864,812", "$5,683,522", "$2,841,761",
+            "$14,048,334", "$8,164,823", "$4,664,823", "$5,883,511", "$3,883,511",
+            "$6,704,334", "$18,944,334", "$10,612,823", "$7,112,823"]}
+# capital amounts, the stack and aggregates every recipient is entitled to see
+SHARED_OK = {"$10,000,000", "$3,904,044", "$3,500,000", "$2,000,000", "$5,500,000",
+             "$17,404,044", "$4,751,666", "$19,247,882", "51%", "49%"}
+# the common equity recipient must see no exit level at which it loses money
+LOSS = ["$18,000,000", "$18M", "$12,783,904", "$791,424", "$452,242", "0.77x", "-8.2%"]
+FORBIDDEN = ["appraisal", "appraised", "appraiser", "LWHA", "Newmark", "CBRE", "New Day"]
+BRITISH = ["utilise", "organis", "centre", "labour", "metres", "colour", "favour", "analyse"]
 
 fails = []
-def check(label, model, deck_tokens, summ_tokens):
-    dk = [t for t in deck_tokens if norm(t) not in dk_flat]
-    sm = [t for t in summ_tokens if t not in summ]
-    ok = not dk and not sm
-    print(f'  {"OK " if ok else "!! "}{label:34s} model {model}')
-    if dk: print(f'        missing from deck:    {dk}')
-    if sm: print(f'        missing from summary: {sm}')
-    if not ok: fails.append(label)
 
-print('── figures present in all three ──')
-check('LP equity (gross)',     f'{cell(S,"B5"):,.2f}',  ['$13,255,085'], ['$13,255,000', '$13.26M'])
-check('LP net cash invested',  f'{cell(S,"B6"):,.2f}',  ['$12,989,984'], ['$12,990,000', '$12.99M'])
-check('LP equity % of as-is',  f'{cell(S,"B7"):.4f}',   ['61.94%'],      ['61.9%'])
-check('Preferred return',      f'{cell(S,"B8"):.2%}',   ['12.0%', '12.55%'], ['12.0%', '12.55%'])
-check('Tier 2 multiple / IRR', f'{cell(S,"B9")} / {cell(S,"B10"):.0%}', ['2.0x', '20%'], ['2.0x', '20% IRR'])
-check('Tier 3 LP / Tier 4 LP', f'{cell(S,"B12"):.0%} / {cell(S,"B14"):.0%}',
-      ['20% LP / 80% GP', '50% LP / 50% GP'], ['20% LP / 80% GP', '50% LP / 50% GP'])
-check('Tier 4 hurdle',         f'{cell(S,"B13"):,}',    ['$30,000,000'], ['$30.0M'])
-check('Senior refinance',      f'{cell(S,"B15"):,}',    ['$7,000,000'],  ['$7.0M', 'SOFR + 600'])
-check('Return of capital',     f'{cell(S,"B16"):,}',    ['$2,070,384'],  ['$2.07M'])
-check('Sale month / value',    f'{cell(S,"B17")} / {cell(S,"B18"):,}', ['36', '$29,500,000'], ['month 36', '$29.5M'])
-check('Equity multiple',       f'{cell(S,"E7"):.4f}',   ['2.06x'],       ['2.06x'])
-check('LP IRR',                f'{cell(S,"E8"):.4f}',   ['37.3%'],       ['37.3%'])
-check('Cash before sale',      f'{cell(S,"E10"):,.2f}', ['$8,038,602'],  ['62%'])
-check('GP ownership / LP',     f'{cell(S,"E28"):.0%} / {cell(S,"E29"):.0%}', ['51%', '49%'], ['51%', '49%'])
-check('Keys post PIP',         f'{cell(I,"B49")}',      ['58 keys'],     ['58 keys'])
-check('LP equity per key',     f'{cell(I,"B51"):,.2f}', ['$228,536'],    ['$228,536'])
-check('Dogwood Cove closing',  'Nov 18, 2026',          ['Nov 18, 2026'], ['November 18, 2026'])
-check('Closing: loan payoff',  f'{cell(S,"B21"):,.2f}', ['$10,714,782'], ['$10.71M'])
-check('Closing: MCA payoff',   f'{cell(S,"B22"):,}',    ['$530,000'],    ['$0.53M'])
-check('Closing: Dogwood Cove', f'{cell(S,"B23"):,}',    ['$1,100,000'],  ['$1.10M'])
-check('LP origination fee',    f'{cell(S,"B26"):,.2f}', ['$265,102'],    ['$265,102'])
 
-print('\n── model values the deck must match exactly ──')
-for label, want, tok in [('Tier 1 to LP', cell(S,'E14'), '$14,483,289'),
-                         ('Tier 2 to LP', cell(S,'E15'), '$11,496,678'),
-                         ('Tier 3 to LP', cell(S,'E16'), '$827,471'),
-                         ('Total LP distributions', cell(S,'E18'), '$26,807,438'),
-                         ('GP distributions', cell(S,'E23'), '$3,309,883')]:
-    ok = tok.replace(',', '').replace('$', '') == f'{want:,.0f}'.replace(',', '') and \
-         norm(tok) in dk_flat
-    print(f'  {"OK " if ok else "!! "}{label:34s} {want:,.2f} -> {tok}')
-    if not ok: fails.append(label)
+def check(cond, label, detail=""):
+    print(f'  {"OK " if cond else "!! "}{label}{"" if cond else "  " + detail}')
+    if not cond:
+        fails.append(label)
 
-print('\n── the estimates exclude the acquisition; the acquisition is valued separately ──')
-for label, dk, sm in [
-    ('values exclude the parcel', 'do not include the adjacent Dogwood Cove parcel',
-     'do not include the adjacent Dogwood Cove parcel'),
-    ('EBITDA from the parcel', '$300,000', '$300,000'),
-    ('7.0% cap rate', '7.0% Cap Rate', '7.0%'),
-    ('implied value', '$4.3M', '$4.3M'),
-    ('all-in cost', '$1,400,000', '$1.4M'),
-]:
-    okd, oks = norm(dk) in dk_flat, sm in summ
-    print(f'  {"OK " if okd and oks else "!! "}{label:34s} deck {"y" if okd else "n"}  summary {"y" if oks else "n"}')
-    if not (okd and oks): fails.append(label)
 
-print('\n── banned terms (standing instruction) ──')
-for name, text in (('deck', deck), ('summary', summ)):
-    hits = [w for w in ('CBRE', 'LWHA', 'Newmark', 'appraisal', 'Appraisal', 'appraiser', 'New Day')
-            if w in text]
-    print(f'  {"OK " if not hits else "!! "}{name:8s} {hits or "clean"}')
-    if hits: fails.append(f'banned term in {name}')
-mx = [w for w in ('CBRE', 'appraisal') if any(w in str(c.value) for ws in wb.worksheets
-      for r in ws.iter_rows() for c in r if c.value)]
-print(f'  -- model   {mx} (internal working file; not distributed as a marketing document)')
+for t, (name, path) in PKGS.items():
+    d = pymupdf.open(path)
+    flat = norm("".join(p.get_text() for p in d))
+    raw = re.sub(r"\s+", " ", "".join(p.get_text() for p in d))
+    print(f"\n── {name} · {len(d)} pages ──")
+    check(len(d) == 28, "28 pages", f"got {len(d)}")
 
-print('\n── return grid: summary vs model sensitivity ──')
-Sens = wb['Sensitivity']
-rows = {21_400_000: '1.71x / 27.5%|1.88x / 25.4%', 26_000_000: '2.01x / 36.0%|2.04x / 28.7%',
-        29_500_000: '2.06x / 37.3%|2.10x / 29.6%', 32_000_000: '2.15x / 39.4%|2.18x / 31.1%',
-        35_000_000: '2.26x / 42.1%|2.29x / 33.0%'}
-for r in range(6, 17):
-    v = Sens.cell(r, 1).value
-    if v not in rows: continue
-    m36, m48 = Sens.cell(r, 3).value, Sens.cell(r, 4).value
-    i36, i48 = Sens.cell(r + 14, 3).value, Sens.cell(r + 14, 4).value
-    calc = f'{m36:.2f}x / {i36:.1%}|{m48:.2f}x / {i48:.1%}'
-    want = rows[v]
-    ok = calc == want and all(p in summ for p in want.split('|'))
-    print(f'  {"OK " if ok else "!! "}${v/1e6:>5,.1f}M  model {calc}   summary {want}')
-    if not ok: fails.append(f'grid {v}')
+    missing = [v for v in OWN[t] if norm(v) not in flat]
+    check(not missing, "carries its own economics", f"missing {missing}")
 
-print('\nRESULT:', 'all three documents reconcile' if not fails else f'{len(fails)} MISMATCH: {fails}')
-sys.exit(1 if fails else 0)
+    leaked = []
+    for other in [o for o in PKGS if o != t]:
+        leaked += [v for v in SECRET[other] if v not in SHARED_OK and norm(v) in flat]
+    check(not leaked, "no other tranche's economics", f"leaked {sorted(set(leaked))}")
+
+    named = [w for w in FORBIDDEN if re.search(w, raw, re.I)]
+    check(not named, "no source document named", f"found {named}")
+
+    brit = [w for w in BRITISH if w in raw.lower()]
+    check(not brit, "US spelling", f"found {brit}")
+
+    check(norm("58 keys") in flat and norm("$331,860") in flat,
+          "per-key figures on 58 keys", "cost basis per key $331,860 not found")
+
+    if t == "common":
+        hits = [v for v in LOSS if norm(v) in flat]
+        check(not hits, "no exit level showing a loss", f"found {hits}")
+
+print()
+if fails:
+    print(f"{len(fails)} check(s) failed")
+    sys.exit(1)
+print("all checks passed")

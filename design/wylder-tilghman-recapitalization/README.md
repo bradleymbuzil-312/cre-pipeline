@@ -1,38 +1,44 @@
-# Handoff: Wylder Hotel Tilghman Island — GP/LP Recapitalization Deck
+# Handoff: Wylder Hotel Tilghman Island — Three Capitalization Packages
 
 ## Overview
-A 30-slide institutional equity package marketing a **$13,255,085 limited partner recapitalization** of the
-equity in Wylder Hotel Tilghman Island (Talbot County, MD). The LP funds the entire closing; a senior
-refinance follows in month three.
+Three 28-slide institutional packages marketing a **$17,404,044 recapitalization** of Wylder Hotel
+Tilghman Island (Talbot County, MD) — one package per capital tranche, each disclosing only its own
+economics. Built on the **10.28.26 financial model**.
 
-**Equity ownership is GP 51% / LP 49%** — and ownership is deliberately not the same thing as capital. The
-LP contributes 100% of the equity and holds 49% of it; the GP holds 51% and contributes none. The waterfall
-sits ahead of the ownership split, so the GP's majority interest is fully subordinated and has no effect
-until the LP has been made whole. In the base case the GP receives **11.0% of total equity cash
-($3,309,883 of $30,117,321)** against its 51% interest, and it receives nothing at all below a $25,278,210
-sale value.
+| Tranche | Amount | Share | Terms | Base case ($30.0M exit, 3-yr hold) |
+|---|---|---|---|---|
+| Senior loan · 1st trust deed | $10,000,000 | 57.46% | 12.00% all-in (SOFR 3.79% + 8.21%), IO, 3 yr, 5.00% exit participation | 1.48x · 15.6% IRR |
+| Preferred equity | $3,904,044 | 22.43% | 17.00% accrued, no current pay, cash sweep, 10.00% exit participation | 1.97x · 31.5% IRR |
+| Common equity · LP | $3,500,000 | 20.11% | 15.00% cumulative pref, capital, then 50/50 residual | 2.33x · 32.6% IRR |
+| **Total capitalization** | **$17,404,044** | | All funded at close | |
 
-| | Amount | Note |
-|---|---|---|
-| LP equity (gross) | $13,255,085 | 61.94% of as-is value · $228,536 per key on 58 keys |
-| LP net cash invested | $12,989,984 | After the 2.00% origination fee retained at funding |
-| Senior loan (month 3) | $7,000,000 | SOFR + 600, interest-only, 2.00% origination, balance held flat |
-| **Total capital** | **$20,255,085** | Less $2,070,384 returned to the LP at the refinance |
-| **Net capital in the asset** | **$18,184,701** | $313,529 per key |
+Alongside the LP, the GP (John Flannigan / Wylder Hotels) has **$2,000,000 of its own cash** in the
+deal on identical pari passu terms — a $5,500,000 partnership in which the LP holds 63.64% of the
+capital. **The GP holds a 51% ownership interest** but receives **41.9% of partnership cash** at the
+base case, and takes no distribution until the LP has been paid its 15.00% preferred return and its
+capital back in full. Its 50% of the residual on 36.36% of the capital is the whole of its promote.
 
-**The waterfall.** Tier 1 — operating cash flow 100% to the LP until the accrued preferred return is
-current; capital events 100% to the LP until the preferred return **and** all invested capital are repaid.
-Tier 2 — 100% to the LP until it has received 2.0x net cash invested *and* earned at least a 20% IRR; the GP
-receives nothing before that. Tier 3 — 20% LP / 80% GP on proceeds up to a $30,000,000 gross sale value (the promote, above the GP's 51%
-pro rata). Tier 4 — 50/50 above $30,000,000 (marginally below it). Preferred return 12.0% compounded quarterly (12.55% effective annual),
-cumulative, on the gross capital account. **No GP capital account, no minimum multiple, no GP guaranty.**
+**Total cost basis $19,247,882 — $331,860 per key on 58 keys.** Estimated values: as-is $21,400,000,
+upon completion $26,000,000, upon stabilization $29,500,000.
 
-**Base case** — a month-36 sale at the $29,500,000 stabilized value: **2.06x / 37.3% IRR**, $26,807,438 of
-total LP distributions, $13,817,455 of net profit, of which $8,038,602 (62% of net cash invested) is
-returned before the sale month. GP distributions $3,309,883.
+### Economic isolation between the packages
+Each package carries only its own economics. **No package discloses another tranche's rate, fees,
+participation, promote, splits or returns.** What every recipient does see: the three tranche
+**amounts** and their share of the stack, position in the stack, LTV / loan-to-cost /
+debt-and-preferred-to-value, total basis, estimated values, the operating projections, and senior
+debt service in dollars where the property cash flow requires it. In the common equity package the
+senior and preferred deduction in the waterfall is a **single aggregated amount** ($4,751,666 at the
+base case), never itemized.
 
-GP = Wylder Hotels (John Flannigan), operator, sponsor and managing member, holding 51% of the equity.
-LP = recapitalization equity investor, holding 49% and contributing all of the capital.
+Enforced by an audit in `scripts/build/v7_build.py` and verified against the PDFs by
+`scripts/crosscheck.py` (19 checks).
+
+### No exit level showing a loss
+The returns page in each package (page 22, marked "not for distribution") spans $18M–$36M for the
+senior and preferred, both of which profit at every level, and **$21M–$36M for the common equity**,
+because the LP's $18M column is a loss (0.77x, −8.2%). The partnership breakeven and the GP's $18M
+figures are omitted from the common package entirely.
+
 Advisor: Bradley M. Buzil, The TRANCHE Group at Marcus & Millichap Capital Corporation (MMCC).
 
 ## About the Design Files
@@ -45,17 +51,34 @@ web component (`deck-stage.js`) and a runtime (`support.js`). All styling is **i
 only shared stylesheet is the design system's `colors_and_type.css` (design tokens + `@font-face`).
 
 ## Fidelity
-**High-fidelity (hifi).** Final colors, typography, spacing, copy and figures. Capital-structure, waterfall
-and return figures reconcile to **`Wylder Tilghman Recapitalization GP/LP Model v4`, dated 27 October 2026**
-(Summary, Inputs, Waterfall, Operating CF, Sensitivity). Operating figures reconcile to the **10.6.26
-financial model** — the Operating CF tab of the v4 model is that pro forma's NOI after the asset management
-fee, tied out month by month. Do not alter numbers without an updated model.
+**High-fidelity (hifi).** Final colors, typography, spacing, copy and figures. Capital-structure,
+waterfall and return figures reconcile to the **10.28.26 financial model**; every figure used is
+asserted in `scripts/build/figs_v7.py`, which foots the stack, the uses, the preferred roll-forward,
+the exit waterfall at all seven exit values, each tranche's basis / cash / profit / multiple, and the
+partnership tiers. Operating figures reconcile to the same model's pro forma. Do not alter numbers
+without an updated model.
 
 ## How to Run the Reference
-Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `deck-stage.js`, `support.js`
-must resolve — `file://` fails CORS) and open `Wylder Tilghman Island - Recapitalization.dc.html`. Arrow keys
-/ on-screen nav move between slides; the shell handles scaling, a thumbnail rail, speaker notes and
-print-to-PDF.
+Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `deck-stage.js`,
+`support.js` must resolve — `file://` fails CORS) and open one of:
+
+- `Wylder Tilghman Island - Senior Debt.dc.html`
+- `Wylder Tilghman Island - Preferred Equity.dc.html`
+- `Wylder Tilghman Island - Common Equity.dc.html`
+
+Arrow keys / on-screen nav move between slides; the shell handles scaling, a thumbnail rail, speaker
+notes and print-to-PDF.
+
+### Rebuilding
+```
+python3 scripts/build/v7_build.py      # regenerates all three .dc.html from the shared core, with the leak audit
+python3 dist/build-dist.py             # optimizes assets into dist/_dist-deck (25.3 MB -> 2.3 MB)
+python3 scripts/crosscheck.py          # verifies the three exported PDFs
+```
+`v7_build.py` lifts the fifteen shared core pages from
+`deck/Wylder Tilghman Island - Recapitalization.dc.html` (the superseded single-package deck, kept as
+the source of those pages), patches the two that carried tranche economics, and writes the three
+packages. Print the optimized decks to PDF at 1920×1080 into `package/`.
 
 Canvas is **1920×1080** per slide (16:9).
 
@@ -84,11 +107,7 @@ Sourced from `deck/_ds/.../colors_and_type.css`. Use these exact values.
 **Type sizes in use (px, at 1920×1080):** title H1 104; section H2 40–48; big stat/hero figures 92–104;
 stat-grid values 44–46; table body 13–22; eyebrow 17; labels 10–15.
 
-**Running footer:** every interior slide (2–29) carries a footer rule —
-`Wylder Hotel Tilghman Island · Recapitalization` left, `MMCC · The TRANCHE Group` right, then the page
-number after a hairline divider — in `--font-condensed` 14px/700, `.2em` tracking, uppercase, `--ink-400` on
-light slides and `rgba(255,255,255,.38)` on dark. The cover (01) and contact (30) slides carry the page
-number in the header bar beside the confidentiality label (`Confidential · Equity Recapitalization`).
+**Running footer:** every interior slide (2–27) carries a footer rule — `Wylder Hotel Tilghman Island · <Senior Debt | Preferred Equity | Common Equity>` left, `MMCC · The TRANCHE Group` right, then the page number after a hairline divider — in `--font-condensed` 14px/700, `.2em` tracking, uppercase, `--ink-400` on light slides and `rgba(255,255,255,.38)` on dark. The cover (01) and contact (28) slides carry the page number in the header bar beside the confidentiality label (`Confidential · <tranche> Placement`).
 
 **Rules & borders:** section headers sit above a `1px solid var(--mm-navy)` rule; tables use 2px navy
 top/bottom borders with 1px `--hairline` interior lines. Corners 0–2px (printed feel, not app-like). No
@@ -97,80 +116,79 @@ gradients except the photo-overlay scrims on dark hero slides.
 **A design-system CSS rule caps `<p>` width at ~479px.** Every paragraph needs an explicit `max-width:none`
 (or a `ch` value) or it wraps narrow.
 
-**Motif:** a strata bar (stacked segments in the LP and senior colors) on the title, investor-returns and
-contact slides — the capital-stack metaphor, split 65.44% / 34.56% to match LP equity and the senior loan.
+**Motif:** a strata bar on the title and contact slides, split 60/40 between `#F0720E` and the recipient's tranche color — senior `#032D67`, preferred `#957551`, common `#456EAB`. The same three colors carry the stacked capital bar on page 18, where the recipient's tranche is at full opacity with an orange left mark and the other two are at 42%.
 
-## Screens / Views (30 slides)
-Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text. Interior
-slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, followed by a plain descriptive H2.
+## Screens / Views (28 slides, identical structure in all three)
+Light slides = `--paper` background, navy ink. Dark slides = `--mm-navy-900` background, white text.
+Interior slides open with a 64×3px `--mm-orange` rule in place of a text eyebrow, followed by a plain
+descriptive H2.
 
-1. **Title** — eyebrow "RECAPITALIZATION · $13,255,085 LP EQUITY", H1 property name, factual tagline, dated
-   October 27, 2026.
-2. **Summary of the recapitalization** — lede plus an 8-tile grid: LP equity $13.26M, GP/LP equity 51%/49%,
-   preferred return 12.0%, equity multiple 2.06x, projected IRR 37.3%, GP share of cash 11.0%, debt at
-   closing $0, cash before the sale $8.04M.
-3. **A 58-key waterfront resort on 8.10 acres, with an adjacent parcel under contract** — photo split, lede,
-   2×2 facts, two thumbnails.
-4. **What the asset comprises** — four columns (Location, Accommodations, Food/Beverage/Events, Amenities),
-   each with a photograph and a fact card. Key bridge: 50 rooms in service, 4 out of service to be restored,
-   3 from the rebuilt three-bedroom house = 57 hotel keys, 58 with Dogwood Cove. Marina 23 slips today · 24
-   with the acquisition · 47 on completion.
-5. **Adjacent acquisition — 21441 Dogwood Cove** — full-width aerial, then Transaction ($1,100,000 purchase
-   funded by LP equity at closing with no acquisition debt, fee simple, $15,000 deposit, closing
-   November 18, 2026,
-   $300,000 renovation held back by the senior lender), What It Adds, and Why It Matters.
-6. **Ownership and operating structure** — the GP. Ownership narrative, 2×2 facts and four Structure and
-   Alignment points.
-7. **Operator background and brand portfolio.**
-8. **Business plan and capital improvement program** — three numbered items against the $3.3M /
-   $56,948-per-key program; RevPAR index, drivers list and two stat tiles at right.
-9. **The renovation is designed, priced and scheduled** — Gantt across September 21, 2026 to April 1, 2027
-   with exact dates, alongside the completed model room.
-10. **Small Luxury Hotels affiliation and distribution.**
-11. **Estimated values and underwritten projections** — as-is $21,400,000 ($368,966/key), upon completion
-    $26,000,000 ($448,276/key), upon stabilization $29,500,000 ($508,621/key); 2026–2030 operations.
-12. **Pro forma cash flow and underwriting assumptions** — 2026–2030 at left, the assumption set at right.
-13. **Stabilized cash flow carried forward, 2030 through 2041** — 2030 is the first full year after the
-    projected October 2029 sale, so this page is what a **buyer** underwrites at exit. Debt service is the
-    $7,000,000 senior loan held flat and interest-only.
-14. **Departmental revenue and margins against industry benchmarks** — 2028 stabilized year.
-15. **Historical operations and competitive benchmarking** — actual 2023/2024/2025 plus STR benchmarking.
-16. **The competitive market, supply and demand.**
-17. **Drive-to demand, visitation and new supply.**
-18. **A $13,255,085 LP recapitalization of the equity** — a proportional bar of total capital (LP 65.44% /
-    senior 34.56%), an Equity Ownership block (GP 51% / LP 49%, with the capital-versus-ownership
-    distinction stated), Capital Measures, and The Parties.
-19. **Sources and uses of funds at closing** — LP equity is the only source; seven uses to $13,255,085;
-    closing detail $130,100. Sources less uses = $0.
-20. **A $7,000,000 senior refinance in month three** — terms at left, allocation of proceeds at right, with
-    the $2,070,384 return of capital highlighted.
-21. **The GP holds 51% of the equity and is paid last** (dark) — four tiers with LP/GP split bars and
-    base-case dollars per tier, over a lede stating that the ownership split has no effect until the LP is
-    made whole. Bottom strip: GP equity interest 51%, GP share of base-case cash 11.0%, preferred return
-    12.0%/12.55%, and the $25.3M sale value below which the GP receives nothing.
-22. **Projected investor returns** (dark) — 2.06x / 37.3% / 36 months, with supporting rows and a bottom
-    strip (cash returned before the sale, from the refinance, from operations, unpaid capital after sale).
-23. **LP distributions across the hold period** — by calendar year 2026–2029 plus a Total column (operating
-    cash flow, capital events, pref accrued, tiers 1–3, total), the LP capital account trajectory, and the
-    LP/GP equity cash split at five sale values (100.0%/0.0% at $21.4M through 82.7%/17.3% at $35.0M).
-24. **Sensitivity to sale value and sale month** — multiple and IRR grids across 11 sale values × 4 sale
-    months, plus the gross sale value needed for LP 1.00x and 2.00x at each hold.
-25. **The downside and what protects it** (dark) — twelve downside measures (including the GP's 51% interest
-    against its 11.0% share of base-case cash) and five structural protections, among them "A Majority
-    Interest, Paid Last", which also carries the LP's major-decision approval rights.
-26. **Total basis and the renovation plan** — the $18,184,701 net capital in four groups, the capital plan
-    itemized, four per-key tiles and the exact start/completion dates.
-27. **Estimated value positioned against market evidence** — per-key positioning placing LP equity, net
-    capital, the three estimated values and **both** comparable sets on one scale.
-28. **Comparable hotel sales, resort and local.**
-29. **Recent transaction evidence and local market activity.**
-30. **Contact and next steps** — stat strip (LP equity, preferred return, equity multiple), contact block.
+**01 Title** — tranche-specific. Eyebrow `<TRANCHE> · $<amount>`, H1 property name, a factual tagline
+carrying that tranche's terms and projected return, dated October 30, 2026.
+
+**02 Summary** — tranche-specific lede plus an 8-tile grid of that tranche's own measures, ending in
+its projected multiple and IRR.
+
+**03–17 Shared core** — identical in all three except where noted:
+3. A 58-key waterfront resort on 8.10 acres, with an adjacent parcel under contract.
+4. What the asset comprises — four columns, each with a photograph and a fact card. 50 rooms in
+   service, 4 out of service to be restored, 3 from the rebuilt three-bedroom house = 57 hotel keys,
+   58 with Dogwood Cove. Marina 23 slips today · 24 with the acquisition · 47 on completion.
+5. Adjacent acquisition — 21441 Dogwood Cove. $1,100,000 purchase funded from the capitalization at
+   closing with no acquisition debt, fee simple, $15,000 deposit, closing November 18, 2026,
+   $300,000 renovation.
+6. Ownership and operating structure — the sponsor.
+7. Operator background and brand portfolio.
+8. Business plan and capital improvement program — the $3.3M / $56,948-per-key program.
+9. The renovation is designed, priced and scheduled — Gantt, September 21, 2026 to April 1, 2027.
+10. Small Luxury Hotels affiliation and distribution.
+11. Estimated values and underwritten projections.
+12. Pro forma cash flow and underwriting assumptions.
+13. Stabilized cash flow carried forward, 2030 through 2041 — what a **buyer** underwrites at exit.
+    *Tranche-aware:* the senior package states the rate on the debt-service line; the other two see
+    the dollar debt service only.
+14. Departmental revenue and margins against industry benchmarks — 2028 stabilized year.
+15. Historical operations and competitive benchmarking.
+16. The competitive market, supply and demand.
+17. Drive-to demand, visitation and new supply.
+
+**18 Capital structure** — a proportional stacked bar of the $17,404,044 stack with the recipient's
+tranche at full opacity and an orange left mark, the other two at 42%. Capital Measures (all three
+amounts, the GP co-investment, LTV, loan-to-cost, debt-and-preferred to value, total per key).
+**Your Terms** carries the recipient's economics only.
+
+**19 Sources and uses of funds at closing** — three sources with share and per-key, eleven uses,
+closing detail $130,100, sources less uses $0. The recipient's own fee lines are itemized; the other
+tranches' fees are rolled into one generic line. The Net Funding block is the recipient's own.
+
+**20–23 Tranche pages** — the only four pages that differ in substance:
+
+| | Senior Debt | Preferred Equity | Common Equity |
+|---|---|---|---|
+| 20 | Terms of the senior loan *(dark)* | Terms of the preferred equity *(dark)* | Terms of the partnership *(dark)* |
+| 21 | Coverage, debt yield and leverage | The cash sweep and the preferred balance | How sale proceeds reach the partnership |
+| 22 | **Senior loan return across exit values** | **Preferred equity return across exit values** | **Limited partner return across exit values** |
+| 23 | Credit considerations and downside coverage *(dark)* | Position in the stack and downside coverage *(dark)* | Sponsor alignment and the GP position *(dark)* |
+
+**24 Total basis and the renovation program** — the $19,247,882 basis in three groups, the renovation
+plan itemized, four per-key tiles and the exact start/completion dates. The senior package itemizes
+the senior fee lines; the other two show one generic financing-fees line.
+
+**25 Estimated value positioned against market evidence** — per-key positioning against both
+comparable sets, with the recipient's own attachment point: the senior at $172,414 per key, the
+preferred last dollar at $239,725, the full capitalization at $300,070.
+
+**26 Comparable hotel sales, resort and local.**
+
+**27 Recent transaction evidence and local market activity.**
+
+**28 Contact and next steps** — tranche-specific. Stat strip carries the recipient's own three
+headline terms.
 
 ### The estimated values exclude the acquisition
 The estimated as-is, as-complete and stabilized values are **for the hotel**. They do not include the
 adjacent Dogwood Cove parcel, and every basis, coverage and return figure in the package is measured against
-them — so the parcel's value is upside the numbers do not carry. This is stated on pages 5, 11, 18, 24, 25,
-26 and 27 and in the LP summary. Page 5 sizes it: capitalizing the **~$300,000 of EBITDA the parcel itself
+them — so the parcel's value is upside the numbers do not carry. This is stated on pages 5, 11, 24 and 25 of each package. Page 5 sizes it: capitalizing the **~$300,000 of EBITDA the parcel itself
 produces** (marina and room revenue) at **7.0%** implies **~$4.3M of value** against a **$1.4M all-in
 cost** — roughly **$2.9M above cost**, 3.1x on cost. The $300,000 is conservative against the model's own
 components (the Dogwood Cove house carries $191,625 of revenue at stabilization and the marina $341,332 of
@@ -185,8 +203,8 @@ underwriting purposes and are subject to completion of the renovation and stabil
 ### Key count convention
 The **hotel** is 50 keys today and 57 on completion of the renovation; the Dogwood Cove residence is the
 **58th key**, operated as a whole-home suite at a $1,500 nightly rate and 35% occupancy ($191,625 a year from
-stabilization, in the projections). **All per-key figures in this package are stated on 58 keys** — the deck,
-the LP summary and the model agree (`Inputs!B49` = 58, `LP equity per key` = $228,536). The marina is
+stabilization, in the projections). **All per-key figures in every package are stated on 58 keys** — cost basis
+$331,860 per key, total capitalization $300,070 per key. The marina is
 **23 slips today and 47 on completion** — the 24 slips that come with the Dogwood Cove acquisition are the
 expansion, which closes **November 18, 2026**.
 
@@ -202,52 +220,78 @@ STR. No brokerage, appraisal or valuation document is cited or reproduced, and n
 `wt-dogwood-aerial.jpg` (slide 5), `wt-lobby.png` (sponsor), `flannigan.png`, `buzil.jpg`,
 `mmcc-2018-white.png` (the only asset with real transparency).
 
-## The send-together package
+## The packages
 
-`package/` holds the three documents that go to an investor as a set — the deck PDF, the LP equity
-summary and the GP/LP model — with its own manifest and the list of conventions applied across all
-three. `scripts/crosscheck.py` asserts that every shared figure reconciles and that no appraiser or
-appraisal is named in any of them; run it after any change to the deck, the summary or the model.
+`package/` holds the three PDFs, one per tranche, with a manifest (`package/README.md`) stating the
+isolation rule, the page map and the conventions applied across all three. **Send one package per
+recipient; never cross-send.** `scripts/crosscheck.py` asserts, against the exported PDFs, that each
+carries its own economics, carries none of the other two tranches', names no source document, uses
+US spelling, states per-key figures on 58 keys, and — for the common equity package — shows no exit
+level at which the recipient loses money.
 
 ```
-python3 -I scripts/crosscheck.py     # 30 assertions; exits non-zero on a mismatch
+python3 scripts/crosscheck.py     # 19 checks; exits non-zero on a failure
 ```
+
+The v4 single-package set (`Wylder Tilghman Island - Recapitalization.pdf`, the LP Equity Summary
+and the GP-LP Model v4) is superseded and kept for reference only. It does not reconcile with these
+three and would disclose cross-tranche economics if sent alongside them.
+`scripts/crosscheck-v4-superseded.py` checks that older set.
 
 ## Files
-- `deck/Wylder Tilghman Island - Recapitalization.dc.html` — the deck (all 30 slides, inline-styled)
+- `deck/Wylder Tilghman Island - Senior Debt.dc.html` — the senior debt package (28 slides)
+- `deck/Wylder Tilghman Island - Preferred Equity.dc.html` — the preferred equity package
+- `deck/Wylder Tilghman Island - Common Equity.dc.html` — the common equity package
+- `deck/Wylder Tilghman Island - Recapitalization.dc.html` — the superseded v4 deck, kept as the
+  source of the fifteen shared core pages that `v7_build.py` lifts
 - `deck/deck-stage.js` — slide-shell web component (scaling, nav, print)
 - `deck/support.js` — Design Component runtime
 - `deck/_ds/tranche-group-design-system-.../colors_and_type.css` — design tokens + Aptos `@font-face`
-- `dist/build-dist.py` — asset-optimizing distribution build (see `dist/README.md`)
-- `package/` — the three send-together documents plus their manifest
-- `scripts/crosscheck.py` — cross-document reconciliation; `scripts/scrub_model.py` — label scrub
+- `dist/build-dist.py` — asset-optimizing distribution build for all three decks (see `dist/README.md`)
+- `package/` — the three PDFs plus the manifest and the superseded v4 set
+- `scripts/build/` — the package generator: `figs_v7.py` (model figures, all asserted), `v7_lib.py`
+  (markup helpers and the shared-core extractor), `v7_common.py` (capital structure, sources and
+  uses), `v7_pages.py` (total basis, returns grid), `v7_patch.py` (per-package edits to the two
+  shared pages that carried tranche economics), `v7_tranche.py` (covers, terms, mechanics, returns,
+  position, contacts), `v7_num.py` (renumbering), `v7_build.py` (assembly and leak audit)
+- `scripts/crosscheck.py` — PDF verification; `scripts/scrub_model.py` — label scrub
 
-> **Data note.** Capital, waterfall and return figures reconcile to the GP/LP model v4 dated 27 October 2026;
-> operating figures reconcile to the 10.6.26 financial model. Sources and uses balance to $0. Do not change
-> numbers without an updated model.
+> **Data note.** Capital, waterfall and return figures reconcile to the **10.28.26 financial
+> model**; `scripts/build/figs_v7.py` asserts every one of them and foots the stack, the uses, the
+> preferred roll-forward, the exit waterfall at all seven exit values, each tranche's
+> basis / cash / profit / multiple, and the partnership tiers. Sources and uses balance to $0. Do
+> not change numbers without an updated model.
 >
-> **Open items requiring sponsor or counsel input before distribution:**
+> **Open items in the 10.28.26 model — resolve before distribution:**
 >
-> 1. **2.0x is a projection, not a minimum.** At month 36 the LP is below 2.0x if the sale is under
->    $25,278,210. Capital is returned in full at $12,023,125, 43.8% below the as-is value. Both are on
->    pages 24 and 25.
-> 2. **The GP falls short of its $5.0M target in the base case** at $3,309,883. The model's own sensitivity
->    puts $5.0M at roughly $32.6M at month 36 or $29.4M at month 48. The deck does not present the GP target;
->    expect it in negotiation. Note the tension with the 51% ownership: a majority holder taking 11.0% of the
->    cash is the point of the subordination, but it is also why the $5.0M target is not met here.
-> 3. **The GP's 51% interest carries control, not just economics.** An LP funding 100% of the capital while
->    holding a 49% minority interest needs the operating agreement to carry its protections — major-decision
->    consents, removal rights on a GP default, and the subordination itself. The deck presents the economics;
->    counsel must paper the governance. Tax allocations of a 51% interest with no capital account also need
->    to be set by counsel.
-> 4. **The 80% GP share in tier 3 is aggressive** relative to institutional feedback (the model's own note).
->    The deck presents it as drafted.
-> 5. **The $30.0M tier 4 hurdle is a gross sale value test.** Definitive documents should define it (gross
->    versus net of costs) because the definition shifts the split.
-> 6. **Working capital appears twice.** $250,000 is a closing use funded by LP equity and $500,000 is held
->    back at the refinance, so the deck shows $750,000 of total working capital on page 26. The model's input
->    label reads "funded $250K, held back $250K" while its arithmetic subtracts the full $500,000 from refinance
->    proceeds. Confirm which is intended.
-> 7. **Sale costs are modeled at 2.0% of value** and exclude Maryland transfer and recordation taxes, which
->    require local verification.
-> 8. **Legal ownership, control and tax allocation of the promote** are to be set by counsel.
+> 1. **Loan Analysis rows 53–73 are stale.** They show preferred at $7,404,044 and common at $0 — the
+>    pre-common-equity case. Sources and Uses is authoritative and is what the packages use. Fix or
+>    delete those rows before the model goes to anyone.
+> 2. **"Indicative pricing: SOFR + 500 bps" contradicts the model's own rate.** The spread is 821 bps
+>    (3.79% + 8.21% = 12.00% all-in). The packages use 821.
+> 3. **The kicker base is labeled "Net Proceeds less Senior and Pref"** but the arithmetic deducts only
+>    the senior principal; the preferred balance comes out after the participations. The packages follow
+>    the arithmetic, which foots at all seven exit values. Definitive documents must define "equity
+>    value at exit" precisely, because the two readings differ by roughly $290,000 of participation at
+>    the base case.
+> 4. **Selling costs are 4.0%**, up from 2.0% in v4, and exclude Maryland transfer and recordation
+>    taxes, which require local verification.
+> 5. **Maryland mortgage recording tax and stub interest on the existing loan are budgeted at zero**
+>    in sources and uses. Confirm at closing; both would come out of the $130,100 closing line.
+> 6. **Year-one coverage is 0.94x** and is carried entirely by the twelve-month interest and carry
+>    reserve. If the renovation runs past the twelve months the reserve funds, coverage has no other
+>    source. The schedule runs September 21, 2026 to April 1, 2027, so there is roughly five months of
+>    slack — confirm that is acceptable to the senior lender.
+> 7. **The LP loses money below roughly $21,000,000** and the partnership receives nothing below
+>    $12,783,904. Neither figure appears in the common equity package, by instruction. The sponsor and
+>    counsel should be aware of both; a subscription document will have to disclose the downside even
+>    though the marketing package does not show those columns.
+> 8. **The GP's 51% interest carries control, not just economics.** An LP contributing 63.64% of
+>    partnership capital while holding a 49% interest needs the operating agreement to carry its
+>    protections — major-decision consents, removal rights on a GP default, and the subordination
+>    itself. The packages present the economics; counsel must paper the governance, including the tax
+>    allocation of a 50% residual share on 36.36% of the capital.
+> 9. **Three separate investors will eventually see each other's terms** at closing, in the
+>    intercreditor and the operating agreement. The isolation here is a marketing-stage measure, not a
+>    confidentiality undertaking — it keeps each party from negotiating against another's pricing
+>    during the raise.
