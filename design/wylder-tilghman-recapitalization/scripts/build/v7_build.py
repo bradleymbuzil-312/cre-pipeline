@@ -19,6 +19,10 @@ PKG = {
           ('SENIOR RETURNS', lambda: T.returns_page('senior')),
           ('CREDIT CONSIDERATIONS', T.senior_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
+ 'hm': dict(file='Wylder Tilghman Island - Senior Debt (Hard Money).dc.html', label='Senior Debt',
+   pages=[('SENIOR LOAN TERMS', T.hm_terms), ('DEBT SERVICE COVERAGE', T.senior_coverage),
+          ('CREDIT CONSIDERATIONS', T.hm_credit)],
+   dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
  'pref': dict(file='Wylder Tilghman Island - Preferred Equity.dc.html', label='Preferred Equity',
    pages=[('PREFERRED EQUITY TERMS', T.pref_terms), ('CASH SWEEP AND BALANCE', T.pref_sweep),
           ('PREFERRED RETURNS', lambda: T.returns_page('pref')),
@@ -50,7 +54,16 @@ COMMON = dict(
            'Preferred return', 'preferred return'],
   amounts=[LP_PREF, GP_PREF, WF_PREF, WF_RESID, WF_SPLIT] + CE_RESID + LP_CASH + GP_CASH_OUT
           + LP_PROFIT + GP_PROFIT)
-OTHERS = {'senior': [PREF, COMMON], 'pref': [SENIOR, COMMON], 'common': [SENIOR, PREF]}
+OTHERS = {'senior': [PREF, COMMON], 'hm': [PREF, COMMON],
+          'pref': [SENIOR, COMMON], 'common': [SENIOR, PREF]}
+# the hard money package quotes no participation and projects no lender return
+NO_RETURN = ['Exit participation', 'exit participation', 'equity kicker',
+             'participation in equity', f'{SR_KICKER:.2%}', 'IRR', 'irr',
+             'Equity multiple', 'equity multiple', 'Projected Return', 'projected return',
+             'total cash received', 'Base-Case', 'Net Funded Basis', 'not for distribution',
+             f'${SR_BASIS:,.0f}', f'${SR_INT_3Y:,.0f}'] \
+            + [f'${v:,.0f}' for v in SR_KICK + SR_CASH + SR_PROFIT] \
+            + [f'{v:.2f}x' for v in SR_MULT] + [f'{v:.1%}' for v in SR_IRR]
 # amounts every package is entitled to see: the tranche sizes, the stack, the basis, the aggregate
 ALLOWED = {SENIOR_AMT, PREF_AMT, COMMON_AMT, GP_CASH, TOTAL, PARTNERSHIP, SR_PF_DEDUCT, COST_BASIS}
 LOSS = [f'${EXITS[0]:,.0f}', f'${EXITS[0]/1e6:,.0f}M', f'${PARTNERSHIP_BREAKEVEN:,.0f}',
@@ -86,6 +99,10 @@ def audit(path, t):
         leaks += [f'${a:,.0f}' for a in other['amounts']
                   if a not in ALLOWED and f'${a:,.0f}' in s]
     out = [f'  cross-tranche leaks: {sorted(set(leaks)) if leaks else "none"}']
+    if t == 'hm':
+        hits = sorted({v for v in NO_RETURN if v in s})
+        out.append(f'  participation / lender return: {hits if hits else "none"}')
+        out.append(f'  returns page present: {"&mdash; total cash received" in s}')
     if t == 'common':
         hits = sorted({f for f in LOSS if f in s})
         out.append(f'  loss-level references: {hits if hits else "none"}')
@@ -107,7 +124,7 @@ def audit(path, t):
 
 
 if __name__ == '__main__':
-    for t in ('senior', 'pref', 'common'):
+    for t in ('senior', 'hm', 'pref', 'common'):
         path, n, order = build(t)
-        print(f'\n{PKG[t]["label"]}  —  {n} pages  —  {path.split("/")[-1]}')
+        print(f'\n{PKG[t]["file"][:-8]}  —  {n} pages')
         print(audit(path, t))

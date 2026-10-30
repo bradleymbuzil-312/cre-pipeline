@@ -10,18 +10,21 @@ from v7_lib import *
 from figs_v7 import *
 
 TRANCHE_COLOR = {'senior': '#032D67', 'pref': '#957551', 'common': '#456EAB'}
-TNAME = {'senior': 'the senior loan', 'pref': 'the preferred equity',
-         'common': 'the common equity'}
+# 'hm' is the senior loan offered without an equity kicker, for hard money lenders
+BASE = {'senior': 'senior', 'hm': 'senior', 'pref': 'pref', 'common': 'common'}
+TNAME = {'senior': 'the senior loan', 'hm': 'the senior loan',
+         'pref': 'the preferred equity', 'common': 'the common equity'}
 
 # ───────────────────────────────────────────────── capital structure
 def capital_structure(t):
+    hl = BASE[t]
     rows_ = [('Common equity &middot; LP', COMMON, 'common'),
              ('Preferred equity', PREF, 'pref'),
              ('Senior loan &middot; 1st trust deed', SENIOR, 'senior')]
     bar = '    <div style="display:flex;flex-direction:column;flex:1;min-height:0;">\n'
     for lab, amt, key in rows_:
         pc = amt / TOTAL
-        on = (key == t)
+        on = (key == hl)
         dim = '' if on else 'opacity:.42;'
         mark = ('<div style="position:absolute;left:0;top:0;bottom:0;width:7px;'
                 'background:var(--mm-orange);"></div>') if on else ''
@@ -47,9 +50,9 @@ def capital_structure(t):
 
     meas = (sub('Capital Measures', pb='7px')
      + row('Senior loan &middot; 1st trust deed', f'${SENIOR:,.0f}', pad=4,
-           kind=('hi' if t == 'senior' else ''))
-     + row('Preferred equity', f'${PREF:,.0f}', pad=4, kind=('hi' if t == 'pref' else ''))
-     + row('Common equity &middot; LP', f'${COMMON:,.0f}', pad=4, kind=('hi' if t == 'common' else ''))
+           kind=('hi' if hl == 'senior' else ''))
+     + row('Preferred equity', f'${PREF:,.0f}', pad=4, kind=('hi' if hl == 'pref' else ''))
+     + row('Common equity &middot; LP', f'${COMMON:,.0f}', pad=4, kind=('hi' if hl == 'common' else ''))
      + row('Total capitalization', f'${TOTAL:,.0f}', kind='sub', pad=4)
      + row('GP co-investment &middot; sponsor cash', f'${GP_CASH:,.0f}', pad=4,
            note='John Flannigan, invested outside loan proceeds and remaining in the deal')
@@ -60,7 +63,17 @@ def capital_structure(t):
      + row('Total capitalization per key &middot; 58', f'${TOTAL/KEYS:,.0f}', kind='sub', pad=4))
 
     # ── terms: the recipient's own economics only
-    if t == 'senior':
+    if t == 'hm':
+        terms = (row('Amount', f'${SENIOR:,.0f}', pad=4, vfs='15px')
+         + row('Rate', f'{ALLIN:.2%} floating', pad=4, vfs='15px',
+               note=f'SOFR {SOFR:.2%} plus a {SPREAD:.2%} spread, resetting monthly')
+         + row('Term and amortization', f'{SR_TERM} years &middot; interest-only', pad=4, vfs='15px')
+         + row('Collateral', 'First trust deed', pad=4, vfs='15px')
+         + row('Origination fee', '2.00%', pad=4, vfs='15px', kind='sub'))
+        note = ('The senior loan is a single advance funded in full at close, with no future funding '
+                'obligation. The balance of the requirement is funded by subordinate capital, all of '
+                'which closes concurrently.')
+    elif t == 'senior':
         terms = (row('Amount', f'${SENIOR:,.0f}', pad=4, vfs='15px')
          + row('Rate', f'{ALLIN:.2%} floating', pad=4, vfs='15px',
                note=f'SOFR {SOFR:.2%} plus a {SPREAD:.2%} spread, resetting monthly')
@@ -96,7 +109,13 @@ def capital_structure(t):
     terms = ('      <div style="height:10px;"></div>\n'
              + sub('Your Terms', pb='7px') + terms + para(note, fs='15px', auto=True))
 
-    sn = {'senior': ('This page is shown from the senior lender&rsquo;s perspective. The senior loan is '
+    sn = {'hm': ('This page is shown from the senior lender&rsquo;s perspective. The senior loan is '
+                 'ten million dollars, forty-six point seven percent of as-is value and fifty-seven '
+                 'point five percent of cost, at twelve percent floating and interest-only for three '
+                 'years. Seven million four hundred four thousand of subordinate capital closes '
+                 'beneath it, all funded at close, plus two million of sponsor cash already in the '
+                 'deal.'),
+          'senior': ('This page is shown from the senior lender&rsquo;s perspective. The senior loan is '
                      'ten million dollars, forty-six point seven percent of as-is value and fifty-seven '
                      'point five percent of cost, at twelve percent floating and interest-only for three '
                      'years, with a five percent participation in equity value at exit. Seven million four '
@@ -146,6 +165,7 @@ FEE_USES = {
                ('Other capitalization costs and fees', SR_ORIG + SR_BROKER)],
     'common': [('Closing, legal and other', 130_100),
                ('Capitalization costs and fees', SR_ORIG + SR_BROKER + PF_ORIG + PF_MMCC)]}
+FEE_USES['hm'] = FEE_USES['senior']
 for _k, _v in FEE_USES.items():
     assert sum(a for _, a in BASE_USES) + sum(a for _, a in _v) == TOTAL, _k
 
@@ -167,6 +187,7 @@ NET_FUNDING = {
 
 
 def sources_and_uses(t):
+    t = BASE[t]
     src = sub('Sources')
     for lab, amt in SOURCES:
         src += row(lab, f'${amt:,.0f}', pad=15, fs='18px',

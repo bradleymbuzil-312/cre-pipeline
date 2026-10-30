@@ -1,9 +1,9 @@
-# Handoff: Wylder Hotel Tilghman Island — Three Capitalization Packages
+# Handoff: Wylder Hotel Tilghman Island — Four Capitalization Packages
 
 ## Overview
-Three 28-slide institutional packages marketing a **$17,404,044 recapitalization** of Wylder Hotel
-Tilghman Island (Talbot County, MD) — one package per capital tranche, each disclosing only its own
-economics. Built on the **10.28.26 financial model**.
+Institutional packages marketing a **$17,404,044 recapitalization** of Wylder Hotel Tilghman Island
+(Talbot County, MD) — one per capital tranche, each disclosing only its own economics, plus a
+hard money variant of the senior loan. Built on the **10.28.26 financial model**.
 
 | Tranche | Amount | Share | Terms | Base case ($30.0M exit, 3-yr hold) |
 |---|---|---|---|---|
@@ -31,7 +31,7 @@ senior and preferred deduction in the waterfall is a **single aggregated amount*
 base case), never itemized.
 
 Enforced by an audit in `scripts/build/v7_build.py` and verified against the PDFs by
-`scripts/crosscheck.py` (19 checks).
+`scripts/crosscheck.py` (26 checks).
 
 ### No exit level showing a loss
 The returns page in each package (page 22, marked "not for distribution") spans $18M–$36M for the
@@ -63,6 +63,8 @@ Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `
 `support.js` must resolve — `file://` fails CORS) and open one of:
 
 - `Wylder Tilghman Island - Senior Debt.dc.html`
+- `Wylder Tilghman Island - Senior Debt (Hard Money).dc.html` — same loan, no equity kicker, no
+  lender returns page, 27 slides
 - `Wylder Tilghman Island - Preferred Equity.dc.html`
 - `Wylder Tilghman Island - Common Equity.dc.html`
 
@@ -242,6 +244,8 @@ three and would disclose cross-tranche economics if sent alongside them.
 
 ## Files
 - `deck/Wylder Tilghman Island - Senior Debt.dc.html` — the senior debt package (28 slides)
+- `deck/Wylder Tilghman Island - Senior Debt (Hard Money).dc.html` — the same loan without the
+  5.00% equity kicker and without the lender returns page (27 slides), for hard money lenders
 - `deck/Wylder Tilghman Island - Preferred Equity.dc.html` — the preferred equity package
 - `deck/Wylder Tilghman Island - Common Equity.dc.html` — the common equity package
 - `deck/Wylder Tilghman Island - Recapitalization.dc.html` — the superseded v4 deck, kept as the

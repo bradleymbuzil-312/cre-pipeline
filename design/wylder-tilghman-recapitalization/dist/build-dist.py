@@ -43,6 +43,7 @@ JPEG_QUALITY = 84
 SMALL_BOX_PX = 500      # below this width, supersample 2x so zoom stays clean
 MID_BOX_PX = 1000       # 500-1000px: 1.5x, so hero photos survive zoom and print
 DECKS = ["Wylder Tilghman Island - Senior Debt.dc.html",
+          "Wylder Tilghman Island - Senior Debt (Hard Money).dc.html",
           "Wylder Tilghman Island - Preferred Equity.dc.html",
           "Wylder Tilghman Island - Common Equity.dc.html"]
 

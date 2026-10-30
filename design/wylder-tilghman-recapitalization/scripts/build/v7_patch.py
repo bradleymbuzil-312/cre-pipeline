@@ -11,6 +11,7 @@ ATTACH = {
  'common': ('Total capitalization', TOTAL, 'Capitalization vs As-Is Estimate',
             'the capitalization attaches at',
             'three hundred thousand and seventy')}
+ATTACH['hm'] = ATTACH['senior']
 
 
 def value_positioning(b, t):
@@ -59,7 +60,7 @@ def value_positioning(b, t):
 
 def extended_cash_flow(b, t):
     """The senior package states the rate; the others see the dollar debt service only."""
-    if t == 'senior':
+    if t in ('senior', 'hm'):
         return b
     reps = [('Debt service is the $10,000,000 senior loan held flat and interest-only at 12.00%.',
              'Debt service is the senior loan held flat and interest-only.'),

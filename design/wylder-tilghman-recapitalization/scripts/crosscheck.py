@@ -13,9 +13,15 @@ import sys
 import pymupdf
 
 P = "/home/user/cre-pipeline/design/wylder-tilghman-recapitalization/package"
-PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf"),
-        "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf"),
-        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf")}
+PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf", 28),
+        "hm": ("Senior Debt (Hard Money)",
+               f"{P}/Wylder Tilghman Island - Senior Debt (Hard Money).pdf", 27),
+        "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 28),
+        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 28)}
+# the two debt packages are the same loan with and without the equity kicker, so they are not
+# "other tranches" to each other
+OTHERS = {"senior": ["pref", "common"], "hm": ["pref", "common"],
+          "pref": ["senior", "common"], "common": ["senior", "pref"]}
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -25,6 +31,8 @@ OWN = {
  "senior": ["$10,000,000", "12.00%", "SOFR", "8.21%", "3.79%", "interest-only",
             "$8,600,000", "$9,800,000", "$3,600,000", "5.00%", "$940,000",
             "$14,540,000", "$4,740,000", "1.48x", "15.6%", "57.46%", "46.73%"],
+ "hm": ["$10,000,000", "12.00%", "SOFR", "8.21%", "3.79%", "interest-only", "$8,600,000",
+        "57.46%", "46.73%", "33.90%", "$9,404,044", "1.73x"],
  "pref": ["$3,904,044", "17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "10.00%",
           "$1,880,000", "$7,526,610", "$3,700,647", "1.97x", "31.5%", "64.97%"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
@@ -32,6 +40,7 @@ OWN = {
             "2.33x", "32.6%", "63.64%"]}
 # ── what the other two must never see
 SECRET = {
+ "hm": [],
  "senior": ["12.00%", "SOFR", "8.21%", "$8,600,000", "$9,800,000", "$3,600,000", "$940,000",
             "$14,540,000", "$4,740,000", "1.48x", "15.6%", "$364,000", "$1,228,000",
             "$4,164,000", "$5,028,000", "$14,828,000"],
@@ -46,6 +55,11 @@ SHARED_OK = {"$10,000,000", "$3,904,044", "$3,500,000", "$2,000,000", "$5,500,00
              "$17,404,044", "$4,751,666", "$19,247,882", "51%", "49%"}
 # the common equity recipient must see no exit level at which it loses money
 LOSS = ["$18,000,000", "$18M", "$12,783,904", "$791,424", "$452,242", "0.77x", "-8.2%"]
+NO_RETURN = ["Exit participation", "exit participation", "equity kicker", "participation in equity",
+             "5.00%", "IRR", "Equity multiple", "equity multiple", "Projected Return",
+             "total cash received", "Net Funded Basis", "not for distribution", "$9,800,000",
+             "$3,600,000", "$940,000", "$364,000", "$1,228,000", "$14,540,000", "$4,740,000",
+             "1.48x", "1.51x", "15.6%", "16.4%"]
 FORBIDDEN = ["appraisal", "appraised", "appraiser", "LWHA", "Newmark", "CBRE", "New Day"]
 BRITISH = ["utilise", "organis", "centre", "labour", "metres", "colour", "favour", "analyse"]
 
@@ -58,18 +72,18 @@ def check(cond, label, detail=""):
         fails.append(label)
 
 
-for t, (name, path) in PKGS.items():
+for t, (name, path, pages) in PKGS.items():
     d = pymupdf.open(path)
     flat = norm("".join(p.get_text() for p in d))
     raw = re.sub(r"\s+", " ", "".join(p.get_text() for p in d))
     print(f"\n── {name} · {len(d)} pages ──")
-    check(len(d) == 28, "28 pages", f"got {len(d)}")
+    check(len(d) == pages, f"{pages} pages", f"got {len(d)}")
 
     missing = [v for v in OWN[t] if norm(v) not in flat]
     check(not missing, "carries its own economics", f"missing {missing}")
 
     leaked = []
-    for other in [o for o in PKGS if o != t]:
+    for other in OTHERS[t]:
         leaked += [v for v in SECRET[other] if v not in SHARED_OK and norm(v) in flat]
     check(not leaked, "no other tranche's economics", f"leaked {sorted(set(leaked))}")
 
@@ -81,6 +95,10 @@ for t, (name, path) in PKGS.items():
 
     check(norm("58 keys") in flat and norm("$331,860") in flat,
           "per-key figures on 58 keys", "cost basis per key $331,860 not found")
+
+    if t == "hm":
+        hits = [v for v in NO_RETURN if norm(v) in flat]
+        check(not hits, "no participation and no lender return", f"found {hits}")
 
     if t == "common":
         hits = [v for v in LOSS if norm(v) in flat]

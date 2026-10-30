@@ -49,7 +49,10 @@ META = {
 
 def title(t):
     m = META[t]
-    sn = {'senior': ('A ten million dollar senior loan, first trust deed, at twelve percent floating and '
+    sn = {'hm': ('A ten million dollar senior loan, first trust deed, at twelve percent floating and '
+                 'interest-only for a three-year term. Forty-six point seven percent of as-is value and '
+                 'fifty-seven point five percent of total cost, and the only debt on the asset.'),
+          'senior': ('A ten million dollar senior loan, first trust deed, at twelve percent floating and '
                      'interest-only for a three-year term. Forty-six point seven percent of as-is value '
                      'and fifty-seven point five percent of total cost.'),
           'pref': ('A three million nine hundred four thousand dollar preferred equity investment '
@@ -166,7 +169,14 @@ OPP = {
 
 def opportunity(t):
     h, lede, items = OPP[t]
-    sn = {'senior': ('Ten million dollar senior loan, forty-six point seven percent of as-is value and '
+    sn = {'hm': ('Ten million dollar senior loan, forty-six point seven percent of as-is value and '
+                 'fifty-seven point five percent of cost, at twelve percent all-in, interest-only for '
+                 'three years. Debt yield is twenty-three percent on year-two net operating income and '
+                 'coverage is one point nine three times, rising to two point two three times in twenty '
+                 'twenty-eight. The twelve-month reserve covers the renovation year. Nine million four '
+                 'hundred four thousand of capital stands beneath the loan, forty-eight point nine '
+                 'percent of total basis.'),
+          'senior': ('Ten million dollar senior loan, forty-six point seven percent of as-is value and '
                      'fifty-seven point five percent of cost, at twelve percent all-in, interest-only '
                      'for three years. Debt yield is twenty-three percent on year-two net operating '
                      'income and coverage is one point nine three times, rising to two point two three '
@@ -826,3 +836,114 @@ def common_alignment():
           'fifteen percent cumulative preferred return and its capital back in full before the general '
           'partner earns any promote.')
     return darkpage('Sponsor Alignment', 'Sponsor alignment and the GP position.', sn, c, b)
+
+
+# ═══════════════════════════════════════════════════════════ SENIOR DEBT · NO PARTICIPATION
+# The same loan offered without an equity kicker, for hard money lenders. No projected return
+# appears anywhere in this package and there is no returns page.
+META['hm'] = dict(
+  label='Senior Debt', eyebrow='Confidential &middot; Senior Debt Placement',
+  kicker=f'Senior Loan &middot; ${SENIOR:,.0f} &middot; First Trust Deed',
+  amount=SENIOR, color='#032D67',
+  lede=(f'A <strong>${SENIOR:,.0f} senior loan</strong>, first trust deed, on a 58-key waterfront '
+        f'resort in Talbot County, Maryland &mdash; {LTV["is"]:.2%} of as-is value and {LTC:.2%} of '
+        f'total cost. Interest-only at {ALLIN:.2%} for a three-year term, with a twelve-month '
+        f'interest and carry reserve funded at close. ${PREF+COMMON:,.0f} of subordinate capital '
+        f'closes concurrently and ${GP_CASH:,.0f} of sponsor cash is already invested. The loan is '
+        'the only debt on the asset.'),
+  stats=[('Loan Amount', f'${SENIOR:,.0f}'), ('All-In Rate', f'{ALLIN:.2%}'),
+         ('LTV &middot; As-Is', f'{LTV["is"]:.2%}')])
+
+OPP['hm'] = ('Summary of the senior loan request.',
+  f'Marcus &amp; Millichap Capital Corporation is placing a <strong style="color:var(--mm-navy-900);">'
+  f'${SENIOR:,.0f} senior loan</strong>, first trust deed, on Wylder Hotel Tilghman Island. The loan is '
+  f'{LTV["is"]:.2%} of as-is value and {LTC:.2%} of total cost, interest-only for a {SR_TERM}-year term, '
+  f'with a twelve-month interest and carry reserve funded at close. '
+  f'<strong style="color:var(--mm-navy-900);">${PREF+COMMON:,.0f} of subordinate capital</strong> closes '
+  f'concurrently and ${GP_CASH:,.0f} of sponsor cash is already invested and remains in the deal.',
+  [('Senior Loan', f'${SENIOR/1e6:,.2f}M', f'First trust deed &middot; ${SENIOR/KEYS:,.0f} per key', 1),
+   ('LTV &middot; As-Is', f'{LTV["is"]:.2%}', f'{LTV["stab"]:.2%} of the stabilized estimate', 0),
+   ('Loan to Cost', f'{LTC:.2%}', f'On a ${COST_BASIS:,.0f} total basis', 0),
+   ('All-In Rate', f'{ALLIN:.2%}', f'SOFR {SOFR:.2%} plus {SPREAD:.2%}, floating', 0),
+   ('Term &amp; Amortization', f'{SR_TERM} yr &middot; IO', 'Single advance funded at close', 0),
+   ('Debt Yield &middot; 2027', f'{DY[2027]:.2%}', f'{DY[2028]:.2%} in 2028', 0),
+   ('DSCR &middot; 2027', f'{DSCR[2027]:.2f}x', f'{DSCR[2028]:.2f}x in 2028 &middot; reserve covers 2026', 0),
+   ('Capital Beneath the Loan', f'${(PREF+COMMON+GP_CASH)/1e6:,.2f}M',
+    f'{(PREF+COMMON+GP_CASH)/COST_BASIS:.1%} of total basis', 1)])
+
+
+def hm_terms():
+    c = (bigcol('Loan Amount', f'${SENIOR/1e6:,.1f}M', f'${SENIOR/KEYS:,.0f} per key',
+          dkv('Gross loan amount', f'${SENIOR:,.0f}')
+          + dkv('Origination fee', '2.00%')
+          + dkv('Interest and carry reserve', f'${SR_RESERVE:,.0f}')
+          + dkv('Net proceeds at close', f'${SR_NET:,.0f}', accent=True, last=True), 'first')
+     + bigcol('All-In Rate', f'{ALLIN:.2%}', f'SOFR plus {SPREAD:.2%}, floating',
+          dkv('Index &middot; SOFR', f'{SOFR:.2%}')
+          + dkv('Spread', f'{SPREAD:.2%}')
+          + dkv('Annual debt service', f'${SR_ADS:,.0f}')
+          + dkv('Amortization', 'Interest-only', accent=True, last=True), 'mid')
+     + bigcol('Term', f'{SR_TERM} years', 'Exit at the end of year three',
+          dkv('Collateral', 'First trust deed')
+          + dkv('Funding', 'Single advance at close')
+          + dkv('Loan to cost', f'{LTC:.2%}')
+          + dkv('Position', 'Only debt on the asset', accent=True, last=True), 'last'))
+    b = (blk('Position', f'The loan is the only debt on the asset and is secured by a first trust deed. '
+             f'${PREF+COMMON:,.0f} of subordinate capital funds concurrently at close and '
+             f'${GP_CASH:,.0f} of sponsor cash is already invested, giving a '
+             f'{(PREF+COMMON+GP_CASH)/COST_BASIS:.1%} cushion beneath the loan on total basis.')
+     + blk('Reserve and Carry', f'A ${SR_RESERVE:,.0f} interest and carry reserve &mdash; twelve months '
+           'of debt service &mdash; is funded from the capitalization at close and covers the renovation '
+           'period in full, before the asset reopens under the brand.')
+     + blk('Takeout', f'At an indicative {PERM_RATE:.2%} on a 30-year amortizing basis, debt service is '
+           f'${PERM_ADS:,.0f} and coverage is {PERM_DSCR[2027]:.2f}x on 2027 cash flow, so a conventional '
+           'permanent loan clears the balance at maturity. The test is on page 21.'))
+    sn = ('Senior loan terms. Ten million dollars, gross, less a two percent origination fee and a one '
+          'million two hundred thousand dollar interest and carry reserve, for eight million six hundred '
+          'thousand of net proceeds at close. All-in rate twelve percent: SOFR at three point seven nine '
+          'plus an eight point two one spread, floating, interest-only, one million two hundred thousand '
+          'of annual debt service. Three-year term, first trust deed, single advance, fifty-seven point '
+          'five percent of cost, and the only debt on the asset.')
+    return darkpage('Senior Loan Terms', 'Terms of the senior loan.', sn, c, b)
+
+
+def hm_credit():
+    beneath = PREF + COMMON + GP_CASH
+    c = (bigcol('Capital Beneath the Loan', f'${(PREF+COMMON)/1e6:,.2f}M',
+          f'Plus ${GP_CASH:,.0f} of sponsor cash already invested',
+          dkv('Subordinate capital at close', f'${PREF+COMMON:,.0f}')
+          + dkv('Sponsor cash invested', f'${GP_CASH:,.0f}')
+          + dkv('Total beneath the loan', f'${beneath:,.0f}')
+          + dkv('Share of total basis', f'{beneath/COST_BASIS:.2%}', accent=True, last=True),
+          'first', fs='70px')
+     + bigcol('Loan to Stabilized Value', f'{LTV["stab"]:.2%}', 'On the April 2029 estimate',
+          dkv('As-is', f'{LTV["is"]:.2%}')
+          + dkv('Upon completion', f'{LTV["complete"]:.2%}')
+          + dkv('Upon stabilization', f'{LTV["stab"]:.2%}')
+          + dkv('Loan per key &middot; 58 keys', f'${SENIOR/KEYS:,.0f}', accent=True, last=True),
+          'mid', fs='70px')
+     + bigcol(f'Coverage at an ${EXITS[0]/1e6:,.0f}M Sale', f'{NET_PROCEEDS[0]/SENIOR:.2f}x',
+          'Net proceeds to principal, well below the as-is estimate',
+          dkv('Gross sale value', f'${EXITS[0]:,.0f}')
+          + dkv('Net of a 4.0% cost of sale', f'${NET_PROCEEDS[0]:,.0f}')
+          + dkv('Senior principal', f'${SENIOR:,.0f}')
+          + dkv('Proceeds to principal', f'{NET_PROCEEDS[0]/SENIOR:.2f}x', accent=True, last=True),
+          'last', fs='70px'))
+    b = (blk('Renovation Risk', f'The ${3_003_000:,.0f} program is funded in full at close, with '
+             f'${258_000:,.0f} of contingency inside it, and the twelve-month interest and carry reserve '
+             'pays debt service through completion. The schedule by trade is on page 9.')
+     + blk('Ramp and Seasonality', f'Coverage is {DSCR[2026]:.2f}x in the renovation year and '
+           f'{DSCR[2027]:.2f}x in the first full year of operation. The business plan targets 83% of '
+           'market RevPAR at stabilization, a level still below the competitive average on page 16.')
+     + blk('Brand and Management', 'The asset operates under the Wylder brand with the sponsor as '
+           'operator. The brand resume and the affiliation terms are on pages 7 and 10, and historical '
+           'operating results are on page 15.'))
+    sn = ('Credit considerations. Seven million four hundred four thousand of subordinate capital closes '
+          'beneath the loan and two million of sponsor cash is already invested, nine million four hundred '
+          'four thousand in total, forty-eight point nine percent of the nineteen million two hundred '
+          'forty-seven thousand dollar basis. Leverage falls from forty-six point seven percent of as-is '
+          'value to thirty-three point nine percent of the stabilized estimate. Even at an eighteen '
+          'million dollar sale, well below the as-is estimate, net proceeds cover principal one point '
+          'seven three times. The renovation is fully funded with contingency and the reserve pays debt '
+          'service through completion.')
+    return darkpage('Credit Considerations', 'Credit considerations and downside coverage.', sn, c, b)

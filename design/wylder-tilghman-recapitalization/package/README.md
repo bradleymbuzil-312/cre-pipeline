@@ -1,4 +1,4 @@
-# Three capitalization packages — Wylder Hotel Tilghman Island
+# Four capitalization packages — Wylder Hotel Tilghman Island
 
 Built on the 10.28.26 model. The capitalization is **$17,404,044** in three tranches, all funded
 at close: a $10,000,000 senior loan (first trust deed), $3,904,044 of preferred equity and
@@ -6,15 +6,21 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 
 | File | For | Pages |
 |---|---|---|
-| `Wylder Tilghman Island - Senior Debt.pdf` | The senior lender | 28 |
+| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | 28 |
+| `Wylder Tilghman Island - Senior Debt (Hard Money).pdf` | **Hard money lenders** — same loan, no kicker | 27 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | 28 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | 28 |
+
+The two debt packages are the **same $10,000,000 loan** at the same rate, term and fee. They differ
+only in the exit participation: the first quotes a 5.00% kicker and carries a lender returns page;
+the hard money version quotes no participation, projects no lender return, and has no returns page
+(27 pages instead of 28). Send one or the other, not both.
 
 ## Send one package per recipient. Never cross-send.
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(19 checks, all passing).
+(26 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|
@@ -29,9 +35,12 @@ In the common equity package the senior and preferred deduction in the waterfall
 
 ## Returns pages (page 22 in every package, marked "not for distribution")
 
+The hard money package has **no returns page** — page 22 is removed and the deck is 27 pages.
+
 | | Basis | Base case ($30.0M exit, 3-year hold) | Exit values shown |
 |---|---|---|---|
-| Senior loan | $9,800,000 net funded | 1.48x · 15.6% IRR · $14,540,000 received | $18M – $36M |
+| Senior loan (with kicker) | $9,800,000 net funded | 1.48x · 15.6% IRR · $14,540,000 received | $18M – $36M |
+| Senior loan (hard money) | — | *no return shown* | — |
 | Preferred equity | $3,825,963 net funded | 1.97x · 31.5% IRR · $7,526,610 received | $18M – $36M |
 | Common equity · LP | $3,500,000 committed | 2.33x · 32.6% IRR · $8,164,823 received | **$21M – $36M** |
 
@@ -49,6 +58,9 @@ breakeven and the GP's $18M figures are omitted from the common package entirely
 | 20–23 | Tranche pages: terms, mechanics (coverage / cash sweep / waterfall), **returns**, position |
 | 24–27 | Total basis, value positioning, sale comparables, recent transactions |
 | 28 | Contact — tranche-specific |
+
+The hard money package drops the returns page, so its tranche block is 20–22 (terms, coverage,
+credit considerations), the closing pages shift to 23–26 and contact is 27.
 
 Page 25 states each recipient's own attachment point: the senior at $172,414 per key, the
 preferred last dollar at $239,725, the full capitalization at $300,070.
@@ -81,6 +93,22 @@ preferred last dollar at $239,725, the full capitalization at $300,070.
 These three reconcile with each other and are kept for reference. They do **not** reconcile with
 the three packages above and would disclose cross-tranche economics if sent alongside them.
 `scripts/crosscheck-v4-superseded.py` checks that older set.
+
+## If the kicker is dropped
+
+The 10.28.26 model gives the senior a 5.00% participation in equity value at exit — $940,000 at the
+base case, and the whole of the difference between the senior's 1.42x at an $18M sale and 1.51x at
+$36M. Removing it has two consequences the model does not yet reflect:
+
+1. **A hard money lender will want that value back in rate or points.** The hard money package
+   quotes the same 12.00% all-in and 2.00% origination as the kicker version. If the market prices
+   the lost participation into the coupon, the senior's rate and the DSCR and debt-yield figures on
+   page 21 move with it.
+2. **The 5.00% falls to the equity unless repriced.** In the model's waterfall that participation
+   comes out of the kicker base before the residual, so dropping it adds $940,000 to the partnership
+   residual at the base case and raises the LP and GP returns. The preferred and common packages as
+   built still assume the senior takes its 5.00%. Re-run them if the hard money quote is the one
+   that closes.
 
 ## Open items in the 10.28.26 model
 

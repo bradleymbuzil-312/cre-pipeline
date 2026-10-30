@@ -29,7 +29,7 @@ assert all(sum(v for _, v in o) == T_OTH for o in OTH_BY.values())
 assert T_ACQ + T_PIP + T_OTH == COST_BASIS
 
 def total_basis(t='senior'):
-    OTH = OTH_BY['senior'] if t == 'senior' else OTH_BY['other']
+    OTH = OTH_BY['senior'] if t in ('senior', 'hm') else OTH_BY['other']
     def grp(title, lines, tl, tot):
         s = sub(title, fs='13.5px')
         for k, v in lines:
