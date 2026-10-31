@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Per-package edits to the shared core, so no shared page carries another tranche's economics."""
+import re
 from figs_v7 import *
 
 ATTACH = {
@@ -58,20 +59,85 @@ def value_positioning(b, t):
     return b
 
 
+CELL = re.compile(r'(<div style="padding:7px 3px;[^"]*">)([^<]*)(</div>)')
+
+
+def _cells(b, label, n=12):
+    """The n value cells that follow a row's label cell, left to right."""
+    i = b.index(f'>{label}</div>') + len(label) + 7
+    out, pos = [], i
+    for _ in range(n):
+        m = CELL.search(b, pos)
+        assert m, (label, len(out))
+        out.append(m)
+        pos = m.end()
+    return out
+
+
+def _read(b, label):
+    return [m.group(2).replace(',', '').replace('(', '-').replace(')', '').replace('$', '')
+            for m in _cells(b, label)]
+
+
+def _write(b, label, vals):
+    for m, v in reversed(list(zip(_cells(b, label), vals))):
+        b = b[:m.start()] + m.group(1) + v + m.group(3) + b[m.end():]
+    return b
+
+
+def _stat(b, note, val):
+    pat = re.compile(r'(>)([^<>]{1,12})(</div>\s*<div[^>]*>' + re.escape(note) + ')')
+    m = pat.search(b)
+    assert m, note
+    return b[:m.start()] + m.group(1) + val + m.group(3) + b[m.end():]
+
+
 def extended_cash_flow(b, t):
-    """The senior package states the rate; the others see the dollar debt service only."""
-    if t in ('senior', 'hm'):
-        return b
-    reps = [('Debt service is the $10,000,000 senior loan held flat and interest-only at 12.00%.',
-             'Debt service is the senior loan held flat and interest-only.'),
+    """Re-derive the senior debt service block from the request actually being made.
+
+    The page is lifted from an earlier deck, where the debt service row, the two coverage rows
+    and the debt yield row were fixed to a different loan. All four are recomputed here from
+    SR_ADS and SENIOR, along with the four summary measures beneath the table. The senior
+    package states the rate; the others see the dollar debt service only.
+    """
+    noi = [float(v) for v in _read(b, 'Net operating income')]           # thousands
+    ncf = [float(v) for v in _read(b, 'Net cash flow at a 4.0% reserve')]
+    ds = SR_ADS / 1000.0
+    b = _write(b, 'Debt service', [f'({ds:,.0f})'] * len(noi))
+    b = _write(b, 'Coverage on net operating income', [f'{n / ds:.2f}x' for n in noi])
+    b = _write(b, 'Coverage at a 4.0% reserve', [f'{c / ds:.2f}x' for c in ncf])
+    b = _write(b, 'Debt yield', [f'{n / (SENIOR / 1000.0):.1%}' for n in noi])
+    b = _stat(b, 'Minimum coverage over the period, in 2030', f'{noi[0] / ds:.2f}x')
+    b = _stat(b, 'Minimum coverage with the reserve stepped to 4.0%', f'{ncf[0] / ds:.2f}x')
+    b = _stat(b, 'Aggregate cash flow after debt service, 2031 to 2041',
+              f'${(sum(noi[1:]) - ds * (len(noi) - 1)) / 1000:,.1f}M')
+    reps = [(f'Debt service is the $10,000,000 senior loan held flat and interest-only at 12.00%.',
+             f'Debt service is the ${SENIOR:,} senior loan held flat and interest-only at '
+             f'{ALLIN:.2%}.' if t in ('senior', 'hm')
+             else 'Debt service is the senior loan held flat and interest-only.'),
             ('Debt service is the ten million dollar senior loan held flat and interest-only at twelve '
              'percent, one million two hundred thousand dollars a year.',
-             'Debt service is the senior loan held flat and interest-only at one million two hundred '
-             'thousand dollars a year.')]
+             'Debt service is the senior loan held flat and interest-only at '
+             f'${SR_ADS:,} a year.')]
     for old, new in reps:
-        assert b.count(old) == 1, ('extended_cash_flow', t, old[:70], b.count(old))
+        assert b.count(old) == 1, ('extended_cash_flow', t, old[:60], b.count(old))
         b = b.replace(old, new)
     return b
 
 
-PATCH = {'VALUE POSITIONING': value_positioning, 'EXTENDED CASH FLOW': extended_cash_flow}
+def adjacent_acquisition(b, t):
+    """Lender decks describe the owning entity, not the partnership."""
+    if t not in ('senior', 'hm'):
+        return b
+    reps = [('so the parcel comes into the partnership rather than a separate venture',
+             'so the parcel comes into the borrowing entity rather than a separate venture'),
+            ('so the parcel comes into the partnership rather than a separate venture',
+             'so the parcel comes into the borrowing entity rather than a separate venture')]
+    for old, new in reps[:1]:
+        assert b.count(old) >= 1, ('adjacent_acquisition', t, b.count(old))
+        b = b.replace(old, new)
+    return b
+
+
+PATCH = {'VALUE POSITIONING': value_positioning, 'EXTENDED CASH FLOW': extended_cash_flow,
+         'ADJACENT ACQUISITION': adjacent_acquisition}

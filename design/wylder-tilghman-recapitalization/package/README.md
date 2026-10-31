@@ -1,26 +1,51 @@
-# Four capitalization packages — Wylder Hotel Tilghman Island
+# Six capitalization packages — Wylder Hotel Tilghman Island
 
 Built on the 10.28.26 model. The capitalization is **$17,404,044** in three tranches, all funded
 at close: a $10,000,000 senior loan (first trust deed), $3,904,044 of preferred equity and
 $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash already invested.
 
-| File | For | Pages |
-|---|---|---|
-| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | 28 |
-| `Wylder Tilghman Island - Senior Debt (Hard Money).pdf` | **Hard money lenders** — same loan, no kicker | 27 |
-| `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | 28 |
-| `Wylder Tilghman Island - Common Equity.pdf` | The LP | 28 |
+| File | For | Request | Pages |
+|---|---|---|---|
+| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | $10,000,000 | 28 |
+| `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 27 |
+| `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 27 |
+| `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 27 |
+| `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 28 |
+| `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 28 |
 
-The two debt packages are the **same $10,000,000 loan** at the same rate, term and fee. They differ
-only in the exit participation: the first quotes a 5.00% kicker and carries a lender returns page;
-the hard money version quotes no participation, projects no lender return, and has no returns page
-(27 pages instead of 28). Send one or the other, not both.
+**The three "Request" packages are the lender-facing set.** Same loan, same 12.00% all-in rate,
+same 3-year interest-only term, same 2.00% origination — sized at three requests. They quote no
+exit participation, project no lender return, carry no returns page (27 pages), and use no
+partnership, GP or LP vocabulary anywhere. Send one. Never send two requests to the same lender.
+
+`Senior Debt.pdf` is the one package that quotes a 5.00% kicker and carries a lender returns page.
+It exists only at $10,000,000, because the model's exit waterfall is solved only there.
+
+### What moves with the request
+
+| | $8,000,000 | $10,000,000 | $11,000,000 |
+|---|---|---|---|
+| Annual debt service · IO | $960,000 | $1,200,000 | $1,320,000 |
+| Interest and carry reserve · 12 mo | $960,000 | $1,200,000 | $1,320,000 |
+| Origination 2.00% / broker 1.00% | $160,000 / $80,000 | $200,000 / $100,000 | $220,000 / $110,000 |
+| Net proceeds at close | $6,880,000 | $8,600,000 | $9,460,000 |
+| LTV as-is / stabilized | 37.38% / 27.12% | 46.73% / 33.90% | 51.40% / 37.29% |
+| Loan to cost | 46.77% | 57.46% | 62.66% |
+| DSCR 2026 / 2027 / 2028 | 1.18x / 2.41x / 2.78x | 0.94x / 1.93x / 2.23x | 0.86x / 1.75x / 2.02x |
+| Debt yield 2027 / 2028 | 28.94% / 33.38% | 23.15% / 26.71% | 21.05% / 24.28% |
+| Capitalization | $17,104,044 | $17,404,044 | $17,554,044 |
+| **Common equity (the plug)** | **$5,200,000** | **$3,500,000** | **$2,650,000** |
+| Total cost basis / key | $18,947,882 / $326,688 | $19,247,882 / $331,860 | $19,397,882 / $334,446 |
+
+The uses are the same deal at every request: the payoff, the renovation, the acquisition and
+working capital do not move, while the reserve, the origination fee and the broker fee all scale
+with the loan. The preferred is held at $3,904,044, so **the common equity is the plug.**
 
 ## Send one package per recipient. Never cross-send.
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(26 checks, all passing).
+(47 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|
@@ -35,12 +60,13 @@ In the common equity package the senior and preferred deduction in the waterfall
 
 ## Returns pages (page 22 in every package, marked "not for distribution")
 
-The hard money package has **no returns page** — page 22 is removed and the deck is 27 pages.
+The three lender-facing packages have **no returns page** — page 22 is removed and the deck is
+27 pages, with the closing pages at 23–27.
 
 | | Basis | Base case ($30.0M exit, 3-year hold) | Exit values shown |
 |---|---|---|---|
 | Senior loan (with kicker) | $9,800,000 net funded | 1.48x · 15.6% IRR · $14,540,000 received | $18M – $36M |
-| Senior loan (hard money) | — | *no return shown* | — |
+| Senior loan (lender-facing, any request) | — | *no return shown* | — |
 | Preferred equity | $3,825,963 net funded | 1.97x · 31.5% IRR · $7,526,610 received | $18M – $36M |
 | Common equity · LP | $3,500,000 committed | 2.33x · 32.6% IRR · $8,164,823 received | **$21M – $36M** |
 
@@ -59,8 +85,8 @@ breakeven and the GP's $18M figures are omitted from the common package entirely
 | 24–27 | Total basis, value positioning, sale comparables, recent transactions |
 | 28 | Contact — tranche-specific |
 
-The hard money package drops the returns page, so its tranche block is 20–22 (terms, coverage,
-credit considerations), the closing pages shift to 23–26 and contact is 27.
+The lender-facing packages drop the returns page, so their tranche block is 20–22 (terms,
+coverage, credit considerations), the closing pages shift to 23–26 and contact is 27.
 
 Page 25 states each recipient's own attachment point: the senior at $172,414 per key, the
 preferred last dollar at $239,725, the full capitalization at $300,070.
@@ -94,6 +120,13 @@ These three reconcile with each other and are kept for reference. They do **not*
 the three packages above and would disclose cross-tranche economics if sent alongside them.
 `scripts/crosscheck-v4-superseded.py` checks that older set.
 
+## Lender-facing vocabulary
+
+The debt packages carry **no partnership, GP or LP language at all.** The capital stack names the
+tranche "Common equity," the sponsor line reads "Sponsor cash equity," the basis note describes
+capital that "stays in the asset behind the loan," and the adjacent parcel comes into "the
+borrowing entity." The equity packages keep the partnership vocabulary, which is correct for them.
+
 ## If the kicker is dropped
 
 The 10.28.26 model gives the senior a 5.00% participation in equity value at exit — $940,000 at the
@@ -109,6 +142,15 @@ $36M. Removing it has two consequences the model does not yet reflect:
    residual at the base case and raises the LP and GP returns. The preferred and common packages as
    built still assume the senior takes its 5.00%. Re-run them if the hard money quote is the one
    that closes.
+
+## Corrected on page 13
+
+The extended cash flow page was lifted from an earlier deck and its senior debt service block was
+fixed to a loan that is not the one being requested. The debt service row, both coverage rows, the
+debt yield row and the four summary measures beneath the table are now **re-derived from the
+request** in every package. The debt yield row in particular was materially wrong: at $10,000,000
+it read 23.8% rising to 33.0%, against a correct 30.6% rising to 42.4%. It understated the loan,
+but a lender recomputing it would have found the error.
 
 ## Open items in the 10.28.26 model
 

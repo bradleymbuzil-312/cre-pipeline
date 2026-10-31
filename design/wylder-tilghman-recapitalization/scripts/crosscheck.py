@@ -14,14 +14,23 @@ import pymupdf
 
 P = "/home/user/cre-pipeline/design/wylder-tilghman-recapitalization/package"
 PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf", 28),
-        "hm": ("Senior Debt (Hard Money)",
-               f"{P}/Wylder Tilghman Island - Senior Debt (Hard Money).pdf", 27),
+        "hm8": ("Senior Debt - 8M Request",
+                f"{P}/Wylder Tilghman Island - Senior Debt - 8M Request.pdf", 27),
+        "hm10": ("Senior Debt - 10M Request",
+                 f"{P}/Wylder Tilghman Island - Senior Debt - 10M Request.pdf", 27),
+        "hm11": ("Senior Debt - 11M Request",
+                 f"{P}/Wylder Tilghman Island - Senior Debt - 11M Request.pdf", 27),
         "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 28),
         "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 28)}
-# the two debt packages are the same loan with and without the equity kicker, so they are not
-# "other tranches" to each other
-OTHERS = {"senior": ["pref", "common"], "hm": ["pref", "common"],
-          "pref": ["senior", "common"], "common": ["senior", "pref"]}
+LENDER = ["senior", "hm8", "hm10", "hm11"]
+# total cost basis per key moves with the request, because the reserve and the fees are in it
+BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
+             "pref": "$331,860", "common": "$331,860"}
+NO_KICKER = ["hm8", "hm10", "hm11"]
+# the debt packages are the same deal at different requests, so they are not "other tranches"
+# to each other
+OTHERS = {t: (["pref", "common"] if t in LENDER
+              else [o for o in ("senior", "pref", "common") if o != t]) for t in PKGS}
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -31,21 +40,27 @@ OWN = {
  "senior": ["$10,000,000", "12.00%", "SOFR", "8.21%", "3.79%", "interest-only",
             "$8,600,000", "$9,800,000", "$3,600,000", "5.00%", "$940,000",
             "$14,540,000", "$4,740,000", "1.48x", "15.6%", "57.46%", "46.73%"],
- "hm": ["$10,000,000", "12.00%", "SOFR", "8.21%", "3.79%", "interest-only", "$8,600,000",
-        "57.46%", "46.73%", "33.90%", "$9,404,044", "1.73x"],
+ "hm8": ["$8,000,000", "12.00%", "SOFR", "$6,880,000", "$960,000", "37.38%", "46.77%",
+         "28.94%", "2.41x", "2.16x", "$18,947,882", "$326,688", "$5,200,000"],
+ "hm10": ["$10,000,000", "12.00%", "SOFR", "$8,600,000", "$1,200,000", "46.73%", "57.46%",
+          "23.15%", "1.93x", "1.73x", "$19,247,882", "$331,860", "$3,500,000"],
+ "hm11": ["$11,000,000", "12.00%", "SOFR", "$9,460,000", "$1,320,000", "51.40%", "62.66%",
+          "21.05%", "1.75x", "1.57x", "$19,397,882", "$334,446", "$2,650,000"],
  "pref": ["$3,904,044", "17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "10.00%",
           "$1,880,000", "$7,526,610", "$3,700,647", "1.97x", "31.5%", "64.97%"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
             "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
             "2.33x", "32.6%", "63.64%"]}
-# ── what the other two must never see
+# ── what the other packages must never see. Bare IRR percentages are deliberately left out:
+# they collide with unrelated ratios (the 2031 debt yield is 31.5%, so is the preferred IRR).
+# Distinctive dollar amounts, two-decimal rates and x-multiples identify a tranche without them.
 SECRET = {
- "hm": [],
+ "hm8": [], "hm10": [], "hm11": [],
  "senior": ["12.00%", "SOFR", "8.21%", "$8,600,000", "$9,800,000", "$3,600,000", "$940,000",
-            "$14,540,000", "$4,740,000", "1.48x", "15.6%", "$364,000", "$1,228,000",
+            "$14,540,000", "$4,740,000", "1.48x", "$364,000", "$1,228,000",
             "$4,164,000", "$5,028,000", "$14,828,000"],
  "pref": ["17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "$78,081", "$1,880,000",
-          "$7,526,610", "$3,700,647", "1.97x", "31.5%", "$728,000", "$2,456,000",
+          "$7,526,610", "$3,700,647", "1.97x", "$728,000", "$2,456,000",
           "$2,548,647", "$4,276,647", "$8,102,610"],
  "common": ["$1,823,062", "$1,041,750", "$2,864,812", "$5,683,522", "$2,841,761",
             "$14,048,334", "$8,164,823", "$4,664,823", "$5,883,511", "$3,883,511",
@@ -55,11 +70,19 @@ SHARED_OK = {"$10,000,000", "$3,904,044", "$3,500,000", "$2,000,000", "$5,500,00
              "$17,404,044", "$4,751,666", "$19,247,882", "51%", "49%"}
 # the common equity recipient must see no exit level at which it loses money
 LOSS = ["$18,000,000", "$18M", "$12,783,904", "$791,424", "$452,242", "0.77x", "-8.2%"]
+PARTNERSHIP_WORDS = ["partnership", "Partnership", "pari passu", "general partner",
+                     "General Partner", "limited partner", "Limited Partner", "· LP",
+                     "GP co-investment", "GP share", "GP ownership", "LP share", "LP commitment",
+                     "promote", "residual split", "preferred return"]
 NO_RETURN = ["Exit participation", "exit participation", "equity kicker", "participation in equity",
              "5.00%", "IRR", "Equity multiple", "equity multiple", "Projected Return",
              "total cash received", "Net Funded Basis", "not for distribution", "$9,800,000",
              "$3,600,000", "$940,000", "$364,000", "$1,228,000", "$14,540,000", "$4,740,000",
              "1.48x", "1.51x", "15.6%", "16.4%"]
+# the loan-dependent figures that must not appear in a package built for a different request
+WRONG_REQUEST = {"hm8": ["$10,000,000", "$11,000,000", "$1,200,000", "$1,320,000"],
+                 "hm10": ["$8,000,000", "$11,000,000", "$960,000", "$1,320,000"],
+                 "hm11": ["$8,000,000", "$10,000,000", "$960,000", "$1,200,000"]}
 FORBIDDEN = ["appraisal", "appraised", "appraiser", "LWHA", "Newmark", "CBRE", "New Day"]
 BRITISH = ["utilise", "organis", "centre", "labour", "metres", "colour", "favour", "analyse"]
 
@@ -93,12 +116,18 @@ for t, (name, path, pages) in PKGS.items():
     brit = [w for w in BRITISH if w in raw.lower()]
     check(not brit, "US spelling", f"found {brit}")
 
-    check(norm("58 keys") in flat and norm("$331,860") in flat,
-          "per-key figures on 58 keys", "cost basis per key $331,860 not found")
+    check(norm("58 keys") in flat and norm(BASIS_KEY[t]) in flat,
+          "per-key figures on 58 keys", f"cost basis per key {BASIS_KEY[t]} not found")
 
-    if t == "hm":
+    if t in LENDER:
+        hits = [w for w in PARTNERSHIP_WORDS if w in raw]
+        check(not hits, "no partnership, GP or LP vocabulary", f"found {hits}")
+
+    if t in NO_KICKER:
         hits = [v for v in NO_RETURN if norm(v) in flat]
         check(not hits, "no participation and no lender return", f"found {hits}")
+        hits = [v for v in WRONG_REQUEST[t] if norm(v) in flat]
+        check(not hits, "no figures from another loan request", f"found {hits}")
 
     if t == "common":
         hits = [v for v in LOSS if norm(v) in flat]

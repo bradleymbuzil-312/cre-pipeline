@@ -15,15 +15,16 @@ PIP = [('Room renovation', 1_425_000), ('Marina replacement and expansion', 250_
        ('Dogwood Cove house renovation', 300_000)]
 # other costs: the senior fee lines are itemized only in the senior package
 OTH_BY = {
- 'senior': [('Interest and carry reserve &middot; 12 months', 1_200_000),
-            ('Working capital', 500_000), ('Senior origination fee', 200_000),
-            ('Closing, legal and mortgage tax', 120_000), ('Broker fee &middot; MMCC', 100_000),
+ 'senior': [('Interest and carry reserve &middot; 12 months', SR_RESERVE),
+            ('Working capital', 500_000), ('Senior origination fee', SR_ORIG),
+            ('Closing, legal and mortgage tax', 120_000), ('Broker fee &middot; MMCC', SR_BROKER),
             ('Processing and third-party fees', 10_100)],
- 'other':  [('Interest and carry reserve', 1_200_000), ('Working capital', 500_000),
-            ('Financing fees', 300_000), ('Closing, legal and mortgage tax', 120_000),
+ 'other':  [('Interest and carry reserve', SR_RESERVE), ('Working capital', 500_000),
+            ('Financing fees', SR_ORIG + SR_BROKER), ('Closing, legal and mortgage tax', 120_000),
             ('Processing and third-party fees', 10_100)]}
 OTH = OTH_BY['senior']
-T_ACQ, T_PIP, T_OTH = 13_814_782, 3_303_000, 2_130_100
+T_ACQ, T_PIP = 13_814_782, 3_303_000
+T_OTH = 630_100 + SR_RESERVE + SR_ORIG + SR_BROKER
 assert sum(v for _, v in ACQ) == T_ACQ and sum(v for _, v in PIP) == T_PIP
 assert all(sum(v for _, v in o) == T_OTH for o in OTH_BY.values())
 assert T_ACQ + T_PIP + T_OTH == COST_BASIS
@@ -42,8 +43,11 @@ def total_basis(t='senior'):
      + row('Total cost basis', f'${COST_BASIS:,.0f}', pad=9, fs='19px', kind='tot')
      + row('Cost basis per key &middot; 58 keys', f'${COST_BASIS_KEY:,.0f}', pad=7, fs='16px', kind='sub')
      + para('The basis includes <strong style="color:var(--mm-navy-900);">$2,000,000 of sponsor cash '
-            'already invested</strong> outside loan proceeds &mdash; the same capital that stands as the '
-            f'GP&rsquo;s pari passu interest in the partnership. The capitalization on page 18 funds '
+            'already invested</strong> outside loan proceeds &mdash; '
+            + ('capital that stays in the asset behind the loan. ' if t in ('senior', 'hm')
+               else 'the same capital that stands as the GP&rsquo;s pari passu interest in the '
+                    'partnership. ')
+            + f'The capitalization on page 18 funds '
             f'${TOTAL:,.0f} of this basis; a further $642,693 was invested in the hotel between 2021 and '
             '2025, outside the plan at right.', fs='14.5px', auto=True))
     right = grp('Renovation Program', PIP, 'Total renovation program', T_PIP)
@@ -68,8 +72,10 @@ def total_basis(t='senior'):
      'data-speaker-notes="Total cost basis of nineteen million two hundred forty-seven thousand eight '
      'hundred eighty-two dollars, three hundred thirty-one thousand eight hundred sixty per key on '
      'fifty-eight keys. Acquisition and payoff of thirteen million eight hundred fourteen thousand seven '
-     'hundred eighty-two includes two million of sponsor cash already invested outside loan proceeds, which '
-     'is the same capital standing as the general partner pari passu interest. The renovation program is '
+     'hundred eighty-two includes two million of sponsor cash already invested outside loan proceeds, '
+     + ('which stays in the asset behind the loan. ' if t in ('senior', 'hm')
+        else 'which is the same capital standing as the general partner pari passu interest. ')
+     + 'The renovation program is '
      'three million three hundred three thousand, itemized at right and funded at close. Other costs are '
      'two million one hundred thirty thousand one hundred, including a twelve-month interest and carry '
      'reserve and five hundred thousand of working capital." '

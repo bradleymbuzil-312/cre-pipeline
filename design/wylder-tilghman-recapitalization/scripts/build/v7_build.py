@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Assemble the three packages and audit each for cross-tranche economic leakage."""
-import io, re, sys
+import io, os, re, sys
 from v7_lib import load_sections, write_deck, SHARED, DECKDIR
 from v7_common import capital_structure, sources_and_uses
 from v7_pages import total_basis
@@ -19,7 +19,7 @@ PKG = {
           ('SENIOR RETURNS', lambda: T.returns_page('senior')),
           ('CREDIT CONSIDERATIONS', T.senior_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
- 'hm': dict(file='Wylder Tilghman Island - Senior Debt (Hard Money).dc.html', label='Senior Debt',
+ 'hm': dict(file=f'Wylder Tilghman Island - Senior Debt - {SENIOR_AMT//1_000_000}M Request.dc.html', label='Senior Debt',
    pages=[('SENIOR LOAN TERMS', T.hm_terms), ('DEBT SERVICE COVERAGE', T.senior_coverage),
           ('CREDIT CONSIDERATIONS', T.hm_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
@@ -56,6 +56,11 @@ COMMON = dict(
           + LP_PROFIT + GP_PROFIT)
 OTHERS = {'senior': [PREF, COMMON], 'hm': [PREF, COMMON],
           'pref': [SENIOR, COMMON], 'common': [SENIOR, PREF]}
+# the lender-facing packages carry no partnership, GP or LP vocabulary at all
+PARTNERSHIP_WORDS = ['partnership', 'Partnership', 'pari passu', 'general partner',
+                     'General Partner', 'limited partner', 'Limited Partner', '&middot; LP',
+                     'GP co-investment', 'GP &mdash;', 'GP share', 'GP ownership', 'LP share',
+                     'LP commitment', 'promote', 'residual split', 'preferred return']
 # the hard money package quotes no participation and projects no lender return
 NO_RETURN = ['Exit participation', 'exit participation', 'equity kicker',
              'participation in equity', f'{SR_KICKER:.2%}', 'IRR', 'irr',
@@ -99,6 +104,9 @@ def audit(path, t):
         leaks += [f'${a:,.0f}' for a in other['amounts']
                   if a not in ALLOWED and f'${a:,.0f}' in s]
     out = [f'  cross-tranche leaks: {sorted(set(leaks)) if leaks else "none"}']
+    if t in ('senior', 'hm'):
+        pw = sorted({w for w in PARTNERSHIP_WORDS if w in s})
+        out.append(f'  partnership / GP / LP vocabulary: {pw if pw else "none"}')
     if t == 'hm':
         hits = sorted({v for v in NO_RETURN if v in s})
         out.append(f'  participation / lender return: {hits if hits else "none"}')
@@ -123,8 +131,15 @@ def audit(path, t):
     return '\n'.join(out)
 
 
+# At a request other than the solved $10,000,000 the exit waterfall is not available, so only the
+# lender-facing package — which shows no return and no participation — can be built.
+TRANCHES = ('senior', 'hm', 'pref', 'common') if WATERFALL_OK else ('hm',)
+
 if __name__ == '__main__':
-    for t in ('senior', 'hm', 'pref', 'common'):
+    if not WATERFALL_OK:
+        print(f'${SENIOR_AMT:,} request — lender-facing package only '
+              '(the exit waterfall is solved at $10,000,000)')
+    for t in TRANCHES:
         path, n, order = build(t)
         print(f'\n{PKG[t]["file"][:-8]}  —  {n} pages')
         print(audit(path, t))

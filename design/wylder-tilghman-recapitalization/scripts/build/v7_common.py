@@ -12,13 +12,17 @@ from figs_v7 import *
 TRANCHE_COLOR = {'senior': '#032D67', 'pref': '#957551', 'common': '#456EAB'}
 # 'hm' is the senior loan offered without an equity kicker, for hard money lenders
 BASE = {'senior': 'senior', 'hm': 'senior', 'pref': 'pref', 'common': 'common'}
+# the two debt packages are lender-facing: no partnership, GP or LP vocabulary anywhere in them
+LENDER = ('senior', 'hm')
+def eq_label(t):  return 'Common equity' if t in LENDER else 'Common equity &middot; LP'
+def gp_label(t):  return 'Sponsor cash equity' if t in LENDER else 'GP co-investment &middot; sponsor cash'
 TNAME = {'senior': 'the senior loan', 'hm': 'the senior loan',
          'pref': 'the preferred equity', 'common': 'the common equity'}
 
 # ───────────────────────────────────────────────── capital structure
 def capital_structure(t):
     hl = BASE[t]
-    rows_ = [('Common equity &middot; LP', COMMON, 'common'),
+    rows_ = [(eq_label(t), COMMON, 'common'),
              ('Preferred equity', PREF, 'pref'),
              ('Senior loan &middot; 1st trust deed', SENIOR, 'senior')]
     bar = '    <div style="display:flex;flex-direction:column;flex:1;min-height:0;">\n'
@@ -52,9 +56,9 @@ def capital_structure(t):
      + row('Senior loan &middot; 1st trust deed', f'${SENIOR:,.0f}', pad=4,
            kind=('hi' if hl == 'senior' else ''))
      + row('Preferred equity', f'${PREF:,.0f}', pad=4, kind=('hi' if hl == 'pref' else ''))
-     + row('Common equity &middot; LP', f'${COMMON:,.0f}', pad=4, kind=('hi' if hl == 'common' else ''))
+     + row(eq_label(t), f'${COMMON:,.0f}', pad=4, kind=('hi' if hl == 'common' else ''))
      + row('Total capitalization', f'${TOTAL:,.0f}', kind='sub', pad=4)
-     + row('GP co-investment &middot; sponsor cash', f'${GP_CASH:,.0f}', pad=4,
+     + row(gp_label(t), f'${GP_CASH:,.0f}', pad=4,
            note='John Flannigan, invested outside loan proceeds and remaining in the deal')
      + row('Senior LTV &middot; as-is', f'{LTV["is"]:.2%}', pad=4)
      + row('Senior LTV &middot; as-stabilized', f'{LTV["stab"]:.2%}', pad=4)
@@ -187,9 +191,11 @@ NET_FUNDING = {
 
 
 def sources_and_uses(t):
-    t = BASE[t]
+    lender = t in LENDER
+    t = BASE[t] if not lender else t
     src = sub('Sources')
-    for lab, amt in SOURCES:
+    sources = [(lab if 'LP' not in lab else eq_label(t), amt) for lab, amt in SOURCES]
+    for lab, amt in sources:
         src += row(lab, f'${amt:,.0f}', pad=15, fs='18px',
                    note=f'{amt/TOTAL:.2%} of total &middot; ${amt/KEYS:,.0f} per key')
     src += row('Total sources', f'${TOTAL:,.0f}', pad=15, fs='18px', kind='sub')
@@ -199,15 +205,15 @@ def sources_and_uses(t):
      + para('Maryland mortgage recording tax and stub interest on the existing loan are budgeted at zero '
             'and should be confirmed at closing.', fs='15px', auto=True))
 
-    reserve = ('Interest and carry reserve &middot; 12 months' if t == 'senior'
+    reserve = ('Interest and carry reserve &middot; 12 months' if t in LENDER
                else 'Interest and carry reserve')
     uses = sub('Uses')
-    for lab, amt in BASE_USES + FEE_USES[t]:
+    for lab, amt in BASE_USES + FEE_USES[BASE[t]]:
         uses += row(lab.replace('@@RESERVE@@', reserve), f'${amt:,.0f}', pad=9, fs='16.5px')
     uses += row('Total uses', f'${TOTAL:,.0f}', pad=9, fs='16.5px', kind='sub')
     uses += row('Sources less uses', '$0', pad=9, fs='16.5px', kind='hi')
 
-    title, lines = NET_FUNDING[t]
+    title, lines = NET_FUNDING[BASE[t]]
     uses += ('      <div style="margin-top:auto;padding-top:18px;">\n' + sub(title, ind=8)
      + ''.join(row(k, v, pad=8, ind=8, kind=kd) for k, v, kd in lines) + '      </div>\n')
 
@@ -217,7 +223,7 @@ def sources_and_uses(t):
                   'hundred sixty-three after the two percent origination fee.',
           'common': 'Total partnership capital is five million five hundred thousand &mdash; three million '
                     'five hundred thousand from the LP and two million of sponsor cash on the same terms. '
-                    'The LP holds sixty-three point six four percent of partnership capital.'}[t]
+                    'The LP holds sixty-three point six four percent of partnership capital.'}[BASE[t]]
     return ('<section data-label="Sources &amp; Uses" data-screen-label="Sources &amp; Uses" '
      'data-speaker-notes="Sources and uses at closing. Ten million of senior debt, three million nine '
      'hundred four thousand of preferred equity and three million five hundred thousand of common equity, '

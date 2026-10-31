@@ -1,9 +1,16 @@
-# Handoff: Wylder Hotel Tilghman Island — Four Capitalization Packages
+# Handoff: Wylder Hotel Tilghman Island — Six Capitalization Packages
 
 ## Overview
-Institutional packages marketing a **$17,404,044 recapitalization** of Wylder Hotel Tilghman Island
-(Talbot County, MD) — one per capital tranche, each disclosing only its own economics, plus a
-hard money variant of the senior loan. Built on the **10.28.26 financial model**.
+Institutional packages marketing a recapitalization of Wylder Hotel Tilghman Island (Talbot County,
+MD) — one per capital tranche, each disclosing only its own economics, plus a lender-facing senior
+loan package at three request sizes. Built on the **10.28.26 financial model**.
+
+The loan request is a build-time parameter (`WT_SENIOR_LOAN`). Everything that moves with it — the
+reserve, the origination and broker fees, net proceeds, LTV, loan to cost, DSCR, debt yield, the
+permanent takeout test, the cost basis and the extended cash flow's debt service block — is derived,
+not transcribed. The preferred is held at $3,904,044 and **the common equity is the plug**, so the
+uses foot at every request. The exit waterfall is solved only at $10,000,000, so only that request
+produces the returns-bearing packages.
 
 | Tranche | Amount | Share | Terms | Base case ($30.0M exit, 3-yr hold) |
 |---|---|---|---|---|
@@ -31,7 +38,7 @@ senior and preferred deduction in the waterfall is a **single aggregated amount*
 base case), never itemized.
 
 Enforced by an audit in `scripts/build/v7_build.py` and verified against the PDFs by
-`scripts/crosscheck.py` (26 checks).
+`scripts/crosscheck.py` (47 checks).
 
 ### No exit level showing a loss
 The returns page in each package (page 22, marked "not for distribution") spans $18M–$36M for the
@@ -62,9 +69,10 @@ without an updated model.
 Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `deck-stage.js`,
 `support.js` must resolve — `file://` fails CORS) and open one of:
 
-- `Wylder Tilghman Island - Senior Debt.dc.html`
-- `Wylder Tilghman Island - Senior Debt (Hard Money).dc.html` — same loan, no equity kicker, no
-  lender returns page, 27 slides
+- `Wylder Tilghman Island - Senior Debt.dc.html` — $10M with a 5.00% kicker, 28 slides
+- `Wylder Tilghman Island - Senior Debt - 8M Request.dc.html` — lender-facing, 27 slides
+- `Wylder Tilghman Island - Senior Debt - 10M Request.dc.html` — lender-facing, 27 slides
+- `Wylder Tilghman Island - Senior Debt - 11M Request.dc.html` — lender-facing, 27 slides
 - `Wylder Tilghman Island - Preferred Equity.dc.html`
 - `Wylder Tilghman Island - Common Equity.dc.html`
 
@@ -73,7 +81,7 @@ notes and print-to-PDF.
 
 ### Rebuilding
 ```
-python3 scripts/build/v7_build.py      # regenerates all three .dc.html from the shared core, with the leak audit
+python3 scripts/build/v7_loans.py      # regenerates all six .dc.html, one process per request, with the audits
 python3 dist/build-dist.py             # optimizes assets into dist/_dist-deck (25.3 MB -> 2.3 MB)
 python3 scripts/crosscheck.py          # verifies the three exported PDFs
 ```
@@ -243,9 +251,10 @@ three and would disclose cross-tranche economics if sent alongside them.
 `scripts/crosscheck-v4-superseded.py` checks that older set.
 
 ## Files
-- `deck/Wylder Tilghman Island - Senior Debt.dc.html` — the senior debt package (28 slides)
-- `deck/Wylder Tilghman Island - Senior Debt (Hard Money).dc.html` — the same loan without the
-  5.00% equity kicker and without the lender returns page (27 slides), for hard money lenders
+- `deck/Wylder Tilghman Island - Senior Debt.dc.html` — the senior debt package with a 5.00% equity
+  kicker and a lender returns page (28 slides), at the $10,000,000 request only
+- `deck/Wylder Tilghman Island - Senior Debt - {8,10,11}M Request.dc.html` — the lender-facing set:
+  no kicker, no projected lender return, no returns page, no partnership vocabulary (27 slides)
 - `deck/Wylder Tilghman Island - Preferred Equity.dc.html` — the preferred equity package
 - `deck/Wylder Tilghman Island - Common Equity.dc.html` — the common equity package
 - `deck/Wylder Tilghman Island - Recapitalization.dc.html` — the superseded v4 deck, kept as the
@@ -259,7 +268,8 @@ three and would disclose cross-tranche economics if sent alongside them.
   (markup helpers and the shared-core extractor), `v7_common.py` (capital structure, sources and
   uses), `v7_pages.py` (total basis, returns grid), `v7_patch.py` (per-package edits to the two
   shared pages that carried tranche economics), `v7_tranche.py` (covers, terms, mechanics, returns,
-  position, contacts), `v7_num.py` (renumbering), `v7_build.py` (assembly and leak audit)
+  position, contacts), `v7_reno.py` (the page 9 schedule), `v7_num.py` (renumbering),
+  `v7_build.py` (assembly and audits for one request), `v7_loans.py` (every request)
 - `scripts/crosscheck.py` — PDF verification; `scripts/scrub_model.py` — label scrub
 
 > **Data note.** Capital, waterfall and return figures reconcile to the **10.28.26 financial

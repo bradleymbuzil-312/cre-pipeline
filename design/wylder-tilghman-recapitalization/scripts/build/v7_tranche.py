@@ -126,7 +126,7 @@ OPP = {
    f'concurrently and ${GP_CASH:,.0f} of sponsor cash is already invested and remains in the deal.',
    [('Senior Loan', f'${SENIOR/1e6:,.2f}M', f'First trust deed &middot; ${SENIOR/KEYS:,.0f} per key', 1),
     ('LTV &middot; As-Is', f'{LTV["is"]:.2%}', f'{LTV["stab"]:.2%} of the stabilized estimate', 0),
-    ('Loan to Cost', f'{LTC:.2%}', f'On a ${COST_BASIS:,.0f} total basis', 0),
+    ('Loan to Cost', f'{LTC:.2%}', f'On the ${TOTAL:,.0f} capitalization', 0),
     ('All-In Rate', f'{ALLIN:.2%}', f'SOFR {SOFR:.2%} plus {SPREAD:.2%}, floating', 0),
     ('Term &amp; Amortization', f'{SR_TERM} yr &middot; IO', 'Single advance funded at close', 0),
     ('Debt Yield &middot; 2027', f'{DY[2027]:.2%}', f'{DY[2028]:.2%} in 2028', 0),
@@ -363,8 +363,11 @@ def senior_coverage():
         ('RevPAR', [f'${p[3]:,.0f}' for p in PRO], 'sub')], pad=11)
      + para(f'2026 is the renovation year: the asset is down for the program and coverage is '
             f'{DSCR[2026]:.2f}x. The ${SR_RESERVE:,.0f} interest and carry reserve funded at close pays '
-            f'twelve months of debt service in full, so the shortfall is pre-funded and does not depend '
-            f'on operations. Coverage reaches {DSCR[2027]:.2f}x in the first full year after reopening.',
+            'twelve months of debt service in full, so '
+            + ('the shortfall is pre-funded and does not depend on operations. '
+               if DSCR[2026] < 1 else
+               'the renovation year does not depend on operations at all. ')
+            + f'Coverage reaches {DSCR[2027]:.2f}x in the first full year after reopening.',
             fs='15px', auto=True))
     right = (sub('Leverage Against Estimated Value')
      + tbl(['Stage', 'Value', 'Per Key', 'Senior LTV'],
@@ -393,14 +396,14 @@ def senior_coverage():
             f'indicative {PERM_RATE:.2%} on a 30-year amortizing basis, debt service is ${PERM_ADS:,.0f} '
             f'and coverage is {PERM_DSCR[2027]:.2f}x on 2027 cash flow. Estimated values are for '
             'underwriting and exclude the adjacent Dogwood Cove parcel.', fs='15px', auto=True))
-    sn = ('Coverage and leverage. Twenty twenty-six is the renovation year, so coverage is zero point '
-          'nine four times and the twelve-month reserve funded at close pays debt service in full. '
-          'Coverage is one point nine three times in twenty twenty-seven and two point two three times '
-          'in twenty twenty-eight, with debt yield at twenty-three point one five and twenty-six point '
-          'seven one percent. Senior leverage falls from forty-six point seven percent of as-is value to '
-          'thirty-three point nine percent of the stabilized estimate. On a conventional permanent '
-          'takeout at six point five percent, thirty-year amortizing, coverage is three point zero five '
-          'times on twenty twenty-seven cash flow.')
+    sn = (f'Coverage and leverage on a ${SENIOR:,} request. Twenty twenty-six is the renovation year, '
+          f'so coverage is {DSCR[2026]:.2f} times and the twelve-month reserve funded at close pays debt '
+          f'service in full. Coverage is {DSCR[2027]:.2f} times in twenty twenty-seven and '
+          f'{DSCR[2028]:.2f} times in twenty twenty-eight, with debt yield at {DY[2027]:.2%} and '
+          f'{DY[2028]:.2%}. Senior leverage falls from {LTV["is"]:.2%} of as-is value to '
+          f'{LTV["stab"]:.2%} of the stabilized estimate. On a conventional permanent takeout at six '
+          f'point five percent, thirty-year amortizing, coverage is {PERM_DSCR[2027]:.2f} times on '
+          'twenty twenty-seven cash flow.')
     return ('<section data-label="Debt Service Coverage" data-screen-label="Debt Service Coverage" '
      f'data-speaker-notes="{sn}" ' + sec(pad='56px 92px 40px') + '>\n'
      + h2('Coverage, debt yield and leverage.', fs='42px', mb='18px', pb='15px')
@@ -863,7 +866,7 @@ OPP['hm'] = ('Summary of the senior loan request.',
   f'concurrently and ${GP_CASH:,.0f} of sponsor cash is already invested and remains in the deal.',
   [('Senior Loan', f'${SENIOR/1e6:,.2f}M', f'First trust deed &middot; ${SENIOR/KEYS:,.0f} per key', 1),
    ('LTV &middot; As-Is', f'{LTV["is"]:.2%}', f'{LTV["stab"]:.2%} of the stabilized estimate', 0),
-   ('Loan to Cost', f'{LTC:.2%}', f'On a ${COST_BASIS:,.0f} total basis', 0),
+   ('Loan to Cost', f'{LTC:.2%}', f'On the ${TOTAL:,.0f} capitalization', 0),
    ('All-In Rate', f'{ALLIN:.2%}', f'SOFR {SOFR:.2%} plus {SPREAD:.2%}, floating', 0),
    ('Term &amp; Amortization', f'{SR_TERM} yr &middot; IO', 'Single advance funded at close', 0),
    ('Debt Yield &middot; 2027', f'{DY[2027]:.2%}', f'{DY[2028]:.2%} in 2028', 0),

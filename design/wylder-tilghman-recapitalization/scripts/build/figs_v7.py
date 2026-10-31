@@ -4,26 +4,40 @@
 Sources and Uses is authoritative for the stack. The Loan Analysis tab still carries the
 earlier no-common-equity case (pref $7,404,044 / common $0); it is not used here.
 """
+import os
+
 KEYS = 58
 
-# ───────────────────────────────── the stack
-SENIOR   = 10_000_000
+# ───────────────────────────────── the senior loan, sized by request
+# The model solves the $10,000,000 request. Alternative requests re-derive every loan-dependent
+# figure below from the same uses: the uses that do not depend on the loan are fixed, and the
+# reserve, the origination fee and the broker fee all scale with it, so the common equity is the
+# plug. The exit waterfall is solved only at $10,000,000 — see WATERFALL_OK.
+SENIOR = int(os.environ.get('WT_SENIOR_LOAN', 10_000_000))
+WATERFALL_OK = (SENIOR == 10_000_000)
+
 PREF     =  3_904_044
-COMMON   =  3_500_000      # LP, new investor
 GP_CASH  =  2_000_000      # John Flannigan, pari passu with the LP
-TOTAL    = 17_404_044      # senior + pref + LP common
-PARTNERSHIP = COMMON + GP_CASH          # 5,500,000
 
 # ───────────────────────────────── senior, 1st trust deed
 SOFR, SPREAD, ALLIN = 0.0379, 0.0821, 0.1200
-SR_ADS      = 1_200_000                 # interest-only
-SR_ORIG_PC, SR_ORIG = 0.0200, 200_000
-SR_BROKER_PC, SR_BROKER = 0.0100, 100_000
-SR_RESERVE  = 1_200_000                 # 12-month interest and carry reserve
-SR_NET      = 8_600_000                 # gross less origination less reserve
+SR_ORIG_PC, SR_BROKER_PC = 0.0200, 0.0100
+SR_ADS      = round(SENIOR * ALLIN)           # interest-only
+SR_ORIG     = round(SENIOR * SR_ORIG_PC)
+SR_BROKER   = round(SENIOR * SR_BROKER_PC)
+SR_RESERVE  = SR_ADS                          # 12-month interest and carry reserve
+SR_NET      = SENIOR - SR_ORIG - SR_RESERVE   # gross less origination less reserve
 SR_TERM     = 3
-SR_KICKER   = 0.0500                    # share of equity value at exit
-PERM_RATE, PERM_ADS = 0.0650, 758_482
+SR_KICKER   = 0.0500                          # share of equity value at exit
+PERM_RATE   = 0.0650
+PERM_ADS    = round(758_482 * SENIOR / 10_000_000)   # 30-yr amortizing at PERM_RATE
+
+# ───────────────────────────────── the stack: the common equity is the plug
+# uses that do not move with the loan, including the preferred fees and the closing detail
+FIXED_USES  = 15_904_044
+TOTAL       = FIXED_USES + SR_RESERVE + SR_ORIG + SR_BROKER
+COMMON      = TOTAL - SENIOR - PREF           # LP, new investor
+PARTNERSHIP = COMMON + GP_CASH
 
 # ───────────────────────────────── preferred
 PF_RATE_PIK, PF_RATE_CUR = 0.1700, 0.0000
@@ -109,9 +123,9 @@ USES = [('Existing loan payoff', 10_714_782),
         ('Land and house acquisition &middot; 21441 Dogwood Cove', 1_100_000),
         ('Working capital', 500_000),
         ('Dogwood Cove house renovation', 300_000),
-        ('Senior origination fee &middot; 2.0%', SR_ORIG),
+        (f'Senior origination fee &middot; {SR_ORIG_PC:.1%}', SR_ORIG),
         ('Closing, legal and other', 130_100),
-        ('Broker fee &middot; MMCC senior debt &middot; 1.0%', SR_BROKER),
+        (f'Broker fee &middot; MMCC senior debt &middot; {SR_BROKER_PC:.1%}', SR_BROKER),
         ('Preferred origination fee &middot; investor &middot; 2.0%', PF_ORIG),
         ('MMCC preferred equity placement fee &middot; 2.0%', PF_MMCC)]
 CLOSING = [('Legal &mdash; borrower', 65_000), ('Other closing costs', 40_000),
@@ -123,13 +137,29 @@ PRO = [(2026, 0.33, 288,  96, 4_375_938, 1_129_314),
        (2027, 0.38, 395, 150, 6_381_867, 2_315_019),
        (2028, 0.40, 415, 166, 7_082_124, 2_670_611)]
 NOI = {y: n for y, _, _, _, _, n in PRO}
-DSCR  = {2026: 0.9411, 2027: 1.9292, 2028: 2.2255}
-DY    = {2026: 0.1129, 2027: 0.2315, 2028: 0.2671}
-LTV   = {'is': 0.4673, 'complete': 0.3846, 'stab': 0.3390}
-LTC   = 0.5746
-PERM_DSCR = {2026: 1.4889, 2027: 3.0522, 2028: 3.5210}
-COMBINED_LTV = {2026: 0.8133, 2027: 0.6694, 2028: 0.5900}
-COST_BASIS, COST_BASIS_KEY = 19_247_882, 331_860
+DSCR  = {y: n / SR_ADS for y, n in NOI.items()}
+DY    = {y: n / SENIOR for y, n in NOI.items()}
+LTV   = {k: SENIOR / v for k, v in VAL.items()}
+LTC   = SENIOR / TOTAL                        # loan to the cost of executing the plan
+PERM_DSCR = {y: n / PERM_ADS for y, n in NOI.items()}
+COMBINED_LTV = dict(zip((2026, 2027, 2028),
+                        (TOTAL / VAL['is'], TOTAL / VAL['complete'], TOTAL / VAL['stab'])))
+# basis = acquisition and payoff + renovation + other costs; the loan-driven part moves with it
+FIXED_BASIS = 17_747_882
+COST_BASIS  = FIXED_BASIS + SR_RESERVE + SR_ORIG + SR_BROKER
+COST_BASIS_KEY = round(COST_BASIS / KEYS)
+
+if __name__ == '__main__' and not WATERFALL_OK:
+    print(f'── ${SENIOR:,} request · the exit waterfall is solved only at $10,000,000 ──')
+    ok = lambda a, b, lab: print(f'  {"OK " if abs(a-b)<=2 else "!! "}{lab:44s}{a:>14,.0f}{b:>14,.0f}')
+    ok(sum(a for _, a in USES), TOTAL, '  uses foot to the capitalization')
+    ok(SENIOR + PREF + COMMON, TOTAL, '  sources foot to the capitalization')
+    ok(SR_NET, SENIOR - SR_ORIG - SR_RESERVE, '  net senior proceeds at close')
+    ok(COST_BASIS, FIXED_BASIS + SR_RESERVE + SR_ORIG + SR_BROKER, '  total cost basis')
+    ok(SR_ADS, round(SENIOR * ALLIN), '  annual debt service, interest-only')
+    print(f'  LTV as-is {LTV["is"]:.2%} | LTC {LTC:.2%} | DSCR {DSCR[2027]:.2f}x | '
+          f'DY {DY[2027]:.2%} | common equity plug ${COMMON:,}')
+    raise SystemExit
 
 if __name__ == '__main__':
     ok = lambda a, b, lab: print(f'  {"OK " if abs(a-b)<=2 else "!! "}{lab:44s}{a:>14,.0f}{b:>14,.0f}')
