@@ -7,11 +7,15 @@ from v7_pages import total_basis
 from v7_patch import PATCH
 from v7_num import renumber
 import v7_tranche as T
+from v7_marina import *
 from figs_v7 import *
 from figs_v7 import SENIOR as SENIOR_AMT, PREF as PREF_AMT, COMMON as COMMON_AMT
 
 CORE = SHARED[:15]                         # THE ASSET .. MARKET AND DEMAND
 CLOSE = ['TOTAL BASIS', 'VALUE POSITIONING', 'SALE COMPARABLES', 'RECENT TRANSACTIONS', 'CONTACT']
+# the debt packages carry the marina valuation, directly after the hotel value positioning
+DEBT_CLOSE = ['TOTAL BASIS', 'VALUE POSITIONING', 'MARINA VALUATION', 'SALE COMPARABLES',
+              'RECENT TRANSACTIONS', 'CONTACT']
 
 PKG = {
  'senior': dict(file='Wylder Tilghman Island - Senior Debt.dc.html', label='Senior Debt',
@@ -71,6 +75,11 @@ NO_RETURN = ['Exit participation', 'exit participation', 'equity kicker',
             + [f'{v:.2f}x' for v in SR_MULT] + [f'{v:.1%}' for v in SR_IRR]
 # amounts every package is entitled to see: the tranche sizes, the stack, the basis, the aggregate
 ALLOWED = {SENIOR_AMT, PREF_AMT, COMMON_AMT, GP_CASH, TOTAL, PARTNERSHIP, SR_PF_DEDUCT, COST_BASIS}
+# marina slip values, which collide by coincidence with tranche figures: 47 slips at the $40,000
+# top of the range is $1,880,000, and so is the preferred's base-case exit participation.
+ALLOWED |= {SLIPS_T * v for v in (LOW, REC, HIGH)} | {SLIPS_W * REC, SLIPS_D * REC,
+            SLIPS_W * LOW, SLIPS_D * LOW, SLIPS_W * HIGH, SLIPS_D * HIGH,
+            INCOME_SLIP * SLIPS_T, INCOME_SLIP * SLIPS_W, DOGWOOD_ASIS}
 LOSS = [f'${EXITS[0]:,.0f}', f'${EXITS[0]/1e6:,.0f}M', f'${PARTNERSHIP_BREAKEVEN:,.0f}',
         f'${abs(LP_PROFIT[0]):,.0f}', f'${abs(GP_PROFIT[0]):,.0f}',
         f'{LP_MULT[0]:.2f}x', f'{GP_MULT[0]:.2f}x', f'{LP_IRR[0]:.1%}', f'{GP_IRR[0]:.1%}']
@@ -88,8 +97,14 @@ def build(t):
     p = PKG[t]
     for name, fn in p['pages']:
         body[name] = fn()
+    lender = t in ('senior', 'hm')
+    close = DEBT_CLOSE if lender else CLOSE
+    if lender:
+        # TOTAL BASIS is the page the marina page points at for the hotel value estimates
+        body['MARINA VALUATION'] = marina_page(
+            values_page=2 + len(CORE) + 2 + len(p['pages']) + 2)
     order = (['TITLE', 'THE OPPORTUNITY'] + CORE + ['CAPITAL STRUCTURE', 'SOURCES AND USES']
-             + [n for n, _ in p['pages']] + CLOSE)
+             + [n for n, _ in p['pages']] + close)
     path = f'{DECKDIR}/{p["file"]}'
     n = write_deck(path, head, order, body, p['label'])
     renumber(path, p['label'], dark=p['dark'])

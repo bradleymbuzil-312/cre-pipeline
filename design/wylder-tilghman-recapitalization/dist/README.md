@@ -1,7 +1,7 @@
 # Distribution build
 
-The six decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
-(16:9), one slide per page (28 pages, or 27 for the lender-facing set):
+The seven decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
+(16:9), one slide per page (29 for the kicker package, 28 for the lender-facing set and the equity packages):
 
 - `Wylder Tilghman Island - Senior Debt.pdf`
 - `Wylder Tilghman Island - Senior Debt - 8M Request.pdf`
@@ -9,6 +9,7 @@ The six decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
 - `Wylder Tilghman Island - Senior Debt - 11M Request.pdf`
 - `Wylder Tilghman Island - Preferred Equity.pdf`
 - `Wylder Tilghman Island - Common Equity.pdf`
+- `Wylder Tilghman Island - Marina Valuation.pdf` (9 pages)
 
 Text stays live (selectable and searchable); it is not rasterized.
 
@@ -29,7 +30,7 @@ The first cut was not a PDF problem — it was the source imagery:
 Each image's display box is measured from the live render at 1920 × 1080, then
 resized to exactly what the canvas needs — 2× for small images so thumbnails and
 headshots stay crisp when zoomed, 1.5× for mid-size — and re-encoded to JPEG q84.
-Assets totaled 25.33 MB before, 2.33 MB after (−91%), shared across all six decks.
+Assets totaled 25.33 MB before, 2.33 MB after (−91%), shared across all seven decks.
 
 The two full-bleed hero aerials keep their **native resolution**; their saving is
 entirely PNG → JPEG, with no pixels lost. `mmcc-2018-white.png` is the only asset
@@ -52,7 +53,7 @@ cd _dist-deck && python3 -m http.server 8732
 python3 ../scripts/crosscheck.py      # verify the exported PDFs
 ```
 
-`build-dist.py` rewrites the asset references in all six decks and drops any
+`build-dist.py` rewrites the asset references in all seven decks and drops any
 other `.dc.html` (the superseded v4 deck) from the distribution copy.
 
 `build-dist.py` regenerates the optimized asset set into a scratch copy of

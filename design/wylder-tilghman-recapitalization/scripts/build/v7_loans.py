@@ -18,3 +18,11 @@ for loan in REQUESTS:
     if r.returncode:
         print(r.stderr.rstrip())
         raise SystemExit(f'build failed at ${loan:,}')
+
+print(f'\n{"═" * 70}\n  standalone marina valuation\n{"═" * 70}')
+r = subprocess.run([sys.executable, os.path.join(HERE, 'v7_marina.py')],
+                   cwd=HERE, text=True, capture_output=True)
+print(r.stdout.rstrip())
+if r.returncode:
+    print(r.stderr.rstrip())
+    raise SystemExit('marina deck build failed')

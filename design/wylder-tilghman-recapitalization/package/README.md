@@ -1,4 +1,4 @@
-# Six capitalization packages — Wylder Hotel Tilghman Island
+# Wylder Hotel Tilghman Island — capitalization packages and the marina valuation
 
 Built on the 10.28.26 model. The capitalization is **$17,404,044** in three tranches, all funded
 at close: a $10,000,000 senior loan (first trust deed), $3,904,044 of preferred equity and
@@ -6,12 +6,13 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 
 | File | For | Request | Pages |
 |---|---|---|---|
-| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | $10,000,000 | 28 |
-| `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 27 |
-| `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 27 |
-| `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 27 |
+| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | $10,000,000 | 29 |
+| `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 28 |
+| `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 28 |
+| `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 28 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 28 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 28 |
+| `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
 
 **The three "Request" packages are the lender-facing set.** Same loan, same 12.00% all-in rate,
 same 3-year interest-only term, same 2.00% origination — sized at three requests. They quote no
@@ -54,7 +55,7 @@ not the LP.** At $11,000,000 the preferred is $3,018,628, down from the model's 
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(50 checks, all passing).
+(59 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|
@@ -128,6 +129,35 @@ preferred last dollar at $239,725, the full capitalization at $300,070.
 These three reconcile with each other and are kept for reference. They do **not** reconcile with
 the three packages above and would disclose cross-tranche economics if sent alongside them.
 `scripts/crosscheck-v4-superseded.py` checks that older set.
+
+## The marina valuation
+
+Every debt package carries a **Marina Valuation** page, directly after the hotel value positioning.
+The standalone deck is the same analysis in full, Wylder-branded on the TRANCHE Group kit.
+
+| | Low · $25K | Recommended · $30K | High · $40K |
+|---|---|---|---|
+| Wylder · 23 slips | $575,000 | $690,000 | $920,000 |
+| Dogwood Cove · 24 slips, upon approval | $600,000 | $720,000 | $960,000 |
+| **Combined · 47 slips** | **$1,175,000** | **$1,410,000** | **$1,880,000** |
+
+Until the Dogwood Cove slips are approved for commercial use they carry about **$280,000** — the
+$1,100,000 contract price less the parcel's $820,833 residential assessment. That approval is the
+difference between $280,000 and $720,000.
+
+The recommendation is the adjusted median of three deed-verified sales that are mostly slips, within
+about an hour of Tilghman: $26,800 to $48,019 per slip after a 3%-a-year time adjustment, median
+$30,837. Four further local trades carrying a full-service boatyard or hotel and restaurant
+operations run $94,025 to $184,091 per slip; they are shown as context, not as slip prices. An
+income cross-check on market seasonal rents supports $27,000 per slip, 10% below.
+
+**None of this value is in the estimated hotel values** — it is incremental collateral. The sponsor
+model's 2028 slip revenue would imply $2.75M to $3.50M for the combined marina, but that is upside
+to be proven with a trailing marina P&L, not collateral value today.
+
+Two things were deliberately left out of every package: the third-party per-slip benchmark, which
+names no closed sales, and the internal note on the model's 2028 slip expense line. Both are
+underwriting notes rather than lender material.
 
 ## Lender-facing vocabulary
 
