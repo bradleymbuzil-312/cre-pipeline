@@ -30,22 +30,31 @@ It exists only at $10,000,000, because the model's exit waterfall is solved only
 | Origination 2.00% / broker 1.00% | $160,000 / $80,000 | $200,000 / $100,000 | $220,000 / $110,000 |
 | Net proceeds at close | $6,880,000 | $8,600,000 | $9,460,000 |
 | LTV as-is / stabilized | 37.38% / 27.12% | 46.73% / 33.90% | 51.40% / 37.29% |
-| Loan to cost | 46.77% | 57.46% | 62.66% |
+| Loan to cost | 46.58% | 57.46% | 62.79% |
 | DSCR 2026 / 2027 / 2028 | 1.18x / 2.41x / 2.78x | 0.94x / 1.93x / 2.23x | 0.86x / 1.75x / 2.02x |
 | Debt yield 2027 / 2028 | 28.94% / 33.38% | 23.15% / 26.71% | 21.05% / 24.28% |
-| Capitalization | $17,104,044 | $17,404,044 | $17,554,044 |
-| **Common equity (the plug)** | **$5,200,000** | **$3,500,000** | **$2,650,000** |
+| **Preferred equity (the plug)** | **$5,674,878** | **$3,904,044** | **$3,018,628** |
+| Preferred fees · 2.00% each side | $113,498 / $113,498 | $78,081 / $78,081 | $60,373 / $60,373 |
+| Common equity · LP | $3,500,000 | $3,500,000 | $3,500,000 |
+| Capitalization | $17,174,878 | $17,404,044 | $17,518,628 |
+| Debt and preferred to as-is | 63.90% | 64.97% | 65.51% |
 | Total cost basis / key | $18,947,882 / $326,688 | $19,247,882 / $331,860 | $19,397,882 / $334,446 |
 
 The uses are the same deal at every request: the payoff, the renovation, the acquisition and
 working capital do not move, while the reserve, the origination fee and the broker fee all scale
-with the loan. The preferred is held at $3,904,044, so **the common equity is the plug.**
+with the loan. **The LP commitment is held at $3,500,000 and the preferred is the balancing item** —
+it fills whatever the senior does not. Because the preferred carries two fees of 2.00% of itself,
+it solves against itself; at $10,000,000 that reproduces the model's own $3,904,044 exactly, which
+is what confirms the convention.
+
+Note the consequence at the top of the range: **a larger loan request shrinks the preferred raise,
+not the LP.** At $11,000,000 the preferred is $3,018,628, down from the model's $3,904,044.
 
 ## Send one package per recipient. Never cross-send.
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(47 checks, all passing).
+(50 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|

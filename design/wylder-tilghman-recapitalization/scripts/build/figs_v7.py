@@ -16,8 +16,9 @@ KEYS = 58
 SENIOR = int(os.environ.get('WT_SENIOR_LOAN', 10_000_000))
 WATERFALL_OK = (SENIOR == 10_000_000)
 
-PREF     =  3_904_044
+COMMON   =  3_500_000      # LP commitment — a committed number, fixed at every request
 GP_CASH  =  2_000_000      # John Flannigan, pari passu with the LP
+PF_ORIG_PC, PF_MMCC_PC = 0.0200, 0.0200   # to the pref investor / MMCC placement
 
 # ───────────────────────────────── senior, 1st trust deed
 SOFR, SPREAD, ALLIN = 0.0379, 0.0821, 0.1200
@@ -32,18 +33,31 @@ SR_KICKER   = 0.0500                          # share of equity value at exit
 PERM_RATE   = 0.0650
 PERM_ADS    = round(758_482 * SENIOR / 10_000_000)   # 30-yr amortizing at PERM_RATE
 
-# ───────────────────────────────── the stack: the common equity is the plug
-# uses that do not move with the loan, including the preferred fees and the closing detail
-FIXED_USES  = 15_904_044
-TOTAL       = FIXED_USES + SR_RESERVE + SR_ORIG + SR_BROKER
-COMMON      = TOTAL - SENIOR - PREF           # LP, new investor
+# ───────────────────────────────── the stack: the preferred is the balancing item
+# The LP commitment is fixed and the senior is the request, so the preferred fills the gap. Its
+# own two fees are 2.00% of itself on each side, so it solves against itself — at $10,000,000 this
+# reproduces the model's $3,904,044 exactly.
+FIXED_USES = 15_747_882          # uses that move with neither the loan nor the preferred
+
+def solve_pref(loan, common=COMMON):
+    base = FIXED_USES + round(loan * (ALLIN + SR_ORIG_PC + SR_BROKER_PC)) - loan - common
+    pref = round(base / (1 - PF_ORIG_PC - PF_MMCC_PC))
+    for _ in range(32):
+        nxt = base + round(pref * PF_ORIG_PC) + round(pref * PF_MMCC_PC)
+        if nxt == pref:
+            return pref
+        pref = nxt
+    raise ValueError(f'preferred did not converge at a ${loan:,} request')
+
+PREF        = solve_pref(SENIOR)
+TOTAL       = SENIOR + PREF + COMMON
 PARTNERSHIP = COMMON + GP_CASH
 
 # ───────────────────────────────── preferred
 PF_RATE_PIK, PF_RATE_CUR = 0.1700, 0.0000
-PF_ORIG_PC, PF_ORIG = 0.0200, 78_081    # to the pref investor
-PF_MMCC_PC, PF_MMCC = 0.0200, 78_081    # MMCC placement
-PF_NET      = 3_825_963                 # pref less investor origination fee
+PF_ORIG     = round(PREF * PF_ORIG_PC)  # to the pref investor
+PF_MMCC     = round(PREF * PF_MMCC_PC)  # MMCC placement
+PF_NET      = PREF - PF_ORIG            # pref less investor origination fee
 PF_KICKER   = 0.1000
 # sweep-adjusted balance: begin, PIK accrued, sweep, end
 PF_SCHED = [(1, 3_904_044,  663_687, 1_129_314, 3_438_417),

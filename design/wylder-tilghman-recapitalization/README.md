@@ -8,8 +8,10 @@ loan package at three request sizes. Built on the **10.28.26 financial model**.
 The loan request is a build-time parameter (`WT_SENIOR_LOAN`). Everything that moves with it — the
 reserve, the origination and broker fees, net proceeds, LTV, loan to cost, DSCR, debt yield, the
 permanent takeout test, the cost basis and the extended cash flow's debt service block — is derived,
-not transcribed. The preferred is held at $3,904,044 and **the common equity is the plug**, so the
-uses foot at every request. The exit waterfall is solved only at $10,000,000, so only that request
+not transcribed. The LP commitment is held at $3,500,000 and **the preferred is the balancing
+item**, so the uses foot at every request. The preferred carries two fees of 2.00% of itself, so it
+solves against itself; at $10,000,000 that reproduces the model's own $3,904,044 and $3,500,000
+exactly, which is what confirms the convention. The exit waterfall is solved only at $10,000,000, so only that request
 produces the returns-bearing packages.
 
 | Tranche | Amount | Share | Terms | Base case ($30.0M exit, 3-yr hold) |
@@ -38,7 +40,7 @@ senior and preferred deduction in the waterfall is a **single aggregated amount*
 base case), never itemized.
 
 Enforced by an audit in `scripts/build/v7_build.py` and verified against the PDFs by
-`scripts/crosscheck.py` (47 checks).
+`scripts/crosscheck.py` (50 checks).
 
 ### No exit level showing a loss
 The returns page in each package (page 22, marked "not for distribution") spans $18M–$36M for the
