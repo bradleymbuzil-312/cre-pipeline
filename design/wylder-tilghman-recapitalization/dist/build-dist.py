@@ -46,6 +46,7 @@ DECKS = ["Wylder Tilghman Island - Senior Debt.dc.html",
           "Wylder Tilghman Island - Senior Debt - 8M Request.dc.html",
           "Wylder Tilghman Island - Senior Debt - 10M Request.dc.html",
           "Wylder Tilghman Island - Senior Debt - 11M Request.dc.html",
+          "Wylder Tilghman Island - LP Investment.dc.html",
           "Wylder Tilghman Island - Preferred Equity.dc.html",
           "Wylder Tilghman Island - Common Equity.dc.html",
           "Wylder Tilghman Island - Marina Valuation.dc.html"]

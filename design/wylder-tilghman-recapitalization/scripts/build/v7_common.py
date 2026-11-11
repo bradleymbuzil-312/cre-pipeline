@@ -11,13 +11,15 @@ from figs_v7 import *
 
 TRANCHE_COLOR = {'senior': '#032D67', 'pref': '#957551', 'common': '#456EAB'}
 # 'hm' is the senior loan offered without an equity kicker, for hard money lenders
-BASE = {'senior': 'senior', 'hm': 'senior', 'pref': 'pref', 'common': 'common'}
+BASE = {'senior': 'senior', 'hm': 'senior', 'pref': 'pref', 'common': 'common',
+        'lp': 'common'}   # 'lp' is the common tranche with the structure left open
 # the two debt packages are lender-facing: no partnership, GP or LP vocabulary anywhere in them
 LENDER = ('senior', 'hm')
 def eq_label(t):  return 'Common equity' if t in LENDER else 'Common equity &middot; LP'
 def gp_label(t):  return 'Sponsor cash equity' if t in LENDER else 'GP co-investment &middot; sponsor cash'
 TNAME = {'senior': 'the senior loan', 'hm': 'the senior loan',
-         'pref': 'the preferred equity', 'common': 'the common equity'}
+         'pref': 'the preferred equity', 'common': 'the common equity',
+         'lp': 'the limited partner investment'}
 
 # ───────────────────────────────────────────────── capital structure
 def capital_structure(t):
@@ -67,7 +69,19 @@ def capital_structure(t):
      + row('Total capitalization per key &middot; 58', f'${TOTAL/KEYS:,.0f}', kind='sub', pad=4))
 
     # ── terms: the recipient's own economics only
-    if t == 'hm':
+    if t == 'lp':
+        terms = (row('LP commitment', f'${COMMON:,.0f}', pad=4, vfs='15px')
+         + row('GP co-investment', f'${GP_CASH:,.0f}', pad=4, vfs='15px',
+               note='Sponsor cash already invested in the asset, outside loan proceeds')
+         + row('Partnership capital', f'${PARTNERSHIP:,.0f}', pad=4, vfs='15px', kind='sub')
+         + row('Preferred return', 'To be determined', pad=4, vfs='15px')
+         + row('Distribution waterfall', 'To be determined', pad=4, vfs='15px')
+         + row('Ownership and promote', 'To be determined', pad=4, vfs='15px', kind='sub'))
+        note = ('The capital requirement, the uses of funds and the capital ahead of the partnership '
+                'are fixed and are set out on the following pages. The preferred return, the '
+                'distribution waterfall, the ownership split and the promote are open and will be '
+                'set with the lead investor.')
+    elif t == 'hm':
         terms = (row('Amount', f'${SENIOR:,.0f}', pad=4, vfs='15px')
          + row('Rate', f'{ALLIN:.2%} floating', pad=4, vfs='15px',
                note=f'SOFR {SOFR:.2%} plus a {SPREAD:.2%} spread, resetting monthly')
@@ -113,7 +127,13 @@ def capital_structure(t):
     terms = ('      <div style="height:10px;"></div>\n'
              + sub('Your Terms', pb='7px') + terms + para(note, fs='15px', auto=True))
 
-    sn = {'hm': ('This page is shown from the senior lender&rsquo;s perspective. The senior loan is '
+    sn = {'lp': ('This page is shown from the limited partner&rsquo;s perspective. The investment '
+                 'sought is three million five hundred thousand dollars, twenty point one percent of '
+                 'the capitalization, alongside two million of sponsor cash already in the asset. '
+                 'Thirteen million nine hundred four thousand of senior and preferred capital sits '
+                 'ahead of the partnership, sixty-five percent of as-is value. The return structure '
+                 'and the distribution waterfall are open.'),
+          'hm': ('This page is shown from the senior lender&rsquo;s perspective. The senior loan is '
                  'ten million dollars, forty-six point seven percent of as-is value and fifty-seven '
                  'point five percent of cost, at twelve percent floating and interest-only for three '
                  'years. Seven million four hundred four thousand of subordinate capital closes '
@@ -170,6 +190,7 @@ FEE_USES = {
     'common': [('Closing, legal and other', 130_100),
                ('Capitalization costs and fees', SR_ORIG + SR_BROKER + PF_ORIG + PF_MMCC)]}
 FEE_USES['hm'] = FEE_USES['senior']
+FEE_USES['lp'] = FEE_USES['common']
 for _k, _v in FEE_USES.items():
     assert sum(a for _, a in BASE_USES) + sum(a for _, a in _v) == TOTAL, _k
 
@@ -188,6 +209,11 @@ NET_FUNDING = {
                 ('GP co-investment &middot; sponsor cash', f'${GP_CASH:,.0f}', ''),
                 ('Total partnership capital', f'${PARTNERSHIP:,.0f}', 'sub'),
                 ('LP share of partnership capital', f'{COMMON/PARTNERSHIP:.2%}', '')])}
+# the LP deck states the amounts but not the share, which would imply a split that is still open
+NET_FUNDING['lp'] = ('Net Funding &middot; Partnership',
+                     [('LP commitment', f'${COMMON:,.0f}', ''),
+                      ('GP co-investment &middot; sponsor cash', f'${GP_CASH:,.0f}', ''),
+                      ('Total partnership capital', f'${PARTNERSHIP:,.0f}', 'sub')])
 
 
 def sources_and_uses(t):
@@ -213,7 +239,7 @@ def sources_and_uses(t):
     uses += row('Total uses', f'${TOTAL:,.0f}', pad=9, fs='16.5px', kind='sub')
     uses += row('Sources less uses', '$0', pad=9, fs='16.5px', kind='hi')
 
-    title, lines = NET_FUNDING[BASE[t]]
+    title, lines = NET_FUNDING[t if t in NET_FUNDING else BASE[t]]
     uses += ('      <div style="margin-top:auto;padding-top:18px;">\n' + sub(title, ind=8)
      + ''.join(row(k, v, pad=8, ind=8, kind=kd) for k, v, kd in lines) + '      </div>\n')
 
@@ -223,7 +249,10 @@ def sources_and_uses(t):
                   'hundred sixty-three after the two percent origination fee.',
           'common': 'Total partnership capital is five million five hundred thousand &mdash; three million '
                     'five hundred thousand from the LP and two million of sponsor cash on the same terms. '
-                    'The LP holds sixty-three point six four percent of partnership capital.'}[BASE[t]]
+                    'The LP holds sixty-three point six four percent of partnership capital.',
+          'lp': 'Total partnership capital is five million five hundred thousand &mdash; three million '
+                'five hundred thousand sought from the limited partner and two million of sponsor '
+                'cash already in the asset.'}[t if t == 'lp' else BASE[t]]
     return ('<section data-label="Sources &amp; Uses" data-screen-label="Sources &amp; Uses" '
      'data-speaker-notes="Sources and uses at closing. Ten million of senior debt, three million nine '
      'hundred four thousand of preferred equity and three million five hundred thousand of common equity, '

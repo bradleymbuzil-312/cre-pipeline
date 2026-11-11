@@ -7,6 +7,7 @@ from v7_pages import total_basis
 from v7_patch import PATCH
 from v7_num import renumber
 import v7_tranche as T
+import v7_lp as L
 from v7_marina import *
 from figs_v7 import *
 from figs_v7 import SENIOR as SENIOR_AMT, PREF as PREF_AMT, COMMON as COMMON_AMT
@@ -27,6 +28,10 @@ PKG = {
    pages=[('SENIOR LOAN TERMS', T.hm_terms), ('DEBT SERVICE COVERAGE', T.senior_coverage),
           ('CREDIT CONSIDERATIONS', T.hm_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
+ 'lp': dict(file='Wylder Tilghman Island - LP Investment.dc.html',
+   label='Limited Partner Investment',
+   pages=[('THE INVESTMENT REQUEST', L.lp_request), ('STRUCTURE AND WATERFALL', L.lp_structure)],
+   dark={'THE INVESTMENT REQUEST'}),
  'pref': dict(file='Wylder Tilghman Island - Preferred Equity.dc.html', label='Preferred Equity',
    pages=[('PREFERRED EQUITY TERMS', T.pref_terms), ('CASH SWEEP AND BALANCE', T.pref_sweep),
           ('PREFERRED RETURNS', lambda: T.returns_page('pref')),
@@ -59,7 +64,23 @@ COMMON = dict(
   amounts=[LP_PREF, GP_PREF, WF_PREF, WF_RESID, WF_SPLIT] + CE_RESID + LP_CASH + GP_CASH_OUT
           + LP_PROFIT + GP_PROFIT)
 OTHERS = {'senior': [PREF, COMMON], 'hm': [PREF, COMMON],
-          'pref': [SENIOR, COMMON], 'common': [SENIOR, PREF]}
+          'pref': [SENIOR, COMMON], 'common': [SENIOR, PREF],
+          'lp': []}   # the LP deck gets its own audit: it names terms but proposes no numbers
+# The LP deck is a request for investment, not an offer. It may name the terms that are open
+# ("preferred return", "promote", "residual split") but must carry no number for any of them, and
+# none of the senior debt request detail.
+LP_FORBID = (['12.00%', 'SOFR', '8.21%', '3.79%', '17.00%', f'{CE_PREF:.2%}', '50 / 50',
+              f'{SR_KICKER:.2%} of equity value', f'{PF_KICKER:.2%} of equity value',
+              'Senior origination fee', 'Broker fee', 'Preferred origination fee', 'placement fee',
+              'Accrual rate', 'Annual debt service', 'Debt service coverage', 'Debt yield',
+              'Equity multiple', 'Projected Return', 'total cash received', 'Net Funded Basis',
+              'not for distribution', 'Exit participation',
+              f'${SR_NET:,.0f}', f'${PF_NET:,.0f}', f'${LP_PREF:,.0f}']
+             + [f'${v:,.0f}' for v in SR_KICK + PF_KICK + SR_CASH + PF_CASH + LP_CASH
+                + GP_CASH_OUT + SR_PROFIT + PF_PROFIT + LP_PROFIT + GP_PROFIT + CE_RESID]
+             )   # bare multiples are left out: they collide with the coverage ratios
+LP_REQUIRED = ['To be determined', 'to be determined', f'${COMMON_AMT:,.0f}', f'${TOTAL:,.0f}',
+               f'${GP_CASH:,.0f}']
 # the lender-facing packages carry no partnership, GP or LP vocabulary at all
 PARTNERSHIP_WORDS = ['partnership', 'Partnership', 'pari passu', 'general partner',
                      'General Partner', 'limited partner', 'Limited Partner', '&middot; LP',
@@ -77,6 +98,10 @@ NO_RETURN = ['Exit participation', 'exit participation', 'equity kicker',
 ALLOWED = {SENIOR_AMT, PREF_AMT, COMMON_AMT, GP_CASH, TOTAL, PARTNERSHIP, SR_PF_DEDUCT, COST_BASIS}
 # marina slip values, which collide by coincidence with tranche figures: 47 slips at the $40,000
 # top of the range is $1,880,000, and so is the preferred's base-case exit participation.
+ALLOWED_STR = {f'${SLIPS_T * v:,.0f}' for v in (LOW, REC, HIGH)} | {f'${DOGWOOD_ASIS:,.0f}',
+               f'${SLIPS_W * REC:,.0f}', f'${SLIPS_D * REC:,.0f}', f'${SLIPS_W * HIGH:,.0f}',
+               f'${SLIPS_D * HIGH:,.0f}', f'${SLIPS_W * LOW:,.0f}', f'${SLIPS_D * LOW:,.0f}',
+               f'${INCOME_SLIP * SLIPS_T:,.0f}', f'${INCOME_SLIP * SLIPS_W:,.0f}'}
 ALLOWED |= {SLIPS_T * v for v in (LOW, REC, HIGH)} | {SLIPS_W * REC, SLIPS_D * REC,
             SLIPS_W * LOW, SLIPS_D * LOW, SLIPS_W * HIGH, SLIPS_D * HIGH,
             INCOME_SLIP * SLIPS_T, INCOME_SLIP * SLIPS_W, DOGWOOD_ASIS}
@@ -98,8 +123,9 @@ def build(t):
     for name, fn in p['pages']:
         body[name] = fn()
     lender = t in ('senior', 'hm')
-    close = DEBT_CLOSE if lender else CLOSE
-    if lender:
+    carries_marina = lender or t == 'lp'
+    close = DEBT_CLOSE if carries_marina else CLOSE
+    if carries_marina:
         # TOTAL BASIS is the page the marina page points at for the hotel value estimates
         body['MARINA VALUATION'] = marina_page(
             values_page=2 + len(CORE) + 2 + len(p['pages']) + 2)
@@ -119,6 +145,12 @@ def audit(path, t):
         leaks += [f'${a:,.0f}' for a in other['amounts']
                   if a not in ALLOWED and f'${a:,.0f}' in s]
     out = [f'  cross-tranche leaks: {sorted(set(leaks)) if leaks else "none"}']
+    if t == 'lp':
+        hits = sorted({v for v in LP_FORBID if v in s and v not in ALLOWED_STR})
+        out.append(f'  economics or debt request detail: {hits if hits else "none"}')
+        miss = [v for v in LP_REQUIRED if v not in s]
+        out.append(f'  states the request and that terms are open: {"yes" if not miss else miss}')
+        out.append(f'  "to be determined" markers: {s.lower().count("to be determined")}')
     if t in ('senior', 'hm'):
         pw = sorted({w for w in PARTNERSHIP_WORDS if w in s})
         out.append(f'  partnership / GP / LP vocabulary: {pw if pw else "none"}')
@@ -148,7 +180,7 @@ def audit(path, t):
 
 # At a request other than the solved $10,000,000 the exit waterfall is not available, so only the
 # lender-facing package — which shows no return and no participation — can be built.
-TRANCHES = ('senior', 'hm', 'pref', 'common') if WATERFALL_OK else ('hm',)
+TRANCHES = ('senior', 'hm', 'lp', 'pref', 'common') if WATERFALL_OK else ('hm',)
 
 if __name__ == '__main__':
     if not WATERFALL_OK:

@@ -20,17 +20,31 @@ PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf
                  f"{P}/Wylder Tilghman Island - Senior Debt - 10M Request.pdf", 28),
         "hm11": ("Senior Debt - 11M Request",
                  f"{P}/Wylder Tilghman Island - Senior Debt - 11M Request.pdf", 28),
+        "lp": ("LP Investment", f"{P}/Wylder Tilghman Island - LP Investment.pdf", 27),
         "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 28),
         "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 28)}
 LENDER = ["senior", "hm8", "hm10", "hm11"]
 # total cost basis per key moves with the request, because the reserve and the fees are in it
 BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
-             "pref": "$331,860", "common": "$331,860"}
+             "lp": "$331,860", "pref": "$331,860", "common": "$331,860"}
 NO_KICKER = ["hm8", "hm10", "hm11"]
 # the debt packages are the same deal at different requests, so they are not "other tranches"
 # to each other
-OTHERS = {t: (["pref", "common"] if t in LENDER
+OTHERS = {t: ([] if t == "lp" else ["pref", "common"] if t in LENDER
               else [o for o in ("senior", "pref", "common") if o != t]) for t in PKGS}
+# The LP deck is a request for investment, not an offer. It may name the terms that are open
+# ("preferred return", "promote", "residual split") but must carry no number for any of them,
+# and none of the senior debt request detail.
+LP_FORBID = ["12.00%", "SOFR", "8.21%", "3.79%", "17.00%", "15.00% cumulative", "50 / 50",
+             "5.00% of equity value", "10.00% of equity value", "Senior origination fee",
+             "Broker fee", "Preferred origination fee", "placement fee", "Accrual rate",
+             "Annual debt service", "Debt service coverage", "Debt yield", "Equity multiple",
+             "Projected Return", "total cash received", "Net Funded Basis", "Exit participation",
+             # "$1,880,000" is left out: the LP deck carries the marina page, where 47 slips at
+             # the $40,000 top of the range is the same number as the preferred's participation.
+             "$8,600,000", "$3,825,963", "$1,823,062", "$940,000", "$14,540,000",
+             "$7,526,610", "$8,164,823", "$14,048,334", "$4,740,000", "$3,700,647"]
+LP_REQUIRED = ["To be determined", "$3,500,000", "$17,404,044", "$2,000,000", "$13,904,044"]
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -51,6 +65,8 @@ OWN = {
           "$17,518,628"],
  "pref": ["$3,904,044", "17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "10.00%",
           "$1,880,000", "$7,526,610", "$3,700,647", "1.97x", "31.5%", "64.97%"],
+ "lp": ["$3,500,000", "$2,000,000", "$5,500,000", "$17,404,044", "$13,904,044",
+        "To be determined", "64.97%", "20.11%"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
             "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
             "2.33x", "32.6%", "63.64%"]}
@@ -134,6 +150,15 @@ for t, (name, path, pages) in PKGS.items():
 
     check(norm("58 keys") in flat and norm(BASIS_KEY[t]) in flat,
           "per-key figures on 58 keys", f"cost basis per key {BASIS_KEY[t]} not found")
+
+    if t == "lp":
+        hits = ([v for v in LP_FORBID if norm(v) in flat]
+                + [w for w in NO_RETURN_WORDS if re.search(w, raw)])
+        check(not hits, "no economics and no debt request detail", f"found {hits}")
+        missing = [v for v in LP_REQUIRED if norm(v) not in flat]
+        check(not missing, "states the request and that the terms are open", f"missing {missing}")
+        missing = [v for v in MARINA if norm(v) not in flat]
+        check(not missing, "carries the marina valuation", f"missing {missing}")
 
     if t in LENDER:
         missing = [v for v in MARINA if norm(v) not in flat]

@@ -49,7 +49,11 @@ META = {
 
 def title(t):
     m = META[t]
-    sn = {'hm': ('A ten million dollar senior loan, first trust deed, at twelve percent floating and '
+    sn = {'lp': ('A three million five hundred thousand dollar limited partner investment, '
+                 'alongside two million of sponsor cash already in the asset, within a seventeen '
+                 'million four hundred four thousand dollar capitalization. The return structure '
+                 'and the distribution waterfall are open and will be set with the lead investor.'),
+          'hm': ('A ten million dollar senior loan, first trust deed, at twelve percent floating and '
                  'interest-only for a three-year term. Forty-six point seven percent of as-is value and '
                  'fifty-seven point five percent of total cost, and the only debt on the asset.'),
           'senior': ('A ten million dollar senior loan, first trust deed, at twelve percent floating and '
@@ -113,7 +117,7 @@ def title(t):
      f'        <span style="{CON}font-size:13px;letter-spacing:.38em;color:#fff;padding-left:.38em;">'
      'Tilghman Island</span>\n      </div>\n'
      f'      <div style="{MONO}font-size:15px;color:var(--mm-navy-100);letter-spacing:.04em;">'
-     f'{DATE} &middot; Tilghman Island, MD</div>\n    </div>\n  </div>\n</section>')
+     f'{m.get("date", DATE)} &middot; Tilghman Island, MD</div>\n    </div>\n  </div>\n</section>')
 
 
 OPP = {
@@ -169,7 +173,16 @@ OPP = {
 
 def opportunity(t):
     h, lede, items = OPP[t]
-    sn = {'hm': ('Ten million dollar senior loan, forty-six point seven percent of as-is value and '
+    sn = {'lp': ('Three million five hundred thousand dollars is sought from a limited partner, '
+                 'sixty thousand three hundred forty-five a key, funded in full at close, alongside '
+                 'two million of sponsor cash already in the asset. The capitalization is seventeen '
+                 'million four hundred four thousand, with thirteen million nine hundred four '
+                 'thousand of senior and preferred capital ahead of the partnership, sixty-five '
+                 'percent of the as-is estimate. Total cost basis is nineteen million two hundred '
+                 'forty-seven thousand eight hundred eighty-two, three hundred thirty-one thousand '
+                 'eight hundred sixty a key, against a stabilized estimate of twenty-nine million '
+                 'five hundred thousand. The return structure is open.'),
+          'hm': ('Ten million dollar senior loan, forty-six point seven percent of as-is value and '
                  'fifty-seven point five percent of cost, at twelve percent all-in, interest-only for '
                  'three years. Debt yield is twenty-three percent on year-two net operating income and '
                  'coverage is one point nine three times, rising to two point two three times in twenty '

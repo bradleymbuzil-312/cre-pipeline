@@ -45,6 +45,7 @@ def total_basis(t='senior'):
      + para('The basis includes <strong style="color:var(--mm-navy-900);">$2,000,000 of sponsor cash '
             'already invested</strong> outside loan proceeds &mdash; '
             + ('capital that stays in the asset behind the loan. ' if t in ('senior', 'hm')
+               else 'capital that remains in the asset alongside the new investment. ' if t == 'lp'
                else 'the same capital that stands as the GP&rsquo;s pari passu interest in the '
                     'partnership. ')
             + f'The capitalization on page 18 funds '
@@ -74,6 +75,7 @@ def total_basis(t='senior'):
      'fifty-eight keys. Acquisition and payoff of thirteen million eight hundred fourteen thousand seven '
      'hundred eighty-two includes two million of sponsor cash already invested outside loan proceeds, '
      + ('which stays in the asset behind the loan. ' if t in ('senior', 'hm')
+        else 'which remains in the asset alongside the new investment. ' if t == 'lp'
         else 'which is the same capital standing as the general partner pari passu interest. ')
      + 'The renovation program is '
      'three million three hundred three thousand, itemized at right and funded at close. Other costs are '

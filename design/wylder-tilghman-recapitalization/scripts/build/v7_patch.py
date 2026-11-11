@@ -13,6 +13,7 @@ ATTACH = {
             'the capitalization attaches at',
             'three hundred thousand and seventy')}
 ATTACH['hm'] = ATTACH['senior']
+ATTACH['lp'] = ATTACH['common']
 
 
 def value_positioning(b, t):
@@ -92,6 +93,23 @@ def _stat(b, note, val):
     return b[:m.start()] + m.group(1) + val + m.group(3) + b[m.end():]
 
 
+def _drop_row(b, label):
+    """Remove a row: its label cell and the 12 value cells that follow it."""
+    cells = _cells(b, label)
+    i = b.rindex('<div ', 0, b.index(f'>{label}</div>'))
+    b = b[:i] + b[cells[-1].end():]
+    return b
+
+
+def _close_section(b, label):
+    """Give a row the section rule, for when it has become the last row of its block."""
+    cells = _cells(b, label)
+    i = b.rindex('<div ', 0, b.index(f'>{label}</div>'))
+    j = cells[-1].end()
+    return (b[:i] + b[i:j].replace('border-bottom:1px solid var(--hairline)',
+                                   'border-bottom:2px solid var(--mm-navy)') + b[j:])
+
+
 def extended_cash_flow(b, t):
     """Re-derive the senior debt service block from the request actually being made.
 
@@ -111,6 +129,10 @@ def extended_cash_flow(b, t):
     b = _stat(b, 'Minimum coverage with the reserve stepped to 4.0%', f'{ncf[0] / ds:.2f}x')
     b = _stat(b, 'Aggregate cash flow after debt service, 2031 to 2041',
               f'${(sum(noi[1:]) - ds * (len(noi) - 1)) / 1000:,.1f}M')
+    if t == 'lp':
+        # debt yield is a lender's measure; the LP deck carries no senior debt request detail
+        b = _drop_row(b, 'Debt yield')
+        b = _close_section(b, 'Coverage at a 4.0% reserve')
     reps = [(f'Debt service is the $10,000,000 senior loan held flat and interest-only at 12.00%.',
              f'Debt service is the ${SENIOR:,} senior loan held flat and interest-only at '
              f'{ALLIN:.2%}.' if t in ('senior', 'hm')

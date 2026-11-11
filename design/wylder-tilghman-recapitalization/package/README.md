@@ -10,6 +10,7 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 28 |
 | `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 28 |
 | `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 28 |
+| `Wylder Tilghman Island - LP Investment.pdf` | **A prospective LP** — request only, terms open | — | 27 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 28 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 28 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
@@ -55,7 +56,7 @@ not the LP.** At $11,000,000 the preferred is $3,018,628, down from the model's 
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(59 checks, all passing).
+(68 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|
@@ -158,6 +159,28 @@ to be proven with a trailing marina P&L, not collateral value today.
 Two things were deliberately left out of every package: the third-party per-slip benchmark, which
 names no closed sales, and the internal note on the model's 2028 slip expense line. Both are
 underwriting notes rather than lender material.
+
+## The LP Investment deck
+
+A request for investment, **not an offer of terms.** It carries the asset, the business plan, the
+capital requirement, the uses of funds and the marina valuation, and it states on the cover, in the
+summary, on page 18 and across two dedicated pages that **the return structure and the distribution
+waterfall are to be determined.**
+
+| Carried | Left out |
+|---|---|
+| The $3,500,000 sought and the $17,404,044 capitalization | Any preferred return, split, hurdle or promote |
+| The $13,904,044 of senior and preferred capital ahead of it, as amounts | The senior rate, spread, fees, term or participation |
+| The $2,000,000 of sponsor cash already in the asset | Whether that cash ranks alongside or behind — stated as open |
+| Cash flow after debt service, and coverage | Debt yield, DSCR as a loan test, the debt request pages |
+| The waterfall **mechanics**, tier by tier | Every rate and split in them |
+
+Page 20 sets out what is fixed and what is open. Page 21 shows the four tiers — preferred return,
+return of capital, residual split, promote — each with its terms marked to be determined, beside
+what will set them: hold period and exit, the capital ahead of the partnership, how the sponsor's
+co-investment ranks, and governance.
+
+The deck is dated **November 11, 2026**; the capitalization packages keep their October 30 date.
 
 ## Lender-facing vocabulary
 
