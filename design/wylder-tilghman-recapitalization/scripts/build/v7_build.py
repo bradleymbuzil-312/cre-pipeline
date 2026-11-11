@@ -7,7 +7,6 @@ from v7_pages import total_basis
 from v7_patch import PATCH
 from v7_num import renumber
 import v7_tranche as T
-import v7_lp as L
 from v7_marina import *
 from figs_v7 import *
 from figs_v7 import SENIOR as SENIOR_AMT, PREF as PREF_AMT, COMMON as COMMON_AMT
@@ -28,10 +27,6 @@ PKG = {
    pages=[('SENIOR LOAN TERMS', T.hm_terms), ('DEBT SERVICE COVERAGE', T.senior_coverage),
           ('CREDIT CONSIDERATIONS', T.hm_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
- 'lp': dict(file='Wylder Tilghman Island - LP Investment.dc.html',
-   label='Limited Partner Investment',
-   pages=[('THE INVESTMENT REQUEST', L.lp_request), ('STRUCTURE AND WATERFALL', L.lp_structure)],
-   dark={'THE INVESTMENT REQUEST'}),
  'pref': dict(file='Wylder Tilghman Island - Preferred Equity.dc.html', label='Preferred Equity',
    pages=[('PREFERRED EQUITY TERMS', T.pref_terms), ('CASH SWEEP AND BALANCE', T.pref_sweep),
           ('PREFERRED RETURNS', lambda: T.returns_page('pref')),
@@ -65,7 +60,7 @@ COMMON = dict(
           + LP_PROFIT + GP_PROFIT)
 OTHERS = {'senior': [PREF, COMMON], 'hm': [PREF, COMMON],
           'pref': [SENIOR, COMMON], 'common': [SENIOR, PREF],
-          'lp': []}   # the LP deck gets its own audit: it names terms but proposes no numbers
+          }
 # The LP deck is a request for investment, not an offer. It may name the terms that are open
 # ("preferred return", "promote", "residual split") but must carry no number for any of them, and
 # none of the senior debt request detail.
@@ -123,7 +118,7 @@ def build(t):
     for name, fn in p['pages']:
         body[name] = fn()
     lender = t in ('senior', 'hm')
-    carries_marina = lender or t == 'lp'
+    carries_marina = lender
     close = DEBT_CLOSE if carries_marina else CLOSE
     if carries_marina:
         # TOTAL BASIS is the page the marina page points at for the hotel value estimates
@@ -180,7 +175,7 @@ def audit(path, t):
 
 # At a request other than the solved $10,000,000 the exit waterfall is not available, so only the
 # lender-facing package — which shows no return and no participation — can be built.
-TRANCHES = ('senior', 'hm', 'lp', 'pref', 'common') if WATERFALL_OK else ('hm',)
+TRANCHES = ('senior', 'hm', 'pref', 'common') if WATERFALL_OK else ('hm',)
 
 if __name__ == '__main__':
     if not WATERFALL_OK:

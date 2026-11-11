@@ -75,8 +75,9 @@ Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `
 - `Wylder Tilghman Island - Senior Debt - 8M Request.dc.html` — lender-facing, 27 slides
 - `Wylder Tilghman Island - Senior Debt - 10M Request.dc.html` — lender-facing, 27 slides
 - `Wylder Tilghman Island - Senior Debt - 11M Request.dc.html` — lender-facing, 27 slides
-- `Wylder Tilghman Island - LP Investment.dc.html` — a request for LP investment with the
-  economics left open, 27 slides
+- `Wylder Tilghman Island - LP Recapitalization.dc.html` — a $13,255,085 request for LP
+  investment with the economics left open, on the plan where the LP funds the whole
+  closing, 28 slides
 - `Wylder Tilghman Island - Preferred Equity.dc.html`
 - `Wylder Tilghman Island - Common Equity.dc.html`
 - `Wylder Tilghman Island - Marina Valuation.dc.html` — the standalone marina analysis,
@@ -275,8 +276,9 @@ three and would disclose cross-tranche economics if sent alongside them.
   uses), `v7_pages.py` (total basis, returns grid), `v7_patch.py` (per-package edits to the two
   shared pages that carried tranche economics), `v7_tranche.py` (covers, terms, mechanics, returns,
   position, contacts), `v7_reno.py` (the page 9 schedule), `v7_num.py` (renumbering),
-  `v7_build.py` (assembly and audits for one request), `v7_lp.py` (the LP investment
-  request and the open waterfall framework), `v7_marina.py` (the marina figures, the
+  `v7_build.py` (assembly and audits for one request), `figs_lp.py` and `v7_lp.py` (the LP
+  recapitalization figures, its capital pages and the open waterfall framework),
+  `v7_marina.py` (the marina figures, the
   page the debt packages carry and the standalone deck), `v7_loans.py` (every request plus the
   marina deck)
 - `scripts/crosscheck.py` — PDF verification; `scripts/scrub_model.py` — label scrub

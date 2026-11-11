@@ -10,7 +10,7 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 28 |
 | `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 28 |
 | `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 28 |
-| `Wylder Tilghman Island - LP Investment.pdf` | **A prospective LP** — request only, terms open | — | 27 |
+| `Wylder Tilghman Island - LP Recapitalization.pdf` | **A prospective LP** — request only, terms open | — | 28 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 28 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 28 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
@@ -160,27 +160,51 @@ Two things were deliberately left out of every package: the third-party per-slip
 names no closed sales, and the internal note on the model's 2028 slip expense line. Both are
 underwriting notes rather than lender material.
 
-## The LP Investment deck
+## The LP Recapitalization deck
 
-A request for investment, **not an offer of terms.** It carries the asset, the business plan, the
-capital requirement, the uses of funds and the marina valuation, and it states on the cover, in the
-summary, on page 18 and across two dedicated pages that **the return structure and the distribution
-waterfall are to be determined.**
+A request for investment, **not an offer of terms**, and on a **different capital plan from the
+packages above**. Here the limited partner funds the entire closing and no debt sits ahead of it; a
+$7,000,000 senior refinance in month three funds the renovation and returns capital. This is the
+plan the original recapitalization deck was built on, and it is the only one in which a
+**$13,255,085** LP raise reconciles.
+
+| At closing | |
+|---|---|
+| LP equity · gross | $13,255,085 |
+| Less origination fee · 2.00% | ($265,102) |
+| **Net cash invested** | **$12,989,984** |
+| Senior debt at closing | $0 |
+| LP equity to as-is value | 61.94% · $228,536 per key |
+
+| After the month-three refinance | |
+|---|---|
+| Senior refinance | $7,000,000 |
+| Total capital | $20,255,085 |
+| Returned to the LP | ($2,070,384) — 15.9% of net cash invested, inside 90 days |
+| **Net capital in the asset** | **$18,184,701** — $313,529 per key |
+
+Uses at closing retire the $10,714,782 existing loan and the $530,000 merchant cash advance in
+full, buy the adjacent parcel for $1,100,000 and fund $250,000 of working capital. The renovation
+is funded from the refinance, not from closing equity.
 
 | Carried | Left out |
 |---|---|
-| The $3,500,000 sought and the $17,404,044 capitalization | Any preferred return, split, hurdle or promote |
-| The $13,904,044 of senior and preferred capital ahead of it, as amounts | The senior rate, spread, fees, term or participation |
-| The $2,000,000 of sponsor cash already in the asset | Whether that cash ranks alongside or behind — stated as open |
-| Cash flow after debt service, and coverage | Debt yield, DSCR as a loan test, the debt request pages |
+| The $13,255,085 sought and what it clears | Any preferred return, split, hurdle or promote |
+| The refinance **allocation** — what the proceeds do | The refinance's rate, spread, fees and reserve terms |
+| Cash flow after debt service, and coverage | Debt yield, and the debt request pages |
 | The waterfall **mechanics**, tier by tier | Every rate and split in them |
+| The $2,070,384 returned in month three | Ownership percentages and the promote |
 
-Page 20 sets out what is fixed and what is open. Page 21 shows the four tiers — preferred return,
-return of capital, residual split, promote — each with its terms marked to be determined, beside
-what will set them: hold period and exit, the capital ahead of the partnership, how the sponsor's
-co-investment ranks, and governance.
+Page 20 separates what is fixed from what is open. Page 21 shows what the refinance funds. Page 22
+sets out the four tiers — preferred return, return of capital, residual split, promote — each
+marked to be determined, beside what will set them.
 
-The deck is dated **November 11, 2026**; the capitalization packages keep their October 30 date.
+**This deck does not reconcile with the capitalization packages above** and is not part of that
+set. They solve a $10,000,000 senior request with preferred and common equity beneath it; this one
+has the LP funding the close alone. Send one plan or the other, not both. The operating
+projections, the renovation program, the basis detail and the market pages are common to both.
+
+Dated **November 11, 2026**; the capitalization packages keep their October 30 date.
 
 ## Lender-facing vocabulary
 

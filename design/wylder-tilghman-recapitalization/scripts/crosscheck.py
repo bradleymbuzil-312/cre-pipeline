@@ -20,13 +20,14 @@ PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf
                  f"{P}/Wylder Tilghman Island - Senior Debt - 10M Request.pdf", 28),
         "hm11": ("Senior Debt - 11M Request",
                  f"{P}/Wylder Tilghman Island - Senior Debt - 11M Request.pdf", 28),
-        "lp": ("LP Investment", f"{P}/Wylder Tilghman Island - LP Investment.pdf", 27),
+        "lp": ("LP Recapitalization",
+               f"{P}/Wylder Tilghman Island - LP Recapitalization.pdf", 28),
         "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 28),
         "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 28)}
 LENDER = ["senior", "hm8", "hm10", "hm11"]
 # total cost basis per key moves with the request, because the reserve and the fees are in it
 BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
-             "lp": "$331,860", "pref": "$331,860", "common": "$331,860"}
+             "lp": "$313,529", "pref": "$331,860", "common": "$331,860"}
 NO_KICKER = ["hm8", "hm10", "hm11"]
 # the debt packages are the same deal at different requests, so they are not "other tranches"
 # to each other
@@ -35,16 +36,20 @@ OTHERS = {t: ([] if t == "lp" else ["pref", "common"] if t in LENDER
 # The LP deck is a request for investment, not an offer. It may name the terms that are open
 # ("preferred return", "promote", "residual split") but must carry no number for any of them,
 # and none of the senior debt request detail.
-LP_FORBID = ["12.00%", "SOFR", "8.21%", "3.79%", "17.00%", "15.00% cumulative", "50 / 50",
-             "5.00% of equity value", "10.00% of equity value", "Senior origination fee",
-             "Broker fee", "Preferred origination fee", "placement fee", "Accrual rate",
-             "Annual debt service", "Debt service coverage", "Debt yield", "Equity multiple",
-             "Projected Return", "total cash received", "Net Funded Basis", "Exit participation",
-             # "$1,880,000" is left out: the LP deck carries the marina page, where 47 slips at
-             # the $40,000 top of the range is the same number as the preferred's participation.
-             "$8,600,000", "$3,825,963", "$1,823,062", "$940,000", "$14,540,000",
-             "$7,526,610", "$8,164,823", "$14,048,334", "$4,740,000", "$3,700,647"]
-LP_REQUIRED = ["To be determined", "$3,500,000", "$17,404,044", "$2,000,000", "$13,904,044"]
+LP_FORBID = [
+    # the v4 deck's economics, which this one deliberately does not carry
+    "12.0%", "2.0x", "20% IRR", "2.06x", "37.3%", "11.0%", "51% / 49%", "51%/49%",
+    "$26,807,438", "$3,309,883", "$25,278,210", "$12,023,125", "$13,817,455", "$8,038,602",
+    "Equity multiple", "Projected IRR", "GP share of cash",
+    # "Preferred Return" is deliberately not listed: the deck names the term, with no rate.
+    # the senior loan's request terms, which are being arranged separately
+    # "+ 600" and "Interest-only" are not listed either: the normalizer strips separators,
+    # so "600" matches inside any amount, and interest-only describes the modeled debt service
+    # on page 13 rather than a term being requested.
+    "SOFR", "$57,458", "Debt yield", "Debt service coverage",
+    "Exit participation", "Net Funded Basis", "total cash received",
+]
+LP_REQUIRED = ["To be determined", "$13,255,085", "$20,255,085", "$18,184,701", "$0"]
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -65,8 +70,9 @@ OWN = {
           "$17,518,628"],
  "pref": ["$3,904,044", "17.00%", "$3,825,963", "$1,931,666", "$3,714,944", "10.00%",
           "$1,880,000", "$7,526,610", "$3,700,647", "1.97x", "31.5%", "64.97%"],
- "lp": ["$3,500,000", "$2,000,000", "$5,500,000", "$17,404,044", "$13,904,044",
-        "To be determined", "64.97%", "20.11%"],
+ "lp": ["$13,255,085", "$12,989,984", "$7,000,000", "$20,255,085", "$18,184,701",
+        "$2,070,384", "$228,536", "$313,529", "61.94%", "84.98%", "61.64%",
+        "To be determined", "$0", "$10,714,782", "$530,000"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
             "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
             "2.33x", "32.6%", "63.64%"]}

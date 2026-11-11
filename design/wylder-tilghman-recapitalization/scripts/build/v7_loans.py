@@ -19,6 +19,17 @@ for loan in REQUESTS:
         print(r.stderr.rstrip())
         raise SystemExit(f'build failed at ${loan:,}')
 
+for extra, lab in [('v7_lp.py', 'LP recapitalization deck'),
+                   ('v7_marina.py', 'standalone marina valuation')]:
+    print(f'\n{"═" * 70}\n  {lab}\n{"═" * 70}')
+    r = subprocess.run([sys.executable, os.path.join(HERE, extra)],
+                       cwd=HERE, text=True, capture_output=True)
+    print(r.stdout.rstrip())
+    if r.returncode:
+        print(r.stderr.rstrip())
+        raise SystemExit(f'{lab} build failed')
+raise SystemExit(0)
+
 print(f'\n{"═" * 70}\n  standalone marina valuation\n{"═" * 70}')
 r = subprocess.run([sys.executable, os.path.join(HERE, 'v7_marina.py')],
                    cwd=HERE, text=True, capture_output=True)

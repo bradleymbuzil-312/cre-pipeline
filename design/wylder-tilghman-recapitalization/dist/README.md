@@ -7,7 +7,7 @@ The eight decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
 - `Wylder Tilghman Island - Senior Debt - 8M Request.pdf`
 - `Wylder Tilghman Island - Senior Debt - 10M Request.pdf`
 - `Wylder Tilghman Island - Senior Debt - 11M Request.pdf`
-- `Wylder Tilghman Island - LP Investment.pdf` (27 pages)
+- `Wylder Tilghman Island - LP Recapitalization.pdf` (28 pages)
 - `Wylder Tilghman Island - Preferred Equity.pdf`
 - `Wylder Tilghman Island - Common Equity.pdf`
 - `Wylder Tilghman Island - Marina Valuation.pdf` (9 pages)

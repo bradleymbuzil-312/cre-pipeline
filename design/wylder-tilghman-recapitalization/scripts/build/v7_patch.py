@@ -110,7 +110,7 @@ def _close_section(b, label):
                                    'border-bottom:2px solid var(--mm-navy)') + b[j:])
 
 
-def extended_cash_flow(b, t):
+def extended_cash_flow(b, t, ads=None, loan=None):
     """Re-derive the senior debt service block from the request actually being made.
 
     The page is lifted from an earlier deck, where the debt service row, the two coverage rows
@@ -120,11 +120,12 @@ def extended_cash_flow(b, t):
     """
     noi = [float(v) for v in _read(b, 'Net operating income')]           # thousands
     ncf = [float(v) for v in _read(b, 'Net cash flow at a 4.0% reserve')]
-    ds = SR_ADS / 1000.0
+    ds = (SR_ADS if ads is None else ads) / 1000.0
+    principal = SENIOR if loan is None else loan
     b = _write(b, 'Debt service', [f'({ds:,.0f})'] * len(noi))
     b = _write(b, 'Coverage on net operating income', [f'{n / ds:.2f}x' for n in noi])
     b = _write(b, 'Coverage at a 4.0% reserve', [f'{c / ds:.2f}x' for c in ncf])
-    b = _write(b, 'Debt yield', [f'{n / (SENIOR / 1000.0):.1%}' for n in noi])
+    b = _write(b, 'Debt yield', [f'{n / (principal / 1000.0):.1%}' for n in noi])
     b = _stat(b, 'Minimum coverage over the period, in 2030', f'{noi[0] / ds:.2f}x')
     b = _stat(b, 'Minimum coverage with the reserve stepped to 4.0%', f'{ncf[0] / ds:.2f}x')
     b = _stat(b, 'Aggregate cash flow after debt service, 2031 to 2041',
@@ -134,13 +135,13 @@ def extended_cash_flow(b, t):
         b = _drop_row(b, 'Debt yield')
         b = _close_section(b, 'Coverage at a 4.0% reserve')
     reps = [(f'Debt service is the $10,000,000 senior loan held flat and interest-only at 12.00%.',
-             f'Debt service is the ${SENIOR:,} senior loan held flat and interest-only at '
+             f'Debt service is the ${principal:,} senior loan held flat and interest-only at '
              f'{ALLIN:.2%}.' if t in ('senior', 'hm')
-             else 'Debt service is the senior loan held flat and interest-only.'),
+             else f'Debt service is the ${principal:,} senior loan held flat and interest-only.'),
             ('Debt service is the ten million dollar senior loan held flat and interest-only at twelve '
              'percent, one million two hundred thousand dollars a year.',
-             'Debt service is the senior loan held flat and interest-only at '
-             f'${SR_ADS:,} a year.')]
+             f'Debt service is the ${principal:,} senior loan held flat and interest-only at '
+             f'${round(ds*1000):,} a year.')]
     for old, new in reps:
         assert b.count(old) == 1, ('extended_cash_flow', t, old[:60], b.count(old))
         b = b.replace(old, new)
@@ -157,6 +158,31 @@ def adjacent_acquisition(b, t):
              'so the parcel comes into the borrowing entity rather than a separate venture')]
     for old, new in reps[:1]:
         assert b.count(old) >= 1, ('adjacent_acquisition', t, b.count(old))
+        b = b.replace(old, new)
+    return b
+
+
+def lp_funding(b, name):
+    """In the LP recapitalization the refinance funds the renovation, not closing equity."""
+    reps = {
+     'BUSINESS PLAN': [(
+        'The program is funded at close from the capitalization</strong>, together with $300,000 '
+        'for the Dogwood Cove residence; sources and uses are on page 19.</p>',
+        'The program is funded from the senior refinance in month three</strong>, held back by the '
+        'lender and drawn against the work, together with $300,000 for the Dogwood Cove residence; '
+        'the allocation of those proceeds is on page 21.</p>')],
+     'ADJACENT ACQUISITION': [(
+        'funded from the capitalization at closing, with no acquisition debt against the parcel.',
+        'funded from LP equity at closing, with no acquisition debt against the parcel.'),
+       ('The $1,100,000 purchase is <strong style="color:var(--mm-navy-900);">funded from the '
+        'capitalization at closing</strong>, with no acquisition debt against the parcel. The '
+        '$300,000 renovation is funded from the same proceeds.</p>',
+        'The $1,100,000 purchase is <strong style="color:var(--mm-navy-900);">funded from LP equity '
+        'at closing</strong>, with no acquisition debt against the parcel. The $300,000 renovation '
+        'is held back by the senior lender at the refinance and drawn against the work.</p>')],
+    }[name]
+    for old, new in reps:
+        assert b.count(old) == 1, ('lp_funding', name, old[:60], b.count(old))
         b = b.replace(old, new)
     return b
 
