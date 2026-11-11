@@ -28,6 +28,7 @@ SPEC = {
     "wt-lobby.png":         ((768, 1080), "cover"),
     "wt-suite.jpg":         ((766, 654), "cover"),    # hero on slide 09; thumbnails on 03 and 04
     "wt-dogwood-aerial.jpg": ((1760, 259), "cover"),  # full-width band on slide 05
+    "wt-dogwood-house.jpg": ((802, 856), "cover"),    # the acquisition page, slide 06
     "wt-pool.png":          ((455, 290), "cover"),    # thumbnails on slides 03 and 04
     "wt-fb-signs.jpg":      ((425, 290), "cover"),    # F&B thumbnail on slide 04
     "flannigan.png":        ((90, 90), "cover"),

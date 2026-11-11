@@ -1,13 +1,13 @@
 # Distribution build
 
 The eight decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
-(16:9), one slide per page (29 for the kicker package, 28 for the lender-facing set and the equity packages):
+(16:9), one slide per page (30 for the kicker package, 29 for the lender-facing set and the equity packages):
 
 - `Wylder Tilghman Island - Senior Debt.pdf`
 - `Wylder Tilghman Island - Senior Debt - 8M Request.pdf`
 - `Wylder Tilghman Island - Senior Debt - 10M Request.pdf`
 - `Wylder Tilghman Island - Senior Debt - 11M Request.pdf`
-- `Wylder Tilghman Island - LP Recapitalization.pdf` (28 pages)
+- `Wylder Tilghman Island - LP Recapitalization.pdf` (29 pages)
 - `Wylder Tilghman Island - Preferred Equity.pdf`
 - `Wylder Tilghman Island - Common Equity.pdf`
 - `Wylder Tilghman Island - Marina Valuation.pdf` (9 pages)
@@ -50,7 +50,7 @@ cd _dist-deck && python3 -m http.server 8732
 #   http://127.0.0.1:8732/Wylder%20Tilghman%20Island%20-%20Senior%20Debt%20-%2011M%20Request.dc.html
 #   http://127.0.0.1:8732/Wylder%20Tilghman%20Island%20-%20Preferred%20Equity.dc.html
 #   http://127.0.0.1:8732/Wylder%20Tilghman%20Island%20-%20Common%20Equity.dc.html
-# to PDF at 1920x1080, pages 1-28 (1-27 for the lender-facing set)
+# to PDF at 1920x1080, pages 1-30 (1-29 for the lender-facing set)
 python3 ../scripts/crosscheck.py      # verify the exported PDFs
 ```
 

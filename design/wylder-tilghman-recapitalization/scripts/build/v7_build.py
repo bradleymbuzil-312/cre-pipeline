@@ -8,10 +8,13 @@ from v7_patch import PATCH
 from v7_num import renumber
 import v7_tranche as T
 from v7_marina import *
+from v7_dogwood import page as dogwood_page, shift_page_refs
 from figs_v7 import *
 from figs_v7 import SENIOR as SENIOR_AMT, PREF as PREF_AMT, COMMON as COMMON_AMT
 
-CORE = SHARED[:15]                         # THE ASSET .. MARKET AND DEMAND
+OLD_CORE = SHARED[:15]                     # THE ASSET .. MARKET AND DEMAND
+# the acquisition detail page follows the narrative page it belongs to
+CORE = OLD_CORE[:3] + ['DOGWOOD COVE'] + OLD_CORE[3:]
 CLOSE = ['TOTAL BASIS', 'VALUE POSITIONING', 'SALE COMPARABLES', 'RECENT TRANSACTIONS', 'CONTACT']
 # the debt packages carry the marina valuation, directly after the hotel value positioning
 DEBT_CLOSE = ['TOTAL BASIS', 'VALUE POSITIONING', 'MARINA VALUATION', 'SALE COMPARABLES',
@@ -120,16 +123,21 @@ def build(t):
     lender = t in ('senior', 'hm')
     carries_marina = lender
     close = DEBT_CLOSE if carries_marina else CLOSE
-    if carries_marina:
-        # TOTAL BASIS is the page the marina page points at for the hotel value estimates
-        body['MARINA VALUATION'] = marina_page(
-            values_page=2 + len(CORE) + 2 + len(p['pages']) + 2)
     order = (['TITLE', 'THE OPPORTUNITY'] + CORE + ['CAPITAL STRUCTURE', 'SOURCES AND USES']
              + [n for n, _ in p['pages']] + close)
+    # every builder writes page numbers against the order before the insertion; one pass at the
+    # end resolves each reference by section and renumbers it
+    old_order = [n for n in order if n != 'DOGWOOD COVE']
+    body['DOGWOOD COVE'] = dogwood_page()
+    if carries_marina:
+        body['MARINA VALUATION'] = marina_page(
+            values_page=old_order.index('VALUE POSITIONING') + 1)
     path = f'{DECKDIR}/{p["file"]}'
     n = write_deck(path, head, order, body, p['label'])
+    html, moved = shift_page_refs(io.open(path, encoding='utf-8').read(), old_order, order)
+    io.open(path, 'w', encoding='utf-8').write(html)
     renumber(path, p['label'], dark=p['dark'])
-    return path, n, order
+    return path, n, order, moved
 
 
 def audit(path, t):
@@ -182,6 +190,7 @@ if __name__ == '__main__':
         print(f'${SENIOR_AMT:,} request — lender-facing package only '
               '(the exit waterfall is solved at $10,000,000)')
     for t in TRANCHES:
-        path, n, order = build(t)
+        path, n, order, moved = build(t)
         print(f'\n{PKG[t]["file"][:-8]}  —  {n} pages')
+        print(f'  page references renumbered: {", ".join(moved) if moved else "none"}')
         print(audit(path, t))

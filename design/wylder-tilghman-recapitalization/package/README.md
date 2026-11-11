@@ -6,13 +6,13 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 
 | File | For | Request | Pages |
 |---|---|---|---|
-| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | $10,000,000 | 29 |
-| `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 28 |
-| `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 28 |
-| `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 28 |
-| `Wylder Tilghman Island - LP Recapitalization.pdf` | **A prospective LP** — request only, terms open | — | 28 |
-| `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 28 |
-| `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 28 |
+| `Wylder Tilghman Island - Senior Debt.pdf` | A lender taking a 5.00% equity kicker | $10,000,000 | 30 |
+| `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 29 |
+| `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 29 |
+| `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 29 |
+| `Wylder Tilghman Island - LP Recapitalization.pdf` | **A prospective LP** — request only, terms open | — | 29 |
+| `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 29 |
+| `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 29 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
 
 **The three "Request" packages are the lender-facing set.** Same loan, same 12.00% all-in rate,
@@ -56,7 +56,7 @@ not the LP.** At $11,000,000 the preferred is $3,018,628, down from the model's 
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(68 checks, all passing).
+(75 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|
@@ -90,7 +90,8 @@ breakeven and the GP's $18M figures are omitted from the common package entirely
 | | |
 |---|---|
 | 01–02 | Cover and summary — tranche-specific |
-| 03–17 | Shared core: asset, property, adjacent acquisition, sponsor, brand, business plan, renovation schedule, affiliation, projections, cash flow, extended cash flow, departmental benchmarks, historical operations, competitive market, market and demand |
+| 06 | **Dogwood Cove acquisition in detail** — the PSA, what the $1,400,000 buys, what it earns |
+| 03–18 | Shared core: asset, property, adjacent acquisition, **acquisition detail**, sponsor, brand, business plan, renovation schedule, affiliation, projections, cash flow, extended cash flow, departmental benchmarks, historical operations, competitive market, market and demand |
 | 18–19 | Capital structure and sources and uses — recipient's tranche highlighted, recipient's terms and net funding only |
 | 20–23 | Tranche pages: terms, mechanics (coverage / cash sweep / waterfall), **returns**, position |
 | 24–27 | Total basis, value positioning, sale comparables, recent transactions |
@@ -101,6 +102,23 @@ coverage, credit considerations), the closing pages shift to 23–26 and contact
 
 Page 25 states each recipient's own attachment point: the senior at $172,414 per key, the
 preferred last dollar at $239,725, the full capitalization at $300,070.
+
+## The Dogwood Cove acquisition
+
+Page 5 makes the strategic case; **page 6 carries the deal.** The purchase and sale agreement
+($1,100,000, a $15,000 deposit, a 45-day closing period, contemplated closing November 18, 2026,
+bought by 21551 Tilghman Investors LLC in fee simple), what the $1,400,000 all-in buys (the
+four-bedroom residence as the 58th key, roughly three acres, 24 slips usable day one, $300,000 of
+renovation), and what it earns ($1,500 ADR at 35% occupancy, $191,625 at stabilization, taking the
+marina to 47 slips).
+
+The parcel was part of the hotel historically and was separated and sold to a third party in
+bankruptcy about ten years ago, which is why it is available to buy back.
+
+**Note the tension on timing:** the PSA contemplates a 45-day closing period, and the closing date
+carried throughout the package is November 18, 2026. Both are stated on page 6. If the PSA period
+runs from a later execution date those two do not agree, and the date should be confirmed before
+the package goes out.
 
 ## Conventions applied across all three
 

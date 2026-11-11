@@ -408,24 +408,27 @@ def structure():
 
 
 # ───────────────────────────────────────────────────── assembly
-CORE = ['THE ASSET', 'PROPERTY OVERVIEW', 'ADJACENT ACQUISITION', 'THE SPONSOR',
-        'WYLDER BRAND & RESUME', 'BUSINESS PLAN', 'RENOVATION SCHEDULE', 'BRAND AFFILIATION',
-        'PROJECTIONS', 'CASH FLOW AND ASSUMPTIONS', 'EXTENDED CASH FLOW',
-        'DEPARTMENTAL BENCHMARKS', 'HISTORICAL OPERATIONS', 'COMPETITIVE MARKET',
-        'MARKET AND DEMAND']
+OLD_CORE = ['THE ASSET', 'PROPERTY OVERVIEW', 'ADJACENT ACQUISITION', 'THE SPONSOR',
+            'WYLDER BRAND & RESUME', 'BUSINESS PLAN', 'RENOVATION SCHEDULE', 'BRAND AFFILIATION',
+            'PROJECTIONS', 'CASH FLOW AND ASSUMPTIONS', 'EXTENDED CASH FLOW',
+            'DEPARTMENTAL BENCHMARKS', 'HISTORICAL OPERATIONS', 'COMPETITIVE MARKET',
+            'MARKET AND DEMAND']
+CORE = OLD_CORE[:3] + ['DOGWOOD COVE'] + OLD_CORE[3:]
 ORDER = (['TITLE', 'THE OPPORTUNITY'] + CORE
          + ['CAPITAL STRUCTURE', 'SOURCES AND USES', 'THE INVESTMENT REQUEST',
             'BUSINESS PLAN FINANCING', 'STRUCTURE AND WATERFALL', 'TOTAL BASIS',
             'VALUE POSITIONING', 'MARINA VALUATION', 'SALE COMPARABLES', 'RECENT TRANSACTIONS',
             'CONTACT'])
 DARK = {'THE INVESTMENT REQUEST'}
-VALUES_PAGE = ORDER.index('VALUE POSITIONING') + 1
+OLD_ORDER = [n for n in ORDER if n != 'DOGWOOD COVE']
+VALUES_PAGE = OLD_ORDER.index('VALUE POSITIONING') + 1
 
 
 def build_deck():
     from v7_lib import load_sections, write_deck, DECKDIR
     from v7_num import renumber
     from v7_patch import extended_cash_flow, lp_funding
+    from v7_dogwood import page as dogwood_page, shift_page_refs
     from v7_tranche import title, contact
     from v7_marina import marina_page
     head, body = load_sections()
@@ -434,6 +437,7 @@ def build_deck():
                                                     loan=SENIOR)
     for _n in ('BUSINESS PLAN', 'ADJACENT ACQUISITION'):
         body[_n] = lp_funding(body[_n], _n)
+    body['DOGWOOD COVE'] = dogwood_page()
     body['TITLE'] = title('lp')
     body['THE OPPORTUNITY'] = opportunity()
     body['CAPITAL STRUCTURE'] = capital_structure()
@@ -445,12 +449,14 @@ def build_deck():
     body['CONTACT'] = contact('lp')
     path = f'{DECKDIR}/Wylder Tilghman Island - LP Recapitalization.dc.html'
     n = write_deck(path, head, ORDER, body, LABEL)
+    html, moved = shift_page_refs(io.open(path, encoding='utf-8').read(), OLD_ORDER, ORDER)
+    io.open(path, 'w', encoding='utf-8').write(html)
     renumber(path, LABEL, dark=DARK)
-    return path, n
+    return path, n, moved
 
 
 if __name__ == '__main__':
-    path, n = build_deck()
+    path, n, moved = build_deck()
     s = io.open(path, encoding='utf-8').read()
     bad = [w for w in ('appraisal', 'appraised', 'LWHA', 'Newmark', 'CBRE', 'New Day')
            if w.lower() in s.lower()]
@@ -461,3 +467,4 @@ if __name__ == '__main__':
     print(f'  forbidden references: {bad or "none"}')
     print(f'  economics or debt request detail: {econ or "none"}')
     print(f'  "to be determined" markers: {s.lower().count("to be determined")}')
+    print(f'  page references renumbered: {", ".join(moved) if moved else "none"}')

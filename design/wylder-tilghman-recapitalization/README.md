@@ -40,7 +40,7 @@ senior and preferred deduction in the waterfall is a **single aggregated amount*
 base case), never itemized.
 
 Enforced by an audit in `scripts/build/v7_build.py` and verified against the PDFs by
-`scripts/crosscheck.py` (68 checks).
+`scripts/crosscheck.py` (75 checks).
 
 ### No exit level showing a loss
 The returns page in each package (page 22, marked "not for distribution") spans $18M–$36M for the
@@ -151,7 +151,11 @@ its projected multiple and IRR.
 4. What the asset comprises — four columns, each with a photograph and a fact card. 50 rooms in
    service, 4 out of service to be restored, 3 from the rebuilt three-bedroom house = 57 hotel keys,
    58 with Dogwood Cove. Marina 23 slips today · 24 with the acquisition · 47 on completion.
-5. Adjacent acquisition — 21441 Dogwood Cove. $1,100,000 purchase funded from the capitalization at
+5. Adjacent acquisition — 21441 Dogwood Cove, the strategic case.
+5a. **Dogwood Cove acquisition in detail** — the PSA, what the $1,400,000 buys, what it earns, and
+   why a parcel that was once part of the hotel is available to buy back. Inserted at page 6, so
+   every later page moved by one; `v7_dogwood.shift_page_refs` resolves each "page N" reference to
+   the section it meant under the old order and renumbers it, rather than doing arithmetic. $1,100,000 purchase funded from the capitalization at
    closing with no acquisition debt, fee simple, $15,000 deposit, closing November 18, 2026,
    $300,000 renovation.
 6. Ownership and operating structure — the sponsor.
@@ -278,7 +282,8 @@ three and would disclose cross-tranche economics if sent alongside them.
   position, contacts), `v7_reno.py` (the page 9 schedule), `v7_num.py` (renumbering),
   `v7_build.py` (assembly and audits for one request), `figs_lp.py` and `v7_lp.py` (the LP
   recapitalization figures, its capital pages and the open waterfall framework),
-  `v7_marina.py` (the marina figures, the
+  `v7_dogwood.py` (the acquisition detail page and the
+  cross-reference shifter), `v7_marina.py` (the marina figures, the
   page the debt packages carry and the standalone deck), `v7_loans.py` (every request plus the
   marina deck)
 - `scripts/crosscheck.py` — PDF verification; `scripts/scrub_model.py` — label scrub

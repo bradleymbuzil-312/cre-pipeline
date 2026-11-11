@@ -13,17 +13,17 @@ import sys
 import pymupdf
 
 P = "/home/user/cre-pipeline/design/wylder-tilghman-recapitalization/package"
-PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf", 29),
+PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf", 30),
         "hm8": ("Senior Debt - 8M Request",
-                f"{P}/Wylder Tilghman Island - Senior Debt - 8M Request.pdf", 28),
+                f"{P}/Wylder Tilghman Island - Senior Debt - 8M Request.pdf", 29),
         "hm10": ("Senior Debt - 10M Request",
-                 f"{P}/Wylder Tilghman Island - Senior Debt - 10M Request.pdf", 28),
+                 f"{P}/Wylder Tilghman Island - Senior Debt - 10M Request.pdf", 29),
         "hm11": ("Senior Debt - 11M Request",
-                 f"{P}/Wylder Tilghman Island - Senior Debt - 11M Request.pdf", 28),
+                 f"{P}/Wylder Tilghman Island - Senior Debt - 11M Request.pdf", 29),
         "lp": ("LP Recapitalization",
-               f"{P}/Wylder Tilghman Island - LP Recapitalization.pdf", 28),
-        "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 28),
-        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 28)}
+               f"{P}/Wylder Tilghman Island - LP Recapitalization.pdf", 29),
+        "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 29),
+        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 29)}
 LENDER = ["senior", "hm8", "hm10", "hm11"]
 # total cost basis per key moves with the request, because the reserve and the fees are in it
 BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
@@ -121,6 +121,9 @@ FIXED_COMMON = "$3,500,000"
 MARINA = ["$30,000", "$1,410,000", "$690,000", "$720,000", "$1,175,000", "$1,880,000",
           "$280,000", "$27,000", "$30,837", "47 slips", "23 slips", "24 slips"]
 MARINA_PDF = f"{P}/Wylder Tilghman Island - Marina Valuation.pdf"
+# the Dogwood Cove acquisition detail page, carried by every capitalization package
+DOGWOOD = ["$1,100,000", "$300,000", "$1,400,000", "45 days", "November 18, 2026",
+           "21551 Tilghman Investors LLC", "$1,500", "$191,625", "$4,285,714", "$2,885,714"]
 FORBIDDEN = ["appraisal", "appraised", "appraiser", "LWHA", "Newmark", "CBRE", "New Day"]
 BRITISH = ["utilise", "organis", "centre", "labour", "metres", "colour", "favour", "analyse"]
 
@@ -147,6 +150,9 @@ for t, (name, path, pages) in PKGS.items():
     for other in OTHERS[t]:
         leaked += [v for v in SECRET[other] if v not in SHARED_OK and norm(v) in flat]
     check(not leaked, "no other tranche's economics", f"leaked {sorted(set(leaked))}")
+
+    missing = [v for v in DOGWOOD if norm(v) not in flat]
+    check(not missing, "carries the Dogwood Cove acquisition detail", f"missing {missing}")
 
     named = [w for w in FORBIDDEN if re.search(w, raw, re.I)]
     check(not named, "no source document named", f"found {named}")
