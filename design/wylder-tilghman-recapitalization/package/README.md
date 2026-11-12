@@ -10,6 +10,8 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Senior Debt - 8M Request.pdf` | **Lender-facing** — no kicker, no return shown | $8,000,000 | 29 |
 | `Wylder Tilghman Island - Senior Debt - 10M Request.pdf` | **Lender-facing** — no kicker, no return shown | $10,000,000 | 29 |
 | `Wylder Tilghman Island - Senior Debt - 11M Request.pdf` | **Lender-facing** — no kicker, no return shown | $11,000,000 | 29 |
+| `Wylder Tilghman Island - Senior Debt - 12.5M Request.pdf` | **Lender-facing** — no kicker, no return shown | $12,500,000 | 29 |
+| `Wylder Tilghman Island - Senior Debt Model - 12.5M.xlsx` | **The live debt model** for that request | $12,500,000 | 7 tabs |
 | `Wylder Tilghman Island - LP Recapitalization.pdf` | **A prospective LP** — request only, terms open | — | 29 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 29 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 29 |
@@ -25,22 +27,22 @@ It exists only at $10,000,000, because the model's exit waterfall is solved only
 
 ### What moves with the request
 
-| | $8,000,000 | $10,000,000 | $11,000,000 |
-|---|---|---|---|
-| Annual debt service · IO | $960,000 | $1,200,000 | $1,320,000 |
-| Interest and carry reserve · 12 mo | $960,000 | $1,200,000 | $1,320,000 |
-| Origination 2.00% / broker 1.00% | $160,000 / $80,000 | $200,000 / $100,000 | $220,000 / $110,000 |
-| Net proceeds at close | $6,880,000 | $8,600,000 | $9,460,000 |
-| LTV as-is / stabilized | 37.38% / 27.12% | 46.73% / 33.90% | 51.40% / 37.29% |
-| Loan to cost | 46.58% | 57.46% | 62.79% |
-| DSCR 2026 / 2027 / 2028 | 1.18x / 2.41x / 2.78x | 0.94x / 1.93x / 2.23x | 0.86x / 1.75x / 2.02x |
-| Debt yield 2027 / 2028 | 28.94% / 33.38% | 23.15% / 26.71% | 21.05% / 24.28% |
-| **Preferred equity (the plug)** | **$5,674,878** | **$3,904,044** | **$3,018,628** |
-| Preferred fees · 2.00% each side | $113,498 / $113,498 | $78,081 / $78,081 | $60,373 / $60,373 |
-| Common equity · LP | $3,500,000 | $3,500,000 | $3,500,000 |
-| Capitalization | $17,174,878 | $17,404,044 | $17,518,628 |
-| Debt and preferred to as-is | 63.90% | 64.97% | 65.51% |
-| Total cost basis / key | $18,947,882 / $326,688 | $19,247,882 / $331,860 | $19,397,882 / $334,446 |
+| | $8,000,000 | $10,000,000 | $11,000,000 | $12,500,000 |
+|---|---|---|---|---|
+| Annual debt service · IO | $960,000 | $1,200,000 | $1,320,000 | $1,500,000 |
+| Interest and carry reserve · 12 mo | $960,000 | $1,200,000 | $1,320,000 | $1,500,000 |
+| Origination 2.00% / broker 1.00% | $160,000 / $80,000 | $200,000 / $100,000 | $220,000 / $110,000 | $250,000 / $125,000 |
+| Net proceeds at close | $6,880,000 | $8,600,000 | $9,460,000 | $10,750,000 |
+| LTV as-is / stabilized | 37.38% / 27.12% | 46.73% / 33.90% | 51.40% / 37.29% | 58.41% / 42.37% |
+| Loan to cost | 46.58% | 57.46% | 62.79% | 70.66% |
+| DSCR 2026 / 2027 / 2028 | 1.18x / 2.41x / 2.78x | 0.94x / 1.93x / 2.23x | 0.86x / 1.75x / 2.02x | 0.75x / 1.54x / 1.78x |
+| Debt yield 2027 / 2028 | 28.94% / 33.38% | 23.15% / 26.71% | 21.05% / 24.28% | 18.52% / 21.36% |
+| **Preferred equity (the plug)** | **$5,674,878** | **$3,904,044** | **$3,018,628** | **$1,690,502** |
+| Preferred fees · 2.00% each side | $113,498 / $113,498 | $78,081 / $78,081 | $60,373 / $60,373 | $33,810 / $33,810 |
+| Common equity · LP | $3,500,000 | $3,500,000 | $3,500,000 | $3,500,000 |
+| Capitalization | $17,174,878 | $17,404,044 | $17,518,628 | $17,690,502 |
+| Debt and preferred to as-is | 63.90% | 64.97% | 65.51% | 66.31% |
+| Total cost basis / key | $18,947,882 / $326,688 | $19,247,882 / $331,860 | $19,397,882 / $334,446 | $19,622,882 / $338,326 |
 
 The uses are the same deal at every request: the payoff, the renovation, the acquisition and
 working capital do not move, while the reserve, the origination fee and the broker fee all scale
@@ -56,7 +58,7 @@ not the LP.** At $11,000,000 the preferred is $3,018,628, down from the model's 
 
 Each package carries **only its own economics**. No package discloses another tranche's rate,
 fees, participation, promote, splits or returns. Verified by `scripts/crosscheck.py`
-(75 checks, all passing).
+(87 checks, all passing).
 
 | Shown to everyone | Shown to that recipient only |
 |---|---|
@@ -223,6 +225,29 @@ has the LP funding the close alone. Send one plan or the other, not both. The op
 projections, the renovation program, the basis detail and the market pages are common to both.
 
 Dated **November 11, 2026**; the capitalization packages keep their October 30 date.
+
+## The debt model
+
+`Wylder Tilghman Island - Senior Debt Model - 12.5M.xlsx` is a live workbook, not a printout. The
+loan amount in **Loan Request!B5** drives everything: debt service, the reserve, both fees, net
+funding, every leverage and coverage measure, the three sizing tests and the sensitivity grid.
+225 formulas, no hardcoded outputs.
+
+| Tab | What it does |
+|---|---|
+| Loan Request | The request, pricing, net funding at close, leverage against each estimated value, coverage |
+| Loan Sizing | Maximum loan by LTV, DSCR interest-only, DSCR 30-year amortizing and debt yield, with the binding constraint on both the stabilizing year and the first full year |
+| Sources & Uses | Uses at closing; subordinate capital is the plug, so sources equal uses at any loan amount |
+| Operations | 2026–2028 projections, debt service, coverage, debt yield and the permanent takeout test |
+| Extended Cash Flow | 2030–2041 carried forward, with coverage and cash flow after debt service |
+| Sensitivity | DSCR and debt yield across five loan amounts and five NOI scenarios |
+| Total Basis | The basis build, with the loan-driven lines moving with the loan |
+
+It carries **no equity economics** — no preferred rate, no waterfall, no promote, no partner
+returns — for the same reason the debt packages do not. The preferred and common amounts appear
+only as a single "subordinate capital" plug, with the split stated at the requested loan amount.
+
+Rebuild at another size with `WT_SENIOR_LOAN=11000000 python3 scripts/build/v7_model.py`.
 
 ## Lender-facing vocabulary
 

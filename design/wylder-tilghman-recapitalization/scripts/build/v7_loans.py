@@ -6,7 +6,7 @@ WT_SENIOR_LOAN rather than reloaded over a live module.
 """
 import os, subprocess, sys
 
-REQUESTS = [10_000_000, 11_000_000, 8_000_000]
+REQUESTS = [10_000_000, 11_000_000, 12_500_000, 8_000_000]
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 for loan in REQUESTS:

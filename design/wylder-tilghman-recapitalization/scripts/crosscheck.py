@@ -20,15 +20,18 @@ PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf
                  f"{P}/Wylder Tilghman Island - Senior Debt - 10M Request.pdf", 29),
         "hm11": ("Senior Debt - 11M Request",
                  f"{P}/Wylder Tilghman Island - Senior Debt - 11M Request.pdf", 29),
+        "hm125": ("Senior Debt - 12.5M Request",
+                  f"{P}/Wylder Tilghman Island - Senior Debt - 12.5M Request.pdf", 29),
         "lp": ("LP Recapitalization",
                f"{P}/Wylder Tilghman Island - LP Recapitalization.pdf", 29),
         "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 29),
         "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 29)}
-LENDER = ["senior", "hm8", "hm10", "hm11"]
+LENDER = ["senior", "hm8", "hm10", "hm11", "hm125"]
 # total cost basis per key moves with the request, because the reserve and the fees are in it
 BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
-             "lp": "$313,529", "pref": "$331,860", "common": "$331,860"}
-NO_KICKER = ["hm8", "hm10", "hm11"]
+             "hm125": "$338,326", "lp": "$313,529", "pref": "$331,860",
+             "common": "$331,860"}
+NO_KICKER = ["hm8", "hm10", "hm11", "hm125"]
 # the debt packages are the same deal at different requests, so they are not "other tranches"
 # to each other
 OTHERS = {t: ([] if t == "lp" else ["pref", "common"] if t in LENDER
@@ -65,6 +68,9 @@ OWN = {
  "hm10": ["$10,000,000", "12.00%", "SOFR", "$8,600,000", "$1,200,000", "46.73%", "57.46%",
           "23.15%", "1.93x", "1.73x", "$19,247,882", "$331,860", "$3,904,044", "$3,500,000",
           "$17,404,044"],
+ "hm125": ["$12,500,000", "12.00%", "SOFR", "$10,750,000", "$1,500,000", "58.41%", "70.66%",
+           "18.52%", "1.54x", "1.38x", "$19,622,882", "$338,326", "$1,690,502", "$3,500,000",
+           "$17,690,502"],
  "hm11": ["$11,000,000", "12.00%", "SOFR", "$9,460,000", "$1,320,000", "51.40%", "62.79%",
           "21.05%", "1.75x", "1.57x", "$19,397,882", "$334,446", "$3,018,628", "$3,500,000",
           "$17,518,628"],
@@ -112,9 +118,14 @@ WRONG_REQUEST = {"hm8": ["$10,000,000", "$11,000,000", "$1,200,000", "$1,320,000
                           "$3,904,044", "$3,018,628", "$17,404,044", "$17,518,628"],
                  # "$960,000" is left out: it is the $8M debt service and also 24 Dogwood Cove
                  # slips at the $40,000 top of the marina range.
-                 "hm10": ["$8,000,000", "$11,000,000", "$1,320,000",
+                 "hm10": ["$8,000,000", "$11,000,000", "$12,500,000", "$1,500,000", "$1,320,000",
                           "$5,674,878", "$3,018,628", "$17,174,878", "$17,518,628"],
-                 "hm11": ["$8,000,000", "$10,000,000", "$1,200,000",
+                 # "$960,000" is left out here too: it is 24 Dogwood Cove slips at the $40,000
+                 # top of the marina range as well as the $8M request's debt service.
+                 "hm125": ["$8,000,000", "$10,000,000", "$11,000,000",
+                           "$1,200,000", "$1,320,000", "$5,674,878", "$3,904,044", "$3,018,628",
+                           "$17,174,878", "$17,404,044", "$17,518,628"],
+                 "hm11": ["$8,000,000", "$10,000,000", "$12,500,000", "$1,500,000", "$1,200,000",
                           "$5,674,878", "$3,904,044", "$17,174,878", "$17,404,044"]}
 # the LP commitment is fixed at every request; the preferred fills the gap
 FIXED_COMMON = "$3,500,000"

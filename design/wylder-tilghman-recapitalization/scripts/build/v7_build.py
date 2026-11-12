@@ -26,7 +26,7 @@ PKG = {
           ('SENIOR RETURNS', lambda: T.returns_page('senior')),
           ('CREDIT CONSIDERATIONS', T.senior_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),
- 'hm': dict(file=f'Wylder Tilghman Island - Senior Debt - {SENIOR_AMT//1_000_000}M Request.dc.html', label='Senior Debt',
+ 'hm': dict(file=f'Wylder Tilghman Island - Senior Debt - {SENIOR_AMT/1_000_000:g}M Request.dc.html', label='Senior Debt',
    pages=[('SENIOR LOAN TERMS', T.hm_terms), ('DEBT SERVICE COVERAGE', T.senior_coverage),
           ('CREDIT CONSIDERATIONS', T.hm_credit)],
    dark={'SENIOR LOAN TERMS', 'CREDIT CONSIDERATIONS'}),

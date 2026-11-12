@@ -40,7 +40,7 @@ senior and preferred deduction in the waterfall is a **single aggregated amount*
 base case), never itemized.
 
 Enforced by an audit in `scripts/build/v7_build.py` and verified against the PDFs by
-`scripts/crosscheck.py` (75 checks).
+`scripts/crosscheck.py` (87 checks).
 
 ### No exit level showing a loss
 The returns page in each package (page 22, marked "not for distribution") spans $18M–$36M for the
@@ -282,6 +282,7 @@ three and would disclose cross-tranche economics if sent alongside them.
   position, contacts), `v7_reno.py` (the page 9 schedule), `v7_num.py` (renumbering),
   `v7_build.py` (assembly and audits for one request), `figs_lp.py` and `v7_lp.py` (the LP
   recapitalization figures, its capital pages and the open waterfall framework),
+  `v7_model.py` (the live lender-facing Excel debt model),
   `v7_dogwood.py` (the acquisition detail page and the
   cross-reference shifter), `v7_marina.py` (the marina figures, the
   page the debt packages carry and the standalone deck), `v7_loans.py` (every request plus the
