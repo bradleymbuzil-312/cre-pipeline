@@ -25,16 +25,17 @@ PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf
         "lp": ("LP Recapitalization",
                f"{P}/Wylder Tilghman Island - LP Recapitalization.pdf", 29),
         "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 29),
-        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 29)}
+        "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 29),
+        "eq": ("LP Equity", f"{P}/Wylder Tilghman Island - LP Equity.pdf", 26)}
 LENDER = ["senior", "hm8", "hm10", "hm11", "hm125"]
 # total cost basis per key moves with the request, because the reserve and the fees are in it
 BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
              "hm125": "$338,326", "lp": "$313,529", "pref": "$331,860",
-             "common": "$331,860"}
+             "common": "$331,860", "eq": "$331,860"}
 NO_KICKER = ["hm8", "hm10", "hm11", "hm125"]
 # the debt packages are the same deal at different requests, so they are not "other tranches"
 # to each other
-OTHERS = {t: ([] if t == "lp" else ["pref", "common"] if t in LENDER
+OTHERS = {t: ([] if t in ("lp", "eq") else ["pref", "common"] if t in LENDER
               else [o for o in ("senior", "pref", "common") if o != t]) for t in PKGS}
 # The LP deck is a request for investment, not an offer. It may name the terms that are open
 # ("preferred return", "promote", "residual split") but must carry no number for any of them,
@@ -53,6 +54,26 @@ LP_FORBID = [
     "Exit participation", "Net Funded Basis", "total cash received",
 ]
 LP_REQUIRED = ["To be determined", "$13,255,085", "$20,255,085", "$18,184,701", "$0"]
+
+# The LP equity marketing deck states one economic objective — a 2.0x target over a 36-month
+# hold — and nothing else. Every other term is named and left open, and the senior request is
+# not in the package at all.
+EQ_FORBID = [
+    # no proposed economics for any tranche
+    "12.00%", "17.00%", "15.00%", "50 / 50", "50/50", "51% / 49%", "51%/49%",
+    "Equity multiple of", "Projected IRR", "Projected Return", "Exit participation",
+    "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$7,526,610", "$3,700,647",
+    "$3,825,963", "$1,931,666", "$3,714,944", "$4,740,000", "$14,540,000",
+    # no senior debt request detail
+    "SOFR", "$10,000,000", "$8,600,000", "$3,904,044", "Debt yield", "Debt service coverage",
+    "Loan to value", "Loan to cost", "first trust deed", "Net Funded Basis",
+    # the v4 recapitalization plan, which this package does not carry
+    "$13,255,085", "$20,255,085", "$18,184,701",
+]
+# "2.0x" is required here, so NO_RETURN_WORDS cannot be reused wholesale: only IRR is barred.
+EQ_REQUIRED = ["2.0x", "36 months", "To be negotiated", "$17,404,044", "$15,747,882",
+               "$19,247,882", "$29,500,000", "$2,670,611", "13.87%", "9.05%", "$2,000,000",
+               "Target equity multiple", "Preferred return", "Sponsor promote"]
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -79,6 +100,9 @@ OWN = {
  "lp": ["$13,255,085", "$12,989,984", "$7,000,000", "$20,255,085", "$18,184,701",
         "$2,070,384", "$228,536", "$313,529", "61.94%", "84.98%", "61.64%",
         "To be determined", "$0", "$10,714,782", "$530,000"],
+ # the LP equity package's only economics are the target and the plan it is built on
+ "eq": ["2.0x", "36 months", "$17,404,044", "$15,747,882", "$19,247,882", "$331,860",
+        "$29,500,000", "13.87%", "9.05%", "To be negotiated"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
             "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
             "2.33x", "32.6%", "63.64%"]}
@@ -180,6 +204,16 @@ for t, (name, path, pages) in PKGS.items():
         check(not hits, "no economics and no debt request detail", f"found {hits}")
         missing = [v for v in LP_REQUIRED if norm(v) not in flat]
         check(not missing, "states the request and that the terms are open", f"missing {missing}")
+        missing = [v for v in MARINA if norm(v) not in flat]
+        check(not missing, "carries the marina valuation", f"missing {missing}")
+
+    if t == "eq":
+        hits = ([v for v in EQ_FORBID if norm(v) in flat]
+                + [w for w in (r"\bIRR\b",) if re.search(w, raw)])
+        check(not hits, "no proposed economics and no senior request detail", f"found {hits}")
+        missing = [v for v in EQ_REQUIRED if norm(v) not in flat]
+        check(not missing, "states the 2.0x target and leaves the structure open",
+              f"missing {missing}")
         missing = [v for v in MARINA if norm(v) not in flat]
         check(not missing, "carries the marina valuation", f"missing {missing}")
 

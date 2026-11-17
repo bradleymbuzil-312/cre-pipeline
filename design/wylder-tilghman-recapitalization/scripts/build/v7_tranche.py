@@ -63,6 +63,12 @@ def title(t):
                    'accruing at seventeen percent with no current pay and a ten percent participation in '
                    'equity value at exit, behind ten million of senior debt and ahead of five million '
                    'five hundred thousand of common capital.'),
+          'eq': ('A limited partner equity investment in a fifty-eight key waterfront resort, '
+                 'alongside two million of sponsor cash already in the asset. The sponsor is '
+                 'targeting a two times equity multiple over a thirty-six month hold. That is an '
+                 'objective, not a projection and not a guarantee. The size of the investment and '
+                 'the whole of the return structure are open and will be negotiated with the lead '
+                 'investor.'),
           'common': ('A three million five hundred thousand dollar limited partner investment alongside '
                      'two million of sponsor cash on identical terms, earning a fifteen percent '
                      'cumulative preferred return and capital back before a fifty-fifty residual '

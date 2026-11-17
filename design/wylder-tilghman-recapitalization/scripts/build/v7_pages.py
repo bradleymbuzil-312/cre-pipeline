@@ -29,6 +29,21 @@ assert sum(v for _, v in ACQ) == T_ACQ and sum(v for _, v in PIP) == T_PIP
 assert all(sum(v for _, v in o) == T_OTH for o in OTH_BY.values())
 assert T_ACQ + T_PIP + T_OTH == COST_BASIS
 
+def _basis_note(t):
+    """The sponsor-cash sentence, which differs by audience and by what pages the deck carries."""
+    whose = {'senior': 'capital that stays in the asset behind the loan.',
+             'hm': 'capital that stays in the asset behind the loan.',
+             'lp': 'capital that remains in the asset alongside the new investment.',
+             'eq': 'capital that remains in the asset alongside the new investment.'}.get(
+        t, 'the same capital that stands as the GP&rsquo;s pari passu interest in the partnership.')
+    funds = ('The capital raised at closing funds the greater part of this basis.' if t == 'eq'
+             else f'The capitalization on page 18 funds ${TOTAL:,.0f} of this basis.')
+    return ('The basis includes <strong style="color:var(--mm-navy-900);">$2,000,000 of sponsor '
+            f'cash already invested</strong> outside loan proceeds &mdash; {whose} {funds} '
+            'A further $642,693 was invested in the hotel between 2021 and 2025, outside the plan '
+            'at right.')
+
+
 def total_basis(t='senior'):
     OTH = OTH_BY['senior'] if t in ('senior', 'hm') else OTH_BY['other']
     def grp(title, lines, tl, tot):
@@ -42,15 +57,7 @@ def total_basis(t='senior'):
      + '      <div style="height:14px;"></div>\n'
      + row('Total cost basis', f'${COST_BASIS:,.0f}', pad=9, fs='19px', kind='tot')
      + row('Cost basis per key &middot; 58 keys', f'${COST_BASIS_KEY:,.0f}', pad=7, fs='16px', kind='sub')
-     + para('The basis includes <strong style="color:var(--mm-navy-900);">$2,000,000 of sponsor cash '
-            'already invested</strong> outside loan proceeds &mdash; '
-            + ('capital that stays in the asset behind the loan. ' if t in ('senior', 'hm')
-               else 'capital that remains in the asset alongside the new investment. ' if t == 'lp'
-               else 'the same capital that stands as the GP&rsquo;s pari passu interest in the '
-                    'partnership. ')
-            + f'The capitalization on page 18 funds '
-            f'${TOTAL:,.0f} of this basis; a further $642,693 was invested in the hotel between 2021 and '
-            '2025, outside the plan at right.', fs='14.5px', auto=True))
+     + para(_basis_note(t), fs='14.5px', auto=True))
     right = grp('Renovation Program', PIP, 'Total renovation program', T_PIP)
     right += ('      <div style="height:14px;"></div>\n'
      f'      <div style="display:grid;grid-template-columns:repeat(4,1fr);align-items:start;'

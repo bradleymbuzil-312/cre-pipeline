@@ -14,6 +14,8 @@ ATTACH = {
             'three hundred thousand and seventy')}
 ATTACH['hm'] = ATTACH['senior']
 ATTACH['lp'] = ATTACH['common']
+# the LP equity package leaves the stack open, so it positions value against the whole plan
+ATTACH['eq'] = ATTACH['common']
 
 
 def value_positioning(b, t):

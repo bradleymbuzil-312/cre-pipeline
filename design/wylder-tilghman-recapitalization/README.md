@@ -78,6 +78,9 @@ Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `
 - `Wylder Tilghman Island - LP Recapitalization.dc.html` — a $13,255,085 request for LP
   investment with the economics left open, on the plan where the LP funds the whole
   closing, 28 slides
+- `Wylder Tilghman Island - LP Equity.dc.html` — LP equity marketing, deliberately
+  indicative: a target 2.0x multiple over a 36-month hold and every other economic term
+  left to be negotiated, 26 slides
 - `Wylder Tilghman Island - Preferred Equity.dc.html`
 - `Wylder Tilghman Island - Common Equity.dc.html`
 - `Wylder Tilghman Island - Marina Valuation.dc.html` — the standalone marina analysis,
@@ -90,7 +93,7 @@ notes and print-to-PDF.
 ```
 python3 scripts/build/v7_loans.py      # regenerates all six .dc.html, one process per request, with the audits
 python3 dist/build-dist.py             # optimizes assets into dist/_dist-deck (25.3 MB -> 2.3 MB)
-python3 scripts/crosscheck.py          # verifies the three exported PDFs
+python3 scripts/crosscheck.py          # verifies all ten exported PDFs
 ```
 `v7_build.py` lifts the fifteen shared core pages from
 `deck/Wylder Tilghman Island - Recapitalization.dc.html` (the superseded single-package deck, kept as

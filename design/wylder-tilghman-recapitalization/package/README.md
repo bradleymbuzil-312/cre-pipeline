@@ -13,6 +13,7 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Senior Debt - 12.5M Request.pdf` | **Lender-facing** — no kicker, no return shown | $12,500,000 | 29 |
 | `Wylder Tilghman Island - Senior Debt Model - 12.5M.xlsx` | **The live debt model** for that request | $12,500,000 | 7 tabs |
 | `Wylder Tilghman Island - LP Recapitalization.pdf` | **A prospective LP** — request only, terms open | — | 29 |
+| `Wylder Tilghman Island - LP Equity.pdf` | **LP equity marketing** — target 2.0x, terms negotiable | — | 26 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 29 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 29 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
@@ -179,6 +180,34 @@ to be proven with a trailing marina P&L, not collateral value today.
 Two things were deliberately left out of every package: the third-party per-slip benchmark, which
 names no closed sales, and the internal note on the model's 2028 slip expense line. Both are
 underwriting notes rather than lender material.
+
+## The LP Equity deck
+
+**For marketing limited partner equity before the capital stack is fixed.** It carries the asset,
+the business plan, the market evidence and the full uses of capital, and it proposes exactly one
+economic number: a **target 2.0x equity multiple over a 36-month hold**. Everything else — the
+preferred return, the return of capital, the residual split, the sponsor promote, the ownership
+percentages and the governance — is named as a term and marked *to be negotiated*.
+
+| | |
+|---|---|
+| Equity required | **$3.5M – $13.3M**, depending on the senior and preferred capital placed alongside |
+| Target return | **2.0x** over 36 months — an objective, not a projection |
+| Structure | Open. No rate, split, promote or hurdle is proposed |
+| What is fixed | The six lines of the plan, totaling **$15,747,882**, and the **$2,000,000** of sponsor cash already in the asset |
+| Total capital requirement | **~$17,404,044**, indicative at the current capital plan |
+
+The 2.0x is supported by a value bridge rather than an invented waterfall: a **$19,247,882** total
+cost basis ($331,860 a key) stabilizing at **$2,670,611** of net operating income — a **13.87%
+yield on cost** — against a **$29,500,000** stabilized estimate struck at a **9.05%** cap, a
+**53.3%** spread from basis to estimate. Page 20 carries the target-returns-are-objectives
+disclaimer in full: the 2.0x is a target, not a projection, a forecast or a guarantee, and no
+return is promised.
+
+**What is deliberately not in it.** No capital structure page (the stack is not yet fixed), no
+extended cash flow page (it asserts a leverage assumption this package leaves open), no senior
+loan terms, no coverage or debt yield, and none of the preferred or common economics. Twenty-six
+pages.
 
 ## The LP Recapitalization deck
 
