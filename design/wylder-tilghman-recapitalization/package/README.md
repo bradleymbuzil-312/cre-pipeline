@@ -17,6 +17,7 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 29 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 29 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
+| `Wylder Tilghman Island - Equity Teaser.pdf` | **First look** — no figures of any kind | — | 14 |
 
 **The three "Request" packages are the lender-facing set.** Same loan, same 12.00% all-in rate,
 same 3-year interest-only term, same 2.00% origination — sized at three requests. They quote no
@@ -180,6 +181,29 @@ to be proven with a trailing marina P&L, not collateral value today.
 Two things were deliberately left out of every package: the third-party per-slip benchmark, which
 names no closed sales, and the internal note on the model's 2028 slip expense line. Both are
 underwriting notes rather than lender material.
+
+## The Equity Teaser
+
+**The piece that goes out first, before a confidentiality agreement.** It is built like an
+investment-sales offering — photography led, generously set, little type on a page — and it asks
+for equity rather than a sale. It carries **no dollar amount, no percentage, no ratio, no key
+count, no acreage and no date**, and no sources and uses. The only digits in the file are the
+advisor's telephone, email and license on the closing page, and `crosscheck.py` enforces exactly
+that against the exported PDF.
+
+Three sections, each opened by a full-bleed divider:
+
+| | |
+|---|---|
+| **Valuation** | A value ladder — as it stands, on completion, at stabilization — drawn as an unlabeled schematic, with the slide itself saying the bars carry no scale. Beside it, what underpins the position: waterfront that cannot be added to, a marina valued on its own terms, a basis set by cost rather than by trade, and income once the asset is stabilized. |
+| **The renovation plan** | The scope by area across eight items, then the program sequence as a month band from November to April, with the model room block stating the specification is built and can be walked. |
+| **The revenue ramp** | A four-step trajectory — today, the work, first full season, stabilized — then the three drivers (rate, inventory, departments), then five departments set out as they stand against what the work does to them. |
+
+Closes on *An invitation, not an offer*: what is open, what follows under a confidentiality
+agreement, and how it starts.
+
+**Use it as the first touch.** Anything a recipient asks for after reading it — the model, the
+operating history, the capitalization — is in one of the packages above.
 
 ## The LP Equity deck
 

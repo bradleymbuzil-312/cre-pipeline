@@ -1,6 +1,6 @@
 # Distribution build
 
-The ten decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
+The eleven decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
 (16:9), one slide per page (30 for the kicker package, 29 for the lender-facing set and the equity packages):
 
 - `Wylder Tilghman Island - Senior Debt.pdf`
@@ -13,6 +13,7 @@ The ten decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
 - `Wylder Tilghman Island - Preferred Equity.pdf`
 - `Wylder Tilghman Island - Common Equity.pdf`
 - `Wylder Tilghman Island - Marina Valuation.pdf` (9 pages)
+- `Wylder Tilghman Island - Equity Teaser.pdf` (14 pages)
 
 Text stays live (selectable and searchable); it is not rasterized.
 
@@ -33,7 +34,7 @@ The first cut was not a PDF problem — it was the source imagery:
 Each image's display box is measured from the live render at 1920 × 1080, then
 resized to exactly what the canvas needs — 2× for small images so thumbnails and
 headshots stay crisp when zoomed, 1.5× for mid-size — and re-encoded to JPEG q84.
-Assets totaled 25.33 MB before, 2.33 MB after (−91%), shared across all ten decks.
+Assets totaled 25.33 MB before, 2.33 MB after (−91%), shared across all eleven decks.
 
 The two full-bleed hero aerials keep their **native resolution**; their saving is
 entirely PNG → JPEG, with no pixels lost. `mmcc-2018-white.png` is the only asset

@@ -254,6 +254,28 @@ tranche = ([v for v in ["12.00%", "17.00%", "SOFR", "$10,000,000", "$3,904,044",
 check(not tranche, "no capitalization economics", f"found {tranche}")
 
 print()
+# ── the equity teaser: an offering-style piece that states no figure at all
+TEASER_PDF = f"{P}/Wylder Tilghman Island - Equity Teaser.pdf"
+# the closing page carries the advisor's telephone, email and license and nothing else
+TEASER_CONTACT = ["310.909.5473", "01927157"]
+d = pymupdf.open(TEASER_PDF)
+print(f"\n── Equity Teaser · {len(d)} pages ──")
+check(len(d) == 14, "14 pages", f"got {len(d)}")
+body = re.sub(r"\s+", " ", "".join(pg.get_text() for pg in d[:-1]))
+closing = re.sub(r"\s+", " ", d[-1].get_text())
+stray = sorted(set(re.findall(r"\S*\d\S*", body)))
+check(not stray, "no figure on any page but the last", f"found {stray}")
+left = sorted(set(re.findall(r"\S*\d\S*", closing)) - set(TEASER_CONTACT))
+check(not left, "the closing page carries contact details only", f"found {left}")
+raw = body + " " + closing
+check(not re.search(r"sources and uses", raw, re.I), "no sources and uses")
+named = [w for w in FORBIDDEN if re.search(w, raw, re.I)]
+check(not named, "no source document named", f"found {named}")
+brit = [w for w in BRITISH if w in raw.lower()]
+check(not brit, "US spelling", f"found {brit}")
+for word in ("Valuation", "renovation", "revenue"):
+    check(re.search(word, raw, re.I) is not None, f"carries the {word.lower()} section")
+
 if fails:
     print(f"{len(fails)} check(s) failed")
     sys.exit(1)
