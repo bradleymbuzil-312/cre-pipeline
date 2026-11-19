@@ -207,6 +207,22 @@ Two standing rules of the library are deliberately set aside here, on instructio
 - **The valuation is attributed.** It names CBRE and LW Hospitality Advisors and uses the word
   appraisal. Every other package still states values with no source named, and `crosscheck.py`
   still enforces that on them.
+**Every count and every figure states the scope it covers**, because the deck mixes two of
+them: the hotel on its own, and the hotel with the acquired parcel. `crosscheck.py` requires
+each label below.
+
+| Where | Reads |
+|---|---|
+| Cover | 57 keys plus a whole-home suite, $3.3M renovation |
+| Keys tile | **50 → 57 + 1**, "57 hotel keys on completion, plus the Dogwood Cove suite" |
+| Renovation tile | **$3.3M**, "$3.0M hotel program at $52,684 per key, plus $300,000 at Dogwood Cove" |
+| Value tiles | "Hotel only", because CBRE carries nothing for the parcel |
+| T12 and stabilized NOI | "Hotel", and the stabilized tile gives the combined $2.52M beside it |
+| Asset slide | 50 → 57, with the suite placed on the adjacent parcel |
+| Business plan | "more sellable hotel inventory", and the "$3,003,000 hotel program" |
+| Financials | "The hotel on its own. Dogwood Cove is stated separately on the slides that follow." |
+| Budget | the hotel program by line, with the Dogwood renovation outside it |
+
 **Two renovation figures, both labelled.** The cover states the combined program, **$3.3M**: the
 $3,003,000 hotel property improvement plan together with the $300,000 Dogwood Cove house
 renovation, which sits outside it. The opportunity tile reads **$3.0M, hotel program**, and the

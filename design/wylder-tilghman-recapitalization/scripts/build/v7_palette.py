@@ -145,12 +145,13 @@ def cover():
 
 # ── 02 · the opportunity ─────────────────────────────────────────────────────────────────────
 OPP_TILES = [
-  ('Keys', '50 &rarr; 57', 'Upon renovation completion', 1),
-  ('Renovation', '$3.0M', 'Hotel program &middot; $52,684 per key', 0),
-  ('As-Is Value', '$21.4M', 'CBRE &middot; September 11, 2026', 0),
-  ('Stabilized Value', '$29.5M', 'CBRE &middot; April 1, 2029', 1),
-  ('T12 NOI', '$0.63M', 'Trailing twelve months, September 2026', 0),
-  ('Stabilized NOI', '$2.29M', '2029 pro forma', 1),
+  ('Keys', '50 &rarr; 57 + 1', '57 hotel keys on completion, plus the Dogwood Cove suite', 1),
+  ('Renovation', '$3.3M', '$3.0M hotel program at $52,684 per key, plus $300,000 at '
+                          'Dogwood Cove', 0),
+  ('As-Is Value', '$21.4M', 'Hotel only &middot; CBRE, September 11, 2026', 0),
+  ('Stabilized Value', '$29.5M', 'Hotel only &middot; CBRE, April 1, 2029', 1),
+  ('T12 NOI', '$0.63M', 'Hotel, twelve months to September 2026', 0),
+  ('Stabilized NOI', '$2.29M', '2029 hotel pro forma. With the parcel, $2.52M', 1),
   ('RevPAR Index', '42.8% &rarr; ~70%', 'July 2026 TTM vs. comp set', 0),
   ('Program', 'Jan &rarr; Jun 2027', 'Starts January 4, 2027 &middot; 175 days', 0)]
 
@@ -171,7 +172,8 @@ def opportunity():
 
 
 # ── 03 · the asset ───────────────────────────────────────────────────────────────────────────
-ASSET_FACTS = [('Keys', '50 &rarr; 57', 'Four out-of-service rooms returned, three added'),
+ASSET_FACTS = [('Keys', '50 &rarr; 57', 'Four rooms returned, three added. The Dogwood Cove '
+                                       'suite sits on the adjacent parcel'),
                ('Site', '8.10 ac', 'Waterfront on the Bay and the Choptank'),
                ('Positioning', 'Upper Upscale', 'Full-service waterfront resort'),
                ('Location', 'Tilghman, MD', 'Talbot County &middot; Tilghman Island')]
@@ -369,7 +371,7 @@ def brand():
 PLAN_ITEMS = [
   ('Guest room renovation', 'Full renovation of all 57 guest rooms at $25,000 per key. Four '
    'out-of-service keys are returned and three added in the back house, taking the hotel from '
-   '50 to 57: seven keys, 14% more sellable inventory than today.', '$1.93M'),
+   '50 to 57: seven keys, 14% more sellable hotel inventory than today.', '$1.93M'),
   ('Add revenue streams', 'A rebuilt marina and the reimagined boat bar broaden revenue beyond '
    'the room block.', '$0.35M'),
   ('Lift rate through product', 'A fully renovated room block, repositioned toward weddings and '
@@ -417,7 +419,8 @@ def business_plan():
       rule() + H2('Business plan and capital improvement program.')
       + items
       + P('Exterior and interior improvements, contingency and professional fees complete the '
-          '$3,003,000 program, which starts January 4, 2027 and completes in late June 2027.',
+          f'${PIP_HOTEL:,} hotel program, which starts January 4, 2027 and completes in late '
+          f'June 2027. The ${PIP_DOGWOOD:,} Dogwood Cove house renovation sits outside it.',
           fs='15.5px', mt='16px')
       + f'  <div style="border-left:3px solid {ORANGE};padding-left:18px;margin-top:16px;">\n'
       + eyebrow('Brand Optionality', mb='6px')
@@ -438,7 +441,7 @@ FIN_ROWS = [
   ('NOI (EBITDA)', ['$0.49M', '$0.92M', '$0.66M', '$0.63M', '$1.41M', '$2.01M', '$2.29M'], 'tot'),
   ('NOI margin', ['14.0%', '24.0%', '17.6%', '17.1%', '29.1%', '33.3%', '34.2%'], '')]
 FIN_STATS = [('Historical NOI Band', '$0.5M to $0.9M', '2023 through 2025 actual'),
-             ('Stabilized NOI &middot; 2029', '$2.29M', 'Hotel only, before asset management'),
+             ('Stabilized NOI &middot; 2029', '$2.29M', 'Hotel only. Combined, $2.52M'),
              ('RevPAR &middot; T12 &rarr; 2029', '$85 &rarr; $166', 'A 95% increase')]
 
 
@@ -452,7 +455,10 @@ def financials():
           'management stopped discounting transient rate ahead of the renovation.')
     return page('Financials', sn,
       rule(mb='20px')
-      + H2('Three years of history, a 2027 renovation, stabilized by 2029.', fs='38px', mb='22px')
+      + H2('Three years of history, a 2027 renovation, stabilized by 2029.', fs='38px', mb='14px')
+      + P('The hotel on its own. Dogwood Cove is stated separately on the slides that follow.',
+          fs='14.5px', col='var(--ink-500)', mt='0')
+      + '  <div style="height:14px;"></div>\n'
       + tbl(['Metric'] + FIN_COLS, FIN_ROWS, fs='16px', pad=22, lw='1.42fr')
       + '  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0 36px;'
         'margin-top:auto;padding-top:22px;border-top:2px solid var(--mm-navy);">\n'

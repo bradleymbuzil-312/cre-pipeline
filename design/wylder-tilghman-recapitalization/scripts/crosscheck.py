@@ -396,7 +396,15 @@ check(not [w for w in _gone if w.lower() in raw.lower()],
 # the two renovation figures must never appear unlabelled against each other
 check(norm("sits outside this budget") in flat,
       "the budget slide says the Dogwood renovation is outside it")
-check(all(norm(v) in flat for v in ("$1.93M", "$0.35M", "14% more sellable inventory",
+# scope is stated wherever a count or a figure could be read for either the hotel or the whole
+_scoped = ["57 + 1", "57 hotel keys on completion", "$3,003,000 hotel program",
+           "Hotel only \u00b7 CBRE, September 11, 2026", "Hotel only \u00b7 CBRE, April 1, 2029",
+           "2029 hotel pro forma", "The hotel on its own",
+           "The Dogwood Cove suite sits on the adjacent parcel",
+           "more sellable hotel inventory"]
+_miss = [v for v in _scoped if norm(v) not in flat]
+check(not _miss, "every count and figure states the scope it covers", f"missing {_miss}")
+check(all(norm(v) in flat for v in ("$1.93M", "$0.35M", "14% more sellable hotel inventory",
                                     "50-key waterfront resort", "Full-service waterfront resort",
                                     "Affiliate management", "executed management agreement",
                                     "Phase I ESA", "ALTA survey", "Dogwood Cove projections",
