@@ -342,7 +342,9 @@ PALETTE_FORBID = [
     "$11,252,661", "$727,606", "$823,769",
 ]
 PALETTE_REQUIRED = [
-    "50 \u2192 57", "$3.0M", "$52,684", "$21.4M", "$29.5M", "$0.63M", "$2.29M",
+    # the cover states the combined program; the budget slide prices the hotel one by line
+    "50 \u2192 57", "$3.3M", "whole-home suite", "$3.0M", "Hotel program", "$3,303,000",
+    "$52,684", "$21.4M", "$29.5M", "$0.63M", "$2.29M",
     "42.8%", "Jan \u2192 Jun 2027", "January 4, 2027", "175 days",
     "$3,003,000", "$1,425,000", "$258,000", "$488,039", "$152,250",
     "CBRE", "LW Hospitality Advisors", "$518K", "3.6", "$85 \u2192 $166",
@@ -391,6 +393,9 @@ _gone = ["12.3%", "$488K", "no third-party management agreement", "1,100 feet",
 check(not [w for w in _gone if w.lower() in raw.lower()],
       "none of the corrected claims survive",
       f"found {[w for w in _gone if w.lower() in raw.lower()]}")
+# the two renovation figures must never appear unlabelled against each other
+check(norm("sits outside this budget") in flat,
+      "the budget slide says the Dogwood renovation is outside it")
 check(all(norm(v) in flat for v in ("$1.93M", "$0.35M", "14% more sellable inventory",
                                     "50-key waterfront resort", "Full-service waterfront resort",
                                     "Affiliate management", "executed management agreement",

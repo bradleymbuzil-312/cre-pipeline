@@ -207,6 +207,13 @@ Two standing rules of the library are deliberately set aside here, on instructio
 - **The valuation is attributed.** It names CBRE and LW Hospitality Advisors and uses the word
   appraisal. Every other package still states values with no source named, and `crosscheck.py`
   still enforces that on them.
+**Two renovation figures, both labelled.** The cover states the combined program, **$3.3M**: the
+$3,003,000 hotel property improvement plan together with the $300,000 Dogwood Cove house
+renovation, which sits outside it. The opportunity tile reads **$3.0M, hotel program**, and the
+budget slide prices that hotel program by line and says in terms that the Dogwood renovation is
+outside the budget, taking the combined program to $3,303,000. `crosscheck.py` requires that
+sentence, so the two figures can never appear unlabelled against each other.
+
 **Photography.** Every property image in the library is used once: the spring aerial on the
 cover, the site aerial plus a four-up strip of the pool, the interior, the boat bar and the pier
 on the asset slide, the principal's portrait on the track record slide, the parcel on its own

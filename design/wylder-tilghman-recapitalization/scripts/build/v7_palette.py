@@ -20,6 +20,11 @@ from v7_lib import *
 from v7_tranche import tbl
 
 LABEL = 'Investment Overview'
+# the hotel property improvement plan, and the Dogwood Cove house renovation that sits outside
+# it. The cover states the two together; the budget slide prices the hotel program by line.
+PIP_HOTEL, PIP_DOGWOOD = 3_003_000, 300_000
+PIP_ALL_IN = PIP_HOTEL + PIP_DOGWOOD
+assert PIP_ALL_IN == 3_303_000
 FOOT_L = 'Wylder Hotel Tilghman Island &middot; Investment Overview'
 FOOT_R = 'MMCC &middot; The TRANCHE Group'
 NAVY = 'var(--mm-navy-900)'
@@ -91,7 +96,9 @@ def eyebrow(t, col=None, mb='10px', ind=4):
 # ── 01 · cover ───────────────────────────────────────────────────────────────────────────────
 def cover():
     sn = ('Wylder Hotel Tilghman Island. A fifty-key Chesapeake Bay resort repositioning to '
-          'fifty-seven keys through a three million dollar renovation. An investment overview, '
+          'fifty-seven keys plus a whole-home suite through a three point three million dollar '
+          'renovation, the three million three thousand dollar hotel program together with three '
+          'hundred thousand at Dogwood Cove. An investment overview, '
           'November twenty twenty-six. Bradley M. Buzil, Senior Director and exclusive capital '
           'advisor, Marcus and Millichap Capital Corporation.')
     return ('<section data-label="Cover" data-screen-label="Cover" '
@@ -102,8 +109,8 @@ def cover():
      '  <img src="assets/wt-aerial-spring.png" alt="Wylder Hotel Tilghman Island from the air" '
      'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">\n'
      '  <div style="position:absolute;inset:0;background:linear-gradient(180deg,'
-     'rgba(0,17,34,.72) 0%,rgba(0,17,34,.34) 40%,rgba(0,17,34,.60) 72%,'
-     'rgba(0,17,34,.94) 100%);"></div>\n'
+     'rgba(0,17,34,.70) 0%,rgba(0,17,34,.26) 26%,rgba(0,17,34,.58) 52%,'
+     'rgba(0,17,34,.84) 74%,rgba(0,17,34,.96) 100%);"></div>\n'
      f'  <div style="position:absolute;right:0;top:0;bottom:0;width:10px;background:{ORANGE};'
        '"></div>\n\n'
      '  <div style="position:relative;z-index:2;display:flex;justify-content:space-between;'
@@ -112,34 +119,34 @@ def cover():
      'style="height:58px;">\n'
      f'    <span style="{CON}font-size:14px;letter-spacing:.26em;'
      'color:var(--mm-orange-100);">Confidential &middot; Investment Overview</span>\n  </div>\n\n'
-     '  <div style="position:relative;z-index:2;">\n'
-     f'    <h1 style="{DISP}font-weight:700;font-size:86px;line-height:1.04;color:#fff;'
+     '  <div style="position:relative;z-index:2;margin-top:auto;">\n'
+     f'    <h1 style="{DISP}font-weight:700;font-size:92px;line-height:1.03;color:#fff;'
      'margin:0;letter-spacing:-.022em;max-width:none;">Wylder Hotel<br>Tilghman Island.</h1>\n'
-     f'    <p style="{BODY}max-width:none;font-size:23px;line-height:1.5;'
-     'color:rgba(255,255,255,.88);margin:24px 0 0;">A 50-key Chesapeake Bay resort repositioning '
-     'to 57 keys through a $3.0M renovation.</p>\n'
-     f'    <div style="{CON}font-size:14px;letter-spacing:.24em;color:var(--mm-orange-100);'
-     'margin-top:22px;">November 2026 &middot; Tilghman Island, MD</div>\n'
-     '    <div style="margin-top:34px;padding-top:24px;border-top:1px solid '
-     'rgba(255,255,255,.28);display:flex;justify-content:space-between;align-items:center;'
-     'gap:28px;">\n'
-     '      <div style="display:flex;align-items:center;gap:18px;">\n'
-     '        <img src="assets/buzil.jpg" alt="Bradley M. Buzil" style="width:62px;height:62px;'
-     'object-fit:cover;border-radius:50%;">\n'
-     '        <div>\n'
-     f'          <div style="{DISP}font-weight:700;font-size:21px;color:#fff;line-height:1.2;">'
-     'Bradley M. Buzil</div>\n'
-     f'          <div style="{BODY}font-size:15px;color:rgba(255,255,255,.72);margin-top:3px;">'
-     'Senior Director &middot; Exclusive Capital Advisor</div>\n        </div>\n      </div>\n'
-     f'      <span style="{CON}font-size:13.5px;letter-spacing:.2em;'
-     'color:rgba(255,255,255,.7);text-align:right;">Marcus &amp; Millichap<br>Capital '
-     'Corporation</span>\n    </div>\n  </div>\n' + dark_foot() + '</section>')
+     f'    <p style="{BODY}max-width:1180px;font-size:26px;line-height:1.5;'
+     'color:rgba(255,255,255,.9);margin:26px 0 0;">A 50-key Chesapeake Bay resort repositioning '
+     f'to 57 keys plus a whole-home suite through a ${PIP_ALL_IN / 1e6:,.1f}M renovation.</p>\n'
+     f'    <div style="{CON}font-size:15px;letter-spacing:.24em;color:var(--mm-orange-100);'
+     'margin-top:24px;">November 2026 &middot; Tilghman Island, MD</div>\n  </div>\n\n'
+     '  <div style="position:relative;z-index:2;margin-top:64px;padding-top:30px;'
+     'border-top:1px solid rgba(255,255,255,.3);display:flex;justify-content:space-between;'
+     'align-items:center;gap:32px;">\n'
+     '    <div style="display:flex;align-items:center;gap:22px;">\n'
+     '      <img src="assets/buzil.jpg" alt="Bradley M. Buzil" style="width:84px;height:84px;'
+     'object-fit:cover;border-radius:50%;flex:none;">\n'
+     '      <div>\n'
+     f'        <div style="{DISP}font-weight:700;font-size:31px;color:#fff;line-height:1.15;'
+     'letter-spacing:-.01em;">Bradley M. Buzil</div>\n'
+     f'        <div style="{BODY}font-size:19px;color:rgba(255,255,255,.8);margin-top:5px;">'
+     'Senior Director &middot; Exclusive Capital Advisor</div>\n      </div>\n    </div>\n'
+     f'    <span style="{CON}font-size:14.5px;letter-spacing:.2em;line-height:1.8;'
+     'color:rgba(255,255,255,.75);text-align:right;">Marcus &amp; Millichap<br>Capital '
+     'Corporation</span>\n  </div>\n' + dark_foot() + '</section>')
 
 
 # ── 02 · the opportunity ─────────────────────────────────────────────────────────────────────
 OPP_TILES = [
   ('Keys', '50 &rarr; 57', 'Upon renovation completion', 1),
-  ('Renovation', '$3.0M', '$52,684 per key', 0),
+  ('Renovation', '$3.0M', 'Hotel program &middot; $52,684 per key', 0),
   ('As-Is Value', '$21.4M', 'CBRE &middot; September 11, 2026', 0),
   ('Stabilized Value', '$29.5M', 'CBRE &middot; April 1, 2029', 1),
   ('T12 NOI', '$0.63M', 'Trailing twelve months, September 2026', 0),
@@ -604,8 +611,10 @@ def budget():
       + '  <div style="display:grid;grid-template-columns:1.32fr 1fr;gap:52px;flex:1;'
         'grid-template-rows:1fr;min-height:0;">\n'
         '    <div style="display:flex;flex-direction:column;">\n' + rows
-      + P('$52,684 per key across 57 keys. The program starts January 4, 2027 and runs 175 days '
-          'to late June.', fs='15px', col='var(--ink-500)', mt='auto')
+      + P(f'${PIP_HOTEL:,} is the hotel program, $52,684 per key across 57 keys, starting '
+          f'January 4, 2027 and running 175 days to late June. The ${PIP_DOGWOOD:,} Dogwood Cove '
+          'house renovation sits outside this budget and is priced on its own slide, taking the '
+          f'combined program to ${PIP_ALL_IN:,}.', fs='15px', col='var(--ink-500)', mt='auto')
       + '    </div>\n'
         f'    <div style="display:flex;flex-direction:column;border-left:{HAIR};'
         'padding-left:46px;">\n'
