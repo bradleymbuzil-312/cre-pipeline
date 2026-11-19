@@ -10,20 +10,30 @@ import re
 from v7_lib import *
 
 PRICE, RENOVATION, DEPOSIT = 1_100_000, 300_000, 15_000
-ALL_IN = PRICE + RENOVATION
-PSA_DAYS = 45
-CLOSING = 'November 18, 2026'
+CLOSING_PC = 0.03                      # transfer, recordation and title; not yet verified
+CLOSING_COSTS = round(PRICE * CLOSING_PC)
+ALL_IN = PRICE + CLOSING_COSTS + RENOVATION
+# the Change in Terms Addendum of October 22, 2026 moves settlement from October 30
+CLOSING = 'November 16, 2026'
 ACRES = 3
 SLIPS_NEW, SLIPS_TOTAL = 24, 47
 RESIDENCE_ADR, RESIDENCE_OCC = 1_500, 0.35
-RESIDENCE_REVENUE = 191_625
-CAP, EBITDA = 0.0700, 300_000
-IMPLIED_VALUE = round(EBITDA / CAP)
-ABOVE_COST = IMPLIED_VALUE - ALL_IN
+RESIDENCE_REVENUE = 191_625            # 2029 and after; 2028 is a leap year at $192,150
 
-assert ALL_IN == 1_400_000
+# the parcel's own pro forma, unlevered: what it earns against what it costs to buy and open.
+# No appraisal allocates value to this parcel, so the page states yield on cost rather than a
+# capitalized value.
+DOG_NOI = {2028: 222_159, 2029: 223_734, 2030: 225_784, 2031: 231_860}
+YOC = {y: n / ALL_IN for y, n in DOG_NOI.items()}
+# value references, none of them an opinion of value
+ASSESSED = 820_833                     # Maryland SDAT residential assessment
+SLIPS_ASIS, SLIPS_COMMERCIAL = 280_000, 720_000
+# without approval for commercial use of the 24 slips, the parcel's 2029 income falls to this
+DOG_NOI_NO_SLIPS = 80_195
+
+assert ALL_IN == 1_433_000
 assert round(RESIDENCE_ADR * 365 * RESIDENCE_OCC) == RESIDENCE_REVENUE
-assert IMPLIED_VALUE == 4_285_714 and ABOVE_COST == 2_885_714
+assert abs(YOC[2029] - 0.1561) < 0.0005 and abs(YOC[2028] - 0.1550) < 0.0005
 
 
 def page():
@@ -44,16 +54,19 @@ def page():
      'immediately against the hotel and are available at all.</p>\n'
      f'      <p style="{BODY}max-width:none;font-size:15px;line-height:1.5;'
      'color:rgba(255,255,255,.72);margin:12px 0 0;">The 24 slips are in good condition and usable '
-     'from day one, roughly doubling projected slip revenue. None of this value is carried in the '
-     'estimated hotel values, which are for the hotel alone; the strategic case is on page 5.</p>\n'
+     'from day one, and the underwriting assumes they earn what the hotel&rsquo;s existing slips '
+     'earn. <strong style="color:#fff;">Hotel use of them requires county zoning, Critical Area '
+     'and riparian confirmation</strong>, and without it the parcel&rsquo;s stabilized income is '
+     f'${DOG_NOI_NO_SLIPS:,}. None of this value sits in the estimated hotel values, which are '
+     'for the hotel alone; the strategic case is on page 5.</p>\n'
      '    </div>\n')
 
     R = dict(pad=7, fs='16px')
     right = (sub('The Purchase and Sale Agreement')
      + row('Purchase price', f'${PRICE:,}', **R)
      + row('Deposit', f'${DEPOSIT:,}', **R)
-     + row('Closing period under the PSA', f'{PSA_DAYS} days', **R)
-     + row('Contemplated closing', CLOSING, vfs='15px', **R)
+     + row('Acquisition closing costs &middot; 3%', f'${CLOSING_COSTS:,}', **R)
+     + row('Settlement per the addendum', CLOSING, vfs='15px', **R)
      + row('Buyer and title', '21551 Tilghman Investors LLC &middot; fee simple', vfs='14.5px',
            kind='sub', **R)
      + '      <div style="height:11px;"></div>\n'
@@ -62,35 +75,40 @@ def page():
      + row('Land', f'Approximately {ACRES} acres', vfs='15px', **R)
      + row('Boat slips', f'{SLIPS_NEW}, usable day one', vfs='15px', **R)
      + row('Renovation to bring it online', f'${RENOVATION:,}', **R)
-     + row('Total all-in cost', f'${ALL_IN:,}', kind='sub', **R)
+     + row('Total project cost', f'${ALL_IN:,}', kind='sub', **R)
      + '      <div style="height:11px;"></div>\n'
      + sub('What It Earns')
      + row('Residence &middot; average daily rate', f'${RESIDENCE_ADR:,}', **R)
      + row('Residence &middot; occupancy', f'{RESIDENCE_OCC:.0%}', **R)
      + row('Residence revenue at stabilization', f'${RESIDENCE_REVENUE:,}', **R)
+     + row('Parcel net operating income &middot; 2029', f'${DOG_NOI[2029]:,}', **R)
      + row('Marina slips after the acquisition', f'{SLIPS_TOTAL}', kind='sub', **R)
      + '      <div style="margin-top:auto;padding-top:13px;">\n'
      + f'      <div style="display:grid;grid-template-columns:repeat(3,1fr);align-items:start;'
        f'border-top:{NAVY2};">\n'
-     + stat('All-In Cost', f'${ALL_IN:,}', f'${PRICE:,} plus ${RENOVATION:,}',
+     + stat('Total Project Cost', f'${ALL_IN:,}',
+            f'${PRICE:,} price, ${CLOSING_COSTS:,} costs, ${RENOVATION:,} renovation',
             pad='13px 13px 0 0')
-     + stat('Implied Value', f'${IMPLIED_VALUE:,}', f'~${EBITDA:,} of EBITDA at a {CAP:.1%} cap',
-            pad='13px 13px 0 13px', vc='var(--mm-orange)')
-     + stat('Above Cost', f'${ABOVE_COST:,}', f'{IMPLIED_VALUE/ALL_IN:.1f}x on cost', br=False,
-            pad='13px 0 0 13px')
+     + stat('Parcel NOI &middot; 2029', f'${DOG_NOI[2029]:,}', 'Unlevered, after its own expenses',
+            pad='13px 13px 0 13px')
+     + stat('Yield on Cost', f'{YOC[2029]:.2%}', 'On total project cost, not a cap rate',
+            br=False, pad='13px 0 0 13px', vc='var(--mm-orange)')
      + '      </div>\n      </div>\n')
 
     sn = ('The Dogwood Cove acquisition in detail. One million one hundred thousand dollars for a '
           'four-bedroom residence, approximately three acres and twenty-four boat slips, with a '
-          'fifteen thousand dollar deposit and a forty-five day closing period under the purchase '
-          'and sale agreement, contemplated to close November eighteenth, twenty twenty-six. The '
+          'fifteen thousand dollar deposit and settlement moved by addendum to November sixteenth, '
+          'twenty twenty-six. The '
           'buyer is twenty-one thousand five hundred fifty-one Tilghman Investors LLC, the same '
-          'entity that owns the hotel. Three hundred thousand of renovation brings it online, so '
-          'the all-in cost is one million four hundred thousand. The residence becomes the '
+          'entity that owns the hotel. Thirty-three thousand of closing costs and three hundred '
+          'thousand of renovation take the total project cost to one million four hundred '
+          'thirty-three thousand. The residence becomes the '
           'fifty-eighth key at fifteen hundred dollars a night and thirty-five percent occupancy, '
-          'one hundred ninety-one thousand six hundred twenty-five of revenue at stabilization, and '
-          'the twenty-four slips are in good condition and usable from day one, taking the marina '
-          'to forty-seven slips and roughly doubling projected slip revenue. The parcel was part of '
+          'one hundred ninety-one thousand six hundred twenty-five of revenue at stabilization. '
+          'The parcel earns two hundred twenty-three thousand seven hundred thirty-four in twenty '
+          'twenty-nine against that cost, a fifteen point six percent yield on cost. Hotel use of '
+          'the twenty-four slips requires county zoning, Critical Area and riparian confirmation. '
+          'The parcel was part of '
           'the hotel historically and was separated and sold in bankruptcy about ten years ago, so '
           'buying it back reassembles the original assemblage.')
     return ('<section data-label="Dogwood Cove Acquisition" data-screen-label="Dogwood Cove" '

@@ -27,13 +27,17 @@ DATE = 'November 17, 2026'
 
 EQ_LOW, EQ_HIGH = 3_500_000, 13_255_085      # common slice, through to funding the close alone
 TARGET_MULT, TARGET_HOLD = 2.0, 36
-# this package runs on the reconciled pro forma: the November 16 workbook with the Dogwood
-# residence and the 24 new slips added back. 2029 is the first stabilized year under it.
-from v7_addenda import RECON_STAB
+# This package runs on the combined pro forma: the hotel plus Dogwood Cove, with the parcel
+# carrying its own expenses. 2029 is the first stabilized year under it.
+#
+# Yield on cost puts combined income against a basis that includes the parcel. The estimated
+# values are for the hotel alone, so the implied cap is struck on hotel income only; mixing the
+# two would flatter the rate.
+from v7_addenda import RECON_STAB, HOTEL_STAB
 
 STAB_NOI = RECON_STAB
 YIELD_ON_COST = STAB_NOI / COST_BASIS
-IMPLIED_CAP = STAB_NOI / VAL['stab']
+IMPLIED_CAP = HOTEL_STAB / VAL['stab']
 
 PLAN_USES = [('Existing loan payoff', 10_714_782),
              ('Hotel renovation program', 3_003_000),
@@ -43,7 +47,7 @@ PLAN_USES = [('Existing loan payoff', 10_714_782),
              ('Closing, legal and other', 130_100)]
 
 assert sum(a for _, a in PLAN_USES) == FIXED_USES
-assert abs(YIELD_ON_COST - 0.1383) < 0.0005 and abs(IMPLIED_CAP - 0.0902) < 0.0005
+assert abs(YIELD_ON_COST - 0.1308) < 0.0005 and abs(IMPLIED_CAP - 0.0777) < 0.0005
 
 META['eq'] = dict(
   label=LABEL, eyebrow=EYEBROW, kicker='Limited Partner Equity &middot; Target 2.0x',
@@ -67,7 +71,7 @@ TILES = [
   ('Total Capital Requirement', f'${TOTAL/1e6:,.1f}M', 'Indicative, at the current capital plan', 0),
   ('Sponsor Cash in the Asset', f'${GP_CASH/1e6:,.2f}M', 'Invested outside loan proceeds, staying in', 0),
   ('Yield on Cost &middot; Stabilized', f'{YIELD_ON_COST:.2%}',
-   f'${STAB_NOI:,.0f} against a ${COST_BASIS:,.0f} basis', 0),
+   f'${STAB_NOI:,.0f} combined against a ${COST_BASIS:,.0f} basis', 0),
   ('Basis per Key', f'${COST_BASIS_KEY:,.0f}',
    f'Against a ${round(VAL["stab"]/KEYS):,} stabilized estimate', 0),
   ('Renovation Program', '$3.30M', 'Funded from the capital raised at closing', 0),
@@ -244,36 +248,39 @@ DEPENDS = [
   ('The structure is agreed', 'senior and preferred capital placed at or inside the plan, so the '
                               'LP is not diluted by a larger raise'),
   ('The market holds', 'an exit at or near the stabilized estimate, which is struck at a '
-                       f'{IMPLIED_CAP:.2%} cap on stabilized income')]
+                       f'{IMPLIED_CAP:.2%} cap on the hotel&rsquo;s stabilized income'),
+  ('The slips are approved', 'hotel use of the Dogwood Cove slips clears county zoning, Critical '
+                            'Area and riparian review; without it the parcel earns materially '
+                            'less')]
 
 
 def target():
     left = (sub('What a 2.0x Has to Come From')
-     + row('Total cost basis', f'${COST_BASIS:,.0f}', pad=12, fs='17px',
+     + row('Total cost basis', f'${COST_BASIS:,.0f}', pad=8, fs='16.5px',
            note=f'${COST_BASIS_KEY:,.0f} per key on 58 keys')
-     + row('Stabilized net operating income', f'${STAB_NOI:,.0f}', pad=12, fs='17px',
-           note='2029, the first stabilized year')
-     + row('Yield on cost at stabilization', f'{YIELD_ON_COST:.2%}', pad=12, fs='17px', kind='sub')
-     + row('Estimated value upon stabilization', f'${VAL["stab"]:,.0f}', pad=12, fs='17px',
+     + row('Stabilized net operating income', f'${STAB_NOI:,.0f}', pad=8, fs='16.5px',
+           note='2029, hotel and the adjacent parcel combined')
+     + row('Yield on cost at stabilization', f'{YIELD_ON_COST:.2%}', pad=8, fs='16.5px', kind='sub')
+     + row('Estimated value upon stabilization', f'${VAL["stab"]:,.0f}', pad=8, fs='16.5px',
            note=f'${round(VAL["stab"]/KEYS):,} per key &middot; April 2029')
-     + row('Implied cap rate on that estimate', f'{IMPLIED_CAP:.2%}', pad=12, fs='17px')
-     + row('Spread, basis to stabilized estimate', f'{VAL["stab"]/COST_BASIS-1:.1%}', pad=12,
-           fs='17px', kind='tot')
+     + row('Implied cap on that estimate', f'{IMPLIED_CAP:.2%}', pad=8, fs='16.5px',
+           note=f'Hotel income only &middot; ${HOTEL_STAB:,.0f}')
+     + row('Spread, basis to stabilized estimate', f'{VAL["stab"]/COST_BASIS-1:.1%}', pad=8,
+           fs='16.5px', kind='tot')
      + para(f'A {TARGET_MULT:.1f}x is an objective built on that spread: a basis of '
             f'${COST_BASIS_KEY:,.0f} a key against a stabilized estimate of '
             f'${round(VAL["stab"]/KEYS):,}, with the asset stabilizing at a {YIELD_ON_COST:.2%} '
-            f'yield on cost while the estimate itself is struck at a {IMPLIED_CAP:.2%} cap. '
-            'Whether the equity reaches it depends on the structure finally agreed, on execution '
-            'and on the market at exit.', fs='15.5px', mt='22px')
-     + '      <div style="margin-top:22px;">\n'
-     + sub('What the Target Depends On', pb='8px')
+            'yield on cost. The estimate covers the hotel alone, so the parcel&rsquo;s income '
+            'sits in the yield on cost but not in the estimate.', fs='14.5px', mt='16px')
+     + '      <div style="margin-top:14px;">\n'
+     + sub('What the Target Depends On', pb='7px')
      + ''.join(
-         f'      <div style="display:grid;grid-template-columns:28px 1fr;gap:14px;padding:8px 0;'
+         f'      <div style="display:grid;grid-template-columns:28px 1fr;gap:12px;padding:5px 0;'
          f'{"" if i == len(DEPENDS) - 1 else f"border-bottom:{HAIR};"}align-items:baseline;">\n'
          f'        <div style="{MONO}font-size:13px;color:var(--mm-orange);">{i + 1:02d}</div>\n'
-         f'        <div><span style="{BODY}font-size:16px;color:var(--mm-navy-900);'
+         f'        <div><span style="{BODY}font-size:15px;color:var(--mm-navy-900);'
          f'font-weight:600;">{k}</span>'
-         f'<span style="{BODY}font-size:15px;color:var(--ink-700);"> &mdash; '
+         f'<span style="{BODY}font-size:14px;color:var(--ink-700);"> &mdash; '
          f'{v.replace("@@PRO@@", str(pg("PROJECTIONS")))}</span></div>\n'
          '      </div>\n' for i, (k, v) in enumerate(DEPENDS))
      + '      </div>\n')
@@ -363,11 +370,12 @@ def build_deck():
     from v7_tranche import title, contact
     from v7_marina import marina_page
     from v7_addenda import (historicals, renovation_schedule, renovation_cash_flow, cbre, slh,
-                            restate_years, restate_proforma, EQ_BASIS_DATES)
+                            restate_years, restate_proforma, restate_parcel, EQ_BASIS_DATES)
     head, body = load_sections()
     body['VALUE POSITIONING'] = value_positioning(body['VALUE POSITIONING'], 'eq')
     body['BUSINESS PLAN'] = business_plan_window(body['BUSINESS PLAN'], 'eq')
-    body['ADJACENT ACQUISITION'] = adjacent_acquisition(body['ADJACENT ACQUISITION'], 'eq')
+    body['ADJACENT ACQUISITION'] = restate_parcel(
+        adjacent_acquisition(body['ADJACENT ACQUISITION'], 'eq'))
     # renumber the carried-over slides only, resolving each reference by section
     moved = []
     for _n in [c for c in CORE if c not in ADDENDA and c != 'DOGWOOD COVE'] + ['VALUE POSITIONING']:

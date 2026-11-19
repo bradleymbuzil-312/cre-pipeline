@@ -194,7 +194,21 @@ than left standing: the program opens in the months the property earns least, an
 return in waves the hotel trades throughout instead of closing, with the last wave landing for
 the back half of the 2027 season.
 
-## The reconciled pro forma — LP Equity only
+## Dogwood Cove, priced and expensed — all packages
+
+The acquisition workbook restates the parcel, and the corrections apply to every package:
+
+| | Was | Now |
+|---|---|---|
+| Settlement | November 18, 2026 | **November 16, 2026**, per the Change in Terms Addendum |
+| Total project cost | $1,400,000 | **$1,433,000**, adding $33,000 of acquisition closing costs |
+| Headline value | "Implied value $4,285,714 · $2,885,714 above cost" | **Removed.** No appraisal allocates value to the parcel, so the page states a **15.61% yield on cost** on $223,734 of 2029 income instead |
+
+The page also now carries the condition the workbook flags: **hotel use of the 24 slips requires
+county zoning, Critical Area and riparian confirmation**, and without it the parcel's stabilized
+income is $80,195 rather than $223,734.
+
+## The combined pro forma — LP Equity only
 
 LP Equity runs on the November 16 workbook with the Dogwood Cove residence and the 24 slips the
 acquisition brings added back, so its scope matches the capital plan. The other packages are
@@ -206,13 +220,20 @@ year's ADR is **$383, not $288**:
 
 | | 2027 | 2028 | 2029 | 2030 | 2031 |
 |---|---|---|---|---|---|
-| Total revenue | $4,952,258 | $6,390,423 | $7,072,662 | $7,596,783 | $8,038,582 |
-| Net operating income | $1,495,246 | $2,320,571 | **$2,661,149** | $2,858,470 | $3,061,453 |
-| NOI margin | 30.2% | 36.3% | 37.6% | 37.6% | 38.1% |
+| Total revenue | $4,952,259 | $6,390,948 | $7,072,662 | $7,596,783 | $8,038,582 |
+| Net operating income | $1,453,613 | $2,230,128 | **$2,516,931** | $2,703,997 | $2,903,626 |
+| NOI margin | 29.4% | 34.9% | 35.6% | 35.6% | 36.1% |
 
-**2029 is the first stabilized year** under this schedule, so the value bridge behind the 2.0x
-target restates to a **13.83% yield on cost** against a **9.02% implied cap** — the 53.3% spread
-from basis to stabilized estimate is unchanged.
+The parcel now carries its own expenses — housekeeping at the hotel's rooms ratio, slip expense,
+credit card, management fee, taxes, insurance, utilities, repairs and a reserve. The earlier
+underwriting took its revenue at essentially full margin, which overstated stabilized income by
+about **$144,000**.
+
+**2029 is the first stabilized year**, so the bridge behind the 2.0x target reads a **13.08%
+yield on cost** on combined income against a basis that includes the parcel. The implied cap is
+struck on **hotel income only (7.77%)**, because the estimated values cover the hotel alone —
+mixing combined income with a hotel-only value would flatter the rate. The 53.3% spread from
+basis to stabilized estimate is unchanged.
 
 Three errors in the lifted table were corrected on the way through: the available-room-nights row
 had its 2028 and 2029 cells transposed, the occupied-room-nights row did too, and the stabilized

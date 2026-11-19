@@ -640,17 +640,15 @@ assert EQ_BASIS_DATES[0][1].month == 1 and EQ_BASIS_DATES[0][2].month == 6
 
 
 # ─────────────────────────────────────────────────────────────────────────────────────────────
-# Reconciled pro forma, carried by the LP Equity package only
+# Combined pro forma, carried by the LP Equity package only
 #
-# The November 16 workbook models the renovation wave by wave rather than assuming a dark year,
-# which changes 2027 materially: rooms earn $2,331,825 instead of $1,755,504 because renovated
-# keys come back progressively and sell at the new rate while the program runs. The workbook is
-# hotel only, so the Dogwood Cove residence and the 24 slips the acquisition brings are added
-# back here, with the departmental expense, credit card commission, management fee and
-# replacement reserve that come with that revenue.
-#
-# Years 2028 through 2031 reconcile to the earlier model to within a rounding of the deck's own
-# table; the figures below are the model's.
+# Hotel plus Dogwood Cove, per the Combined Summary of the acquisition workbook. The hotel side
+# models the renovation wave by wave rather than assuming a dark year, so 2027 rooms earn
+# $2,331,825 instead of $1,755,504. The Dogwood side carries its own expenses — housekeeping at
+# the hotel's rooms ratio, slip expense, credit card, management fee, taxes, insurance, utilities,
+# repairs and a replacement reserve — which the earlier underwriting did not: it carried the
+# parcel's revenue at essentially full margin. Expensing it properly takes stabilized combined
+# income down by about $144,000.
 # ─────────────────────────────────────────────────────────────────────────────────────────────
 RECON_YEARS = ['2027', '2028', '2029', '2030', '2031']
 RECON = {
@@ -658,8 +656,17 @@ RECON = {
   'occ_n':  [6_094, 7_928, 8_322, 8_738, 8_946],
   'adr':    [382.60, 395.00, 415.00, 435.00, 455.00],
   'rooms':  [2_331_825, 3_131_386, 3_453_630, 3_801_074, 4_070_498],
-  'total':  [4_952_258, 6_390_423, 7_072_662, 7_596_783, 8_038_582],
-  'noi':    [1_495_246, 2_320_571, 2_661_149, 2_858_470, 3_061_453]}
+  'total':  [4_952_259, 6_390_948, 7_072_662, 7_596_783, 8_038_582],
+  'noi':    [1_453_613, 2_230_128, 2_516_931, 2_703_997, 2_903_626]}
+# the hotel on its own, which is what the estimated values cover
+HOTEL = {'total': [4_850_759, 6_027_704, 6_701_388, 7_216_527, 7_648_894],
+         'noi':   [1_411_103, 2_007_969, 2_293_197, 2_478_214, 2_671_765]}
+# the parcel on its own
+DOGWOOD = {'rev': [101_500, 363_244, 371_273, 380_256, 389_687],
+           'noi': [42_510, 222_159, 223_734, 225_784, 231_860]}
+for _i in range(5):
+    assert abs(HOTEL['noi'][_i] + DOGWOOD['noi'][_i] - RECON['noi'][_i]) <= 1, ('combined NOI', _i)
+    assert abs(HOTEL['total'][_i] + DOGWOOD['rev'][_i] - RECON['total'][_i]) <= 1, ('rev', _i)
 RECON['other'] = [RECON['total'][i] - RECON['rooms'][i] for i in range(5)]
 RECON['opex'] = [RECON['total'][i] - RECON['noi'][i] for i in range(5)]
 RECON['occ'] = [RECON['occ_n'][i] / RECON['avail'][i] for i in range(5)]
@@ -668,14 +675,15 @@ RECON['margin'] = [RECON['noi'][i] / RECON['total'][i] for i in range(5)]
 
 # 2029 is the first stabilized year under this schedule
 RECON_STAB = RECON['noi'][2]
-assert RECON_STAB == 2_661_149
+HOTEL_STAB = HOTEL['noi'][2]
+assert RECON_STAB == 2_516_931 and HOTEL_STAB == 2_293_197
 
 # rate times occupied nights has to produce the rooms line, to the dollar of rounding
 for _i in range(5):
     assert abs(RECON['adr'][_i] * RECON['occ_n'][_i] - RECON['rooms'][_i]) < 400, _i
 # the 2027 step up is the wave schedule, not a rate assumption layered on the old model
 assert RECON['rooms'][0] - 1_755_504 == 576_321
-assert abs(RECON['other'][0] - 2_620_433) <= 1
+assert abs(RECON['other'][0] - 2_620_434) <= 1
 
 
 def _mm(v):
@@ -691,22 +699,46 @@ def _pairs():
           ('>$1,755,504<', f'>${r["rooms"][0]:,.0f}<'),
           ('>$3,122,830<', f'>${r["rooms"][1]:,.0f}<'),
           ('>$3,463,092<', f'>${r["rooms"][2]:,.0f}<'),
-          ('>$2,620,434<', f'>${r["other"][0]:,.0f}<'),
+          ('>$3,259,037<', f'>${r["other"][1]:,.0f}<'),
           ('>$4,375,938<', f'>${r["total"][0]:,.0f}<'),
           ('>$6,381,867<', f'>${r["total"][1]:,.0f}<'),
           ('>$7,082,124<', f'>${r["total"][2]:,.0f}<'),
           ('>($3,246,624)<', f'>(${r["opex"][0]:,.0f})<'),
           ('>($4,066,848)<', f'>(${r["opex"][1]:,.0f})<'),
+          ('>($4,411,513)<', f'>(${r["opex"][2]:,.0f})<'),
+          ('>($4,738,313)<', f'>(${r["opex"][3]:,.0f})<'),
+          ('>($4,977,129)<', f'>(${r["opex"][4]:,.0f})<'),
           ('>$1,129,314<', f'>${r["noi"][0]:,.0f}<'),
           ('>$2,315,019<', f'>${r["noi"][1]:,.0f}<'),
+          ('>$2,858,470<', f'>${r["noi"][3]:,.0f}<'),
+          ('>$3,061,453<', f'>${r["noi"][4]:,.0f}<'),
           ('>$96.00<', f'>${round(r["revpar"][0]):,.2f}<')]
     # ── headline tiles and the projections table
     p += [('>$4.38M<', f'>{_mm(r["total"][0])}<'), ('>$6.38M<', f'>{_mm(r["total"][1])}<'),
           ('>$7.08M<', f'>{_mm(r["total"][2])}<'),
           ('>$1.13M<', f'>{_mm(r["noi"][0])}<'), ('>$2.32M<', f'>{_mm(r["noi"][1])}<'),
           ('>$2.67M<', f'>{_mm(r["noi"][2])}<'),
+          ('>$2.86M<', f'>{_mm(r["noi"][3])}<'), ('>$3.06M<', f'>{_mm(r["noi"][4])}<'),
           ('>$96<', f'>${r["revpar"][0]:,.0f}<'),
-          ('>25.8%<', f'>{r["margin"][0]:.1%}<')]
+          ('>25.8%<', f'>{r["margin"][0]:.1%}<'), ('>36.3%<', f'>{r["margin"][1]:.1%}<'),
+          ('>37.6%<', f'>{r["margin"][3]:.1%}<'), ('>38.1%<', f'>{r["margin"][4]:.1%}<')]
+    # ── departmental benchmarks, stated at the 2029 stabilized year
+    bold = 'font-weight:700;">'
+    p += [('>3,463<', '>3,454<'), ('>48.9%<', '>48.8%<'), ('>7,082<', '>7,073<'),
+          # the parcel's revenue was carried at full margin; it has its own expenses
+          (f'{bold}$341,332</span>', f'{bold}$323,366</span>'),
+          (f'{bold}$191,625</span>', f'{bold}$143,719</span>'),
+          (f'{bold}$851,926</span>', f'{bold}$786,054</span>'),
+          # the prose carried the old 5% slip cost and said nothing of the house's own expenses
+          ('inside the capital plan and carries almost no operating overhead; the model loads it '
+           'with a 5% direct cost, leaving <strong style="color:var(--mm-navy-900);">$341,332'
+           '</strong> of departmental profit at stabilization.',
+           'inside the capital plan and carries light overhead; slips are loaded at a 10% '
+           'direct cost, leaving <strong style="color:var(--mm-navy-900);">$323,366</strong> of '
+           'departmental profit at stabilization.'),
+          ('is underwritten at a $1,500 nightly rate and 35% occupancy as a whole-home suite.',
+           'is underwritten at a $1,500 nightly rate and 35% occupancy as a whole-home suite, '
+           'with its own housekeeping, utilities and taxes.')]
     # ── average daily rate, which appears as a column value and in the assumptions
     p += [('>$288<', f'>${r["adr"][0]:,.0f}<'),
           ('$288 &rarr; $455', f'${r["adr"][0]:,.0f} &rarr; $455'),
@@ -721,7 +753,8 @@ def _pairs():
 
 
 # the stabilized NOI margin appears in the table and again as a headline tile, and both move
-ALL_PAIRS = [('>37.7%<', '>37.6%<')]
+# the stabilized margin appears in the table and again as a headline tile, and both move
+ALL_PAIRS = [('>37.7%<', f'>{RECON["margin"][2]:.1%}<')]
 
 ROW_RE = re.compile(r'(>)([\d,.]+)(</div>)')
 
@@ -776,4 +809,24 @@ def restate_lifted_dates(b, name):
     for old, new in LIFTED_DATE_ROWS:
         assert b.count(old) == 1, ('lifted date row', name, old, b.count(old))
         b = b.replace(old, new)
+    return b
+
+
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# The narrative parcel page is lifted in every package and carries the acquisition's headline
+# cost and closing date, both of which the acquisition workbook restates.
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+PARCEL_FIXES = [('$1,400,000', '$1,433,000'),
+                ('November 18, 2026', 'November 16, 2026'),
+                ('Nov 18, 2026', 'Nov 16, 2026'),
+                ('one million four hundred thousand', 'one million four hundred thirty-three '
+                                                      'thousand'),
+                ('November eighteenth', 'November sixteenth')]
+
+
+def restate_parcel(b):
+    """Put the lifted parcel page on the acquisition workbook's cost and settlement date."""
+    for old, new in PARCEL_FIXES:
+        b = b.replace(old, new)
+    assert '$1,400,000' not in b and '18, 2026' not in b
     return b

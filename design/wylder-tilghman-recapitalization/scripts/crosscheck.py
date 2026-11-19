@@ -87,10 +87,13 @@ EQ_FORBID = [
 ]
 # "2.0x" is required here, so NO_RETURN_WORDS cannot be reused wholesale: only IRR is barred.
 EQ_REQUIRED = ["2.0x", "36 months", "To be negotiated", "$17,404,044", "$15,747,882",
-               "$19,247,882", "$29,500,000", "$2,661,149", "13.83%", "9.02%", "$2,000,000",
+               "$19,247,882", "$29,500,000", "$2,516,931", "13.08%", "7.77%", "$2,000,000",
                "Target equity multiple", "Preferred return", "Sponsor promote",
-               # the reconciled 2027, which is the wave schedule rather than a dark year
-               "$4,952,258", "$2,331,825", "$1,495,246", "2031"]
+               # the combined pro forma, every year of it
+               "$4,952,259", "$2,331,825", "$1,453,613", "$6,390,948", "$2,230,128",
+               "$7,072,662", "$2,703,997", "$2,903,626", "2031",
+               # the parcel priced and expensed on its own terms
+               "$1,433,000", "$223,734", "15.61%", "November 16, 2026", "$143,719"]
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -120,8 +123,11 @@ OWN = {
  # the LP equity package's only economics are the target and the plan it is built on
  # LP Equity runs on the reconciled pro forma: the November 16 workbook with the Dogwood
  # residence and the 24 new slips added back, so 2029 is the first stabilized year
+ # LP Equity runs on the combined pro forma: hotel plus Dogwood Cove, the parcel carrying
+ # its own expenses. 2029 is the first stabilized year; the implied cap is on hotel income
+ # only, because the estimated values are for the hotel alone.
  "eq": ["2.0x", "36 months", "$17,404,044", "$15,747,882", "$19,247,882", "$331,860",
-        "$29,500,000", "13.83%", "9.02%", "To be negotiated"],
+        "$29,500,000", "13.08%", "7.77%", "To be negotiated"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
             "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
             "2.33x", "32.6%", "63.64%"]}
@@ -176,8 +182,12 @@ MARINA = ["$30,000", "$1,410,000", "$690,000", "$720,000", "$1,175,000", "$1,880
           "$280,000", "$27,000", "$30,837", "47 slips", "23 slips", "24 slips"]
 MARINA_PDF = f"{P}/Wylder Tilghman Island - Marina Valuation.pdf"
 # the Dogwood Cove acquisition detail page, carried by every capitalization package
-DOGWOOD = ["$1,100,000", "$300,000", "$1,400,000", "45 days", "November 18, 2026",
-           "21551 Tilghman Investors LLC", "$1,500", "$191,625", "$4,285,714", "$2,885,714"]
+# the acquisition workbook prices the parcel at cost and yields it; no appraisal allocates
+# value to it, so the capitalized-value claim is gone
+DOGWOOD = ["$1,100,000", "$300,000", "$1,433,000", "$33,000", "November 16, 2026",
+           "21551 Tilghman Investors LLC", "$1,500", "$191,625", "$223,734"]
+# claims the acquisition workbook does not support, in any package
+UNSUPPORTED = ["$4,285,714", "$2,885,714", "$1,400,000", "November 18, 2026"]
 FORBIDDEN = ["appraisal", "appraised", "appraiser", "LWHA", "Newmark", "CBRE", "New Day"]
 BRITISH = ["utilise", "organis", "centre", "labour", "metres", "colour", "favour", "analyse"]
 
@@ -207,6 +217,8 @@ for t, (name, path, pages) in PKGS.items():
 
     missing = [v for v in DOGWOOD if norm(v) not in flat]
     check(not missing, "carries the Dogwood Cove acquisition detail", f"missing {missing}")
+    hits = [v for v in UNSUPPORTED if norm(v) in flat]
+    check(not hits, "no unsupported Dogwood value or superseded date", f"found {hits}")
 
     if t == "eq":
         # the valuation slide is the one page in the library allowed to name its source
