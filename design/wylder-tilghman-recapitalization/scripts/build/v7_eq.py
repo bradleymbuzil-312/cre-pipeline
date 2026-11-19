@@ -16,6 +16,11 @@ from v7_pages import dkv, bigcol, blk
 from figs_v7 import (KEYS, VAL, PRO, GP_CASH, FIXED_USES, TOTAL, COST_BASIS, COST_BASIS_KEY,
                      CLOSING, SELL_COST)
 
+def pg(name):
+    """The page a section lands on in this deck's final order."""
+    return ORDER.index(name) + 1
+
+
 LABEL = 'LP Equity'
 EYEBROW = 'Confidential &middot; LP Equity'
 DATE = 'November 17, 2026'
@@ -122,11 +127,12 @@ def uses():
           ('Funds the Renovation in Full',
            '$3,003,000 for the hotel and $300,000 for the Dogwood Cove residence, with $258,000 of '
            'contingency inside it. The program is designed, priced and scheduled; the schedule by '
-           'trade is on page 10.'),
+           f'trade is on page {pg("RENOVATION SCHEDULE")}, and the draw on '
+           f'page {pg("RENOVATION CASH FLOW")}.'),
           ('Buys Back the Adjacent Parcel',
            '$1,100,000 for the residence, roughly three acres and 24 boat slips, plus $300,000 to '
            'bring it online. It was part of the hotel until a bankruptcy sale about ten years ago. '
-           'The detail is on page 6.'),
+           f'The detail is on page {pg("DOGWOOD COVE")}.'),
           ('Carries the Asset Through the Work',
            '$500,000 of working capital, plus whatever interest and carry reserve the financing '
            'requires, so the renovation does not depend on operating cash flow.')])
@@ -174,7 +180,8 @@ def requirement():
           + dkv('Target hold', f'{TARGET_HOLD} months', **R)
           + dkv('Stabilized yield on cost', f'{YIELD_ON_COST:.2%}', **R)
           + dkv('Implied cap on the stabilized estimate', f'{IMPLIED_CAP:.2%}', **R)
-          + dkv('An objective, not a projection', 'See page 20', accent=True, last=True, **R),
+          + dkv('An objective, not a projection', f'See page {pg("TARGET RETURN")}',
+                accent=True, last=True, **R),
           'mid', fs='86px')
      + bigcol('Structure', 'Open',
           'Every economic term is negotiable',
@@ -185,7 +192,8 @@ def requirement():
           + dkv('Ownership and governance', 'To be negotiated', accent=True, last=True, **R),
           'last', fs='86px'))
     b = (blk('What Is Fixed', 'The asset, the business plan and the renovation program; the six '
-             f'lines of the plan on page 18, totalling ${FIXED_USES:,.0f}; and the '
+             f'lines of the plan on page {pg("SOURCES AND USES")}, totalling '
+             f'${FIXED_USES:,.0f}; and the '
              f'${GP_CASH:,.0f} of sponsor cash already in the asset and staying in through the '
              'hold.')
      + blk('What Is Open', 'The size of the LP commitment, which falls as senior and preferred '
@@ -225,8 +233,8 @@ TIERS = [('Tier 1', 'Preferred return',
 DEPENDS = [
   ('The renovation lands', 'all 58 keys and the public spaces delivered on budget and open for the '
                            '2027 season'),
-  ('Rate and occupancy ramp', 'the asset reaches the stabilized case set out on page 12, not a '
-                              'higher one'),
+  ('Rate and occupancy ramp', 'the asset reaches the stabilized case set out on page @@PRO@@, '
+                              'not a higher one'),
   ('The marina expands', 'Dogwood Cove closes and the slip count reaches 47 across the two '
                          'properties'),
   ('The structure is agreed', 'senior and preferred capital placed at or inside the plan, so the '
@@ -261,7 +269,8 @@ def target():
          f'        <div style="{MONO}font-size:13px;color:var(--mm-orange);">{i + 1:02d}</div>\n'
          f'        <div><span style="{BODY}font-size:16px;color:var(--mm-navy-900);'
          f'font-weight:600;">{k}</span>'
-         f'<span style="{BODY}font-size:15px;color:var(--ink-700);"> &mdash; {v}</span></div>\n'
+         f'<span style="{BODY}font-size:15px;color:var(--ink-700);"> &mdash; '
+         f'{v.replace("@@PRO@@", str(pg("PROJECTIONS")))}</span></div>\n'
          '      </div>\n' for i, (k, v) in enumerate(DEPENDS))
      + '      </div>\n')
 
@@ -316,13 +325,16 @@ def target():
 # (it carries a leverage assumption this package deliberately leaves open) and no terms page.
 # ─────────────────────────────────────────────────────────────────────────────────────────────
 CORE = ['THE ASSET', 'PROPERTY OVERVIEW', 'ADJACENT ACQUISITION', 'DOGWOOD COVE', 'THE SPONSOR',
-        'WYLDER BRAND & RESUME', 'BUSINESS PLAN', 'RENOVATION SCHEDULE', 'BRAND AFFILIATION',
-        'PROJECTIONS', 'CASH FLOW AND ASSUMPTIONS', 'DEPARTMENTAL BENCHMARKS',
-        'HISTORICAL OPERATIONS', 'COMPETITIVE MARKET', 'MARKET AND DEMAND']
+        'WYLDER BRAND & RESUME', 'BUSINESS PLAN', 'RENOVATION SCHEDULE', 'RENOVATION CASH FLOW',
+        'BRAND AFFILIATION', 'SLH MEMBERSHIP', 'PROJECTIONS', 'CASH FLOW AND ASSUMPTIONS',
+        'DEPARTMENTAL BENCHMARKS', 'HISTORICAL OPERATIONS', 'CASH FLOW HISTORICALS',
+        'COMPETITIVE MARKET', 'MARKET AND DEMAND']
+# the four slides this package carries and no other
+ADDENDA = ['RENOVATION CASH FLOW', 'SLH MEMBERSHIP', 'CASH FLOW HISTORICALS', 'VALUATION DETAIL']
 ORDER = (['TITLE', 'THE OPPORTUNITY'] + CORE
          + ['SOURCES AND USES', 'THE INVESTMENT REQUEST', 'TARGET RETURN', 'TOTAL BASIS',
-            'VALUE POSITIONING', 'MARINA VALUATION', 'SALE COMPARABLES', 'RECENT TRANSACTIONS',
-            'CONTACT'])
+            'VALUE POSITIONING', 'VALUATION DETAIL', 'MARINA VALUATION', 'SALE COMPARABLES',
+            'RECENT TRANSACTIONS', 'CONTACT'])
 DARK = {'THE INVESTMENT REQUEST'}
 
 # The reference baseline: the order the shared slides' "page N" numbers were written against.
@@ -346,12 +358,14 @@ def build_deck():
     from v7_dogwood import page as dogwood_page, shift_page_refs
     from v7_tranche import title, contact
     from v7_marina import marina_page
+    from v7_addenda import (historicals, renovation_schedule, renovation_cash_flow, cbre, slh,
+                            restate_years, EQ_BASIS_DATES)
     head, body = load_sections()
     body['VALUE POSITIONING'] = value_positioning(body['VALUE POSITIONING'], 'eq')
     body['ADJACENT ACQUISITION'] = adjacent_acquisition(body['ADJACENT ACQUISITION'], 'eq')
     # renumber the carried-over slides only, resolving each reference by section
     moved = []
-    for _n in [c for c in CORE if c != 'DOGWOOD COVE'] + ['VALUE POSITIONING']:
+    for _n in [c for c in CORE if c not in ADDENDA and c != 'DOGWOOD COVE'] + ['VALUE POSITIONING']:
         body[_n], _m = shift_page_refs(body[_n], OLD_REF_ORDER, ORDER)
         moved += _m
     body['DOGWOOD COVE'] = dogwood_page()
@@ -361,8 +375,25 @@ def build_deck():
     body['THE INVESTMENT REQUEST'] = requirement()
     body['TARGET RETURN'] = target()
     # total_basis writes its page numbers against the same baseline as the carried-over slides
-    body['TOTAL BASIS'], _m = shift_page_refs(total_basis('eq'), OLD_REF_ORDER, ORDER)
+    body['TOTAL BASIS'], _m = shift_page_refs(total_basis('eq', dates=EQ_BASIS_DATES),
+                                              OLD_REF_ORDER, ORDER)
     moved += _m
+    # the four addenda, and this package's own renovation schedule
+    body['RENOVATION SCHEDULE'] = renovation_schedule()
+    body['RENOVATION CASH FLOW'] = renovation_cash_flow()
+    body['SLH MEMBERSHIP'] = slh()
+    body['CASH FLOW HISTORICALS'] = historicals(basis_page=pg('TOTAL BASIS'))
+    body['VALUATION DETAIL'] = cbre(hist_page=pg('CASH FLOW HISTORICALS'))
+    # the shared projection pages are labelled a year early against the actuals now carried
+    for _n in ('PROJECTIONS', 'CASH FLOW AND ASSUMPTIONS', 'DEPARTMENTAL BENCHMARKS'):
+        body[_n] = restate_years(body[_n])
+    body['HISTORICAL OPERATIONS'] = restate_years(body['HISTORICAL OPERATIONS'], stats_only=True)
+    # this package does present 2026, on the slide that follows
+    _old = '2026 is a transition year and is not presented.'
+    _new = (f'The trailing twelve months to September 2026, and the full departmental statement '
+            f'behind all four periods, are on page {pg("CASH FLOW HISTORICALS")}.')
+    assert body['HISTORICAL OPERATIONS'].count(_old) == 1
+    body['HISTORICAL OPERATIONS'] = body['HISTORICAL OPERATIONS'].replace(_old, _new)
     body['MARINA VALUATION'] = marina_page(values_page=ORDER.index('VALUE POSITIONING') + 1)
     body['CONTACT'] = contact('eq')
     path = f'{DECKDIR}/Wylder Tilghman Island - LP Equity.dc.html'
@@ -374,15 +405,23 @@ def build_deck():
 if __name__ == '__main__':
     path, n, moved = build_deck()
     s = io.open(path, encoding='utf-8').read()
+    # CBRE is named on the valuation slide by instruction; it must appear nowhere else, and
+    # LWHA, the superseded appraisal, must appear nowhere at all
+    import re as _re
+    parts = _re.split(r'<!-- ═+ \d+ · ([^═]*?) ═+ -->', s)
+    elsewhere = ''.join(parts[i + 1] for i in range(1, len(parts), 2)
+                        if parts[i] != 'VALUATION DETAIL')
     bad = [w for w in ('appraisal', 'appraised', 'LWHA', 'Newmark', 'CBRE', 'New Day')
-           if w.lower() in s.lower()]
+           if w.lower() in elsewhere.lower()]
+    on_slide = [w for w in ('CBRE', 'LWHA', 'Newmark') if w in s]
     # nothing about the senior request, and no proposed economics beyond the stated target
     econ = [w for w in ('SOFR', 'all-in rate', 'Debt yield', 'DSCR', 'Loan to value',
                         'Loan to cost', 'preferred return of', 'promote of', '% / ', 'Projected IRR',
                         'Equity multiple of', '12.00%', '$10,000,000 senior')
             if w in s]
     print(f'  {path.split("/")[-1]}  —  {n} pages')
-    print(f'  forbidden references: {bad or "none"}')
+    print(f'  forbidden references outside the valuation slide: {bad or "none"}')
+    print(f'  named sources anywhere: {on_slide}')
     print(f'  senior-request or proposed economics: {econ or "none"}')
     print(f'  "to be negotiated" markers: {s.lower().count("to be negotiated")}')
     print(f'  target {TARGET_MULT:.1f}x stated: {s.count(f"{TARGET_MULT:.1f}x")} times')

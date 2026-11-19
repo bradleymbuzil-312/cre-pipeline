@@ -44,7 +44,7 @@ def _basis_note(t):
             'at right.')
 
 
-def total_basis(t='senior'):
+def total_basis(t='senior', dates=None):
     OTH = OTH_BY['senior'] if t in ('senior', 'hm') else OTH_BY['other']
     def grp(title, lines, tl, tot):
         s = sub(title, fs='13.5px')
@@ -71,7 +71,7 @@ def total_basis(t='senior'):
      + '      <div style="height:14px;"></div>\n' + sub('Start and Completion Dates', fs='13.5px')
      + ''.join(row(lab, f'{_rfmt(a)} &rarr; {_rfmt(b)}', pad=5, fs='15px',
                    kind=('sub' if lab.startswith('Punch') else ''))
-               for lab, a, b in BASIS_DATES)
+               for lab, a, b in (dates or BASIS_DATES))
      + para('The renovation program is funded at close from the capitalization. The schedule by trade is '
             'on page 9. Per-key figures are stated on 58 keys &mdash; the 57 hotel keys post-renovation '
             'plus the Dogwood Cove residence. The estimated values are for the hotel and exclude the '

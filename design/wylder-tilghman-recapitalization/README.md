@@ -80,7 +80,9 @@ Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `
   closing, 28 slides
 - `Wylder Tilghman Island - LP Equity.dc.html` — LP equity marketing, deliberately
   indicative: a target 2.0x multiple over a 36-month hold and every other economic term
-  left to be negotiated, 26 slides
+  left to be negotiated, 30 slides. Carries four addenda no other package has: the
+  cash flow historicals, the restated January–June 2027 renovation schedule and its
+  draw, the attributed CBRE valuation detail, and the SLH membership proposal
 - `Wylder Tilghman Island - Preferred Equity.dc.html`
 - `Wylder Tilghman Island - Common Equity.dc.html`
 - `Wylder Tilghman Island - Marina Valuation.dc.html` — the standalone marina analysis,

@@ -13,7 +13,7 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Senior Debt - 12.5M Request.pdf` | **Lender-facing** — no kicker, no return shown | $12,500,000 | 29 |
 | `Wylder Tilghman Island - Senior Debt Model - 12.5M.xlsx` | **The live debt model** for that request | $12,500,000 | 7 tabs |
 | `Wylder Tilghman Island - LP Recapitalization.pdf` | **A prospective LP** — request only, terms open | — | 29 |
-| `Wylder Tilghman Island - LP Equity.pdf` | **LP equity marketing** — target 2.0x, terms negotiable | — | 26 |
+| `Wylder Tilghman Island - LP Equity.pdf` | **LP equity marketing** — target 2.0x, terms negotiable | — | 30 |
 | `Wylder Tilghman Island - Preferred Equity.pdf` | The preferred investor | — | 29 |
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 29 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
@@ -232,6 +232,29 @@ return is promised.
 extended cash flow page (it asserts a leverage assumption this package leaves open), no senior
 loan terms, no coverage or debt yield, and none of the preferred or common economics. Twenty-six
 pages.
+
+
+### The four addenda, in this package only
+
+Added at the sponsor's direction from the November 16 workbooks and the membership proposal.
+They appear in **no other package**.
+
+| Page | What it carries |
+|---|---|
+| **Cash flow historicals** | The actual operating statement for 2023, 2024, 2025 and the trailing twelve months to September 2026 — revenue by department, departmental, undistributed and fixed expense, down to NOI. Every column foots to the dollar of rounding the source carries. Beneath it, the $642,693 of sponsor capital put in between 2021 and 2025. |
+| **Renovation schedule** | Restated to the sponsor's 175-day program, **January 4 to June 28, 2027**, in four guestroom waves of 14, 15, 14 and 14 keys. This replaces the November-to-April page in this package only; the other nine decks keep the earlier schedule. |
+| **Renovation cash flow** | The same program as money — spend by month, cumulative draw, share of budget deployed and what remains to fund, plus where the $3,003,000 goes by category and how it is drawn. |
+| **Valuation detail** | **The one slide in the entire library that names its source.** CBRE Valuation & Advisory Services, file CB26US098551-1, signed by Michael Cummings, MAI, ISHC and Gregory Wolfe. Three scenarios, all three approaches reconciled, discount and capitalization rates, the income behind the value, and what the valuation assumes. |
+| **SLH membership** | The Small Luxury Hotels proposal dated August 14, 2026 as delivered — four-year term, the discounted fee ladder to a $100,222 four-year total, commission by booking channel and every other charge. |
+
+**The CBRE exception is enforced, not just intended.** `crosscheck.py` splits the LP Equity PDF,
+runs the forbidden-source check across the other twenty-nine pages, requires CBRE on page 26, and
+fails if LWHA — the superseded appraisal — appears anywhere in any document.
+
+**Projection years moved forward one.** The shared pages labelled the projection columns 2026
+through 2030; the sponsor's model calls the same columns Year 1 (2027) through Year 5 (2031), and
+a package carrying actuals through September 2026 cannot also call 2026 its first projected year.
+**The values did not change** — only the labels, and only in this package.
 
 ## The LP Recapitalization deck
 

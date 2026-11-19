@@ -26,7 +26,22 @@ PKGS = {"senior": ("Senior Debt", f"{P}/Wylder Tilghman Island - Senior Debt.pdf
                f"{P}/Wylder Tilghman Island - LP Recapitalization.pdf", 29),
         "pref": ("Preferred Equity", f"{P}/Wylder Tilghman Island - Preferred Equity.pdf", 29),
         "common": ("Common Equity", f"{P}/Wylder Tilghman Island - Common Equity.pdf", 29),
-        "eq": ("LP Equity", f"{P}/Wylder Tilghman Island - LP Equity.pdf", 26)}
+        "eq": ("LP Equity", f"{P}/Wylder Tilghman Island - LP Equity.pdf", 30)}
+# The LP Equity package alone carries four addenda, and its valuation slide alone names CBRE.
+# Every other page of every package still states values with no source named.
+EQ_VALUATION_PAGE = 26
+EQ_ADDENDA = [
+    # cash flow historicals: the actual operating statement must foot on the page
+    "$3,475,020", "$3,810,275", "$3,786,028", "$3,716,313", "$485,761", "$915,792",
+    "$664,922", "$634,680", "T12 Sep 2026", "$642,693",
+    # the renovation, restated to the sponsor's 175-day program
+    "$3,003,000", "175 days", "$52,684", "Jan 4", "Jun 28", "$446,908", "$3,003,000",
+    # the valuation, attributed
+    "CBRE", "CB26US098551-1", "Michael Cummings", "$21,400,000", "$26,000,000", "$29,500,000",
+    "11.25%", "8.75%", "8.25%",
+    # the membership proposal
+    "$4,500", "$13,220", "$20,902", "$33,050", "$100,222", "24,110",
+]
 LENDER = ["senior", "hm8", "hm10", "hm11", "hm125"]
 # total cost basis per key moves with the request, because the reserve and the fees are in it
 BASIS_KEY = {"senior": "$331,860", "hm8": "$326,688", "hm10": "$331,860", "hm11": "$334,446",
@@ -189,8 +204,19 @@ for t, (name, path, pages) in PKGS.items():
     missing = [v for v in DOGWOOD if norm(v) not in flat]
     check(not missing, "carries the Dogwood Cove acquisition detail", f"missing {missing}")
 
-    named = [w for w in FORBIDDEN if re.search(w, raw, re.I)]
-    check(not named, "no source document named", f"found {named}")
+    if t == "eq":
+        # the valuation slide is the one page in the library allowed to name its source
+        others = re.sub(r"\s+", " ", "".join(
+            p.get_text() for i, p in enumerate(d) if i + 1 != EQ_VALUATION_PAGE))
+        val = re.sub(r"\s+", " ", d[EQ_VALUATION_PAGE - 1].get_text())
+        named = [w for w in FORBIDDEN if re.search(w, others, re.I)]
+        check(not named, "no source named outside the valuation slide", f"found {named}")
+        check("CBRE" in val, "the valuation slide names CBRE")
+        check(not re.search(r"LWHA|Newmark", raw, re.I),
+              "the superseded appraisal is never named")
+    else:
+        named = [w for w in FORBIDDEN if re.search(w, raw, re.I)]
+        check(not named, "no source document named", f"found {named}")
 
     brit = [w for w in BRITISH if w in raw.lower()]
     check(not brit, "US spelling", f"found {brit}")
@@ -216,6 +242,13 @@ for t, (name, path, pages) in PKGS.items():
               f"missing {missing}")
         missing = [v for v in MARINA if norm(v) not in flat]
         check(not missing, "carries the marina valuation", f"missing {missing}")
+        missing = [v for v in EQ_ADDENDA if norm(v) not in flat]
+        check(not missing, "carries the four addenda in full", f"missing {missing}")
+        # the renovation is restated here and nowhere else
+        check(not re.search(r"Nov 1, 2026", raw), "no trace of the superseded schedule")
+        # projections are relabelled a year forward against the actuals now carried
+        check(norm("2031") in flat and norm("2026 is a transition year") not in flat,
+              "projection years restated against the actuals")
 
     if t in LENDER:
         missing = [v for v in MARINA if norm(v) not in flat]
