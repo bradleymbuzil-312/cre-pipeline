@@ -347,7 +347,8 @@ PALETTE_REQUIRED = [
     "$3,003,000", "$1,425,000", "$258,000", "$488,039", "$152,250",
     "CBRE", "LW Hospitality Advisors", "$518K", "3.6", "$85 \u2192 $166",
     # the parcel on its own, and the two together
-    "$1,433,000", "$1,100,000", "November 16, 2026", "$223,734", "15.61%", "$80,195",
+    # settlement is not confirmed in file, so the slide says pending rather than a date
+    "$1,433,000", "$1,100,000", "settlement pending", "$223,734", "15.61%", "$80,195",
     "$192,150", "$191,625", "$179,648", "$47,906", "$222,159",
     "$2,516,931", "$7,072,662", "$1,453,613", "$2,230,128", "$2,903,626", "8.9%", "35.6%",
     "$2,375,478",
@@ -381,6 +382,21 @@ _plan = next((pg.get_text() for pg in d if norm("Business plan and capital") in 
 _other = "".join(pg.get_text() for pg in d if pg.get_text() != _plan)
 check(norm("Small Luxury Hotels membership proposal is in hand") in norm(_plan),
       "the business plan states the affiliation proposal is in hand")
+check(norm("SLH fees are not included in the pro forma") in norm(_plan),
+      "the business plan says the affiliation fees are not in the pro forma")
+# corrections of record: the claims these replaced were wrong
+_gone = ["12.3%", "$488K", "no third-party management agreement", "1,100 feet",
+         "Marina, house and pier utility bids", "57-key waterfront resort",
+         "Select-service resort", "that has never produced revenue"]
+check(not [w for w in _gone if w.lower() in raw.lower()],
+      "none of the corrected claims survive",
+      f"found {[w for w in _gone if w.lower() in raw.lower()]}")
+check(all(norm(v) in flat for v in ("$1.93M", "$0.35M", "14% more sellable inventory",
+                                    "50-key waterfront resort", "Full-service waterfront resort",
+                                    "Affiliate management", "executed management agreement",
+                                    "Phase I ESA", "ALTA survey", "Dogwood Cove projections",
+                                    "assumptions pending quotes")),
+      "carries the corrected copy")
 check(norm("Small Luxury Hotels") not in norm(_other) and norm("SLH") not in norm(_other),
       "the affiliation appears on no other slide")
 

@@ -207,6 +207,21 @@ Two standing rules of the library are deliberately set aside here, on instructio
 - **The valuation is attributed.** It names CBRE and LW Hospitality Advisors and uses the word
   appraisal. Every other package still states values with no source named, and `crosscheck.py`
   still enforces that on them.
+**Nine corrections of record, applied to this deck only.** Each replaced a claim that was wrong,
+not merely differently worded, and `crosscheck.py` now fails if any of them reappears:
+
+| Was | Now |
+|---|---|
+| "12.3% more sellable inventory that has never produced revenue" | "seven keys, 14% more sellable inventory than today" (7 on 50 is 14%, and the four returned rooms have earned before) |
+| The 3-bedroom house counted as a new revenue stream, item 02 at $0.85M | The house is the back house that becomes the three added keys, so it sits in the room block: item 01 $1.93M, item 02 $0.35M |
+| "Marina, house and pier utility bids are in hand, so the two largest line items are priced against contractor numbers" | Rooms is the largest line and has no bid. The box now says what is bid and what is budgeted |
+| "sits above the local renovated trade ($488K)" | No $488K trade appears on the slide. Now "within the East Coast waterfront range and well below premier regional assets" |
+| "no third-party management agreement to terminate" | An executed management agreement is on file: "Affiliate management", run under one |
+| "A 57-key waterfront resort" | "A 50-key waterfront resort", which is what it is today |
+| "Select-service resort" | "Full-service waterfront resort" |
+| "1,100 feet of water frontage" | Deleted. The only source also said 9.5 acres against the 8.10 used here |
+| "with settlement November 16, 2026" | "settlement pending". The workbook says closing is not confirmed in file |
+
 - **The brand affiliation is named on one slide.** The brief banned Small Luxury Hotels outright;
   it is reinstated on the business plan slide only, as a **proposal in hand that can be put into
   effect once the renovation is complete**, with the plan explicitly not depending on it. Hilton

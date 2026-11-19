@@ -157,8 +157,8 @@ def opportunity():
 
 # ── 03 · the asset ───────────────────────────────────────────────────────────────────────────
 ASSET_FACTS = [('Keys', '50 &rarr; 57', 'Four out-of-service rooms returned, three added'),
-               ('Site', '8.10 ac', '1,100 feet of water frontage'),
-               ('Positioning', 'Upper Upscale', 'Select-service resort'),
+               ('Site', '8.10 ac', 'Waterfront on the Bay and the Choptank'),
+               ('Positioning', 'Upper Upscale', 'Full-service waterfront resort'),
                ('Location', 'Tilghman, MD', 'Talbot County &middot; Tilghman Island')]
 
 
@@ -177,14 +177,14 @@ def asset():
                     f'line-height:1.1;">{v}</div>\n'
                   + P(n, fs='15px', mt='5px', lh='1.4', ind=8) + '      </div>\n')
     return page('The Asset', sn,
-      rule() + H2('A 57-key waterfront resort on 8.10 acres.')
+      rule() + H2('A 50-key waterfront resort on 8.10 acres.')
       + '  <div style="display:grid;grid-template-columns:1.32fr 1fr;gap:52px;flex:1;'
         'grid-template-rows:1fr;min-height:0;">\n'
         '    <div style="display:flex;flex-direction:column;">\n'
       + P('Wylder Hotel Tilghman Island sits on Tilghman Island in Talbot County, Maryland, '
           'between the Chesapeake Bay and the Choptank River: an 8.10-acre waterfront parcel '
-          'with 1,100 feet of water frontage, a marina, pool, restaurant and boat bar. Operated '
-          'under the Wylder Hotels brand, the property is mid-repositioning.', fs='18px')
+          'with a marina, pool, restaurant and boat bar. Operated under the Wylder Hotels brand, '
+          'the property is mid-repositioning.', fs='18px')
       + '      <div style="position:relative;overflow:hidden;flex:1;min-height:0;'
         'margin-top:24px;">\n'
         '        <img src="assets/wt-aerial.png" alt="The resort and its marina from the air" '
@@ -200,9 +200,8 @@ SPONSOR_TILES = [('Ownership', '21551 Tilghman Investors LLC'),
                  ('Operator / Brand', 'Wylder Hotels'),
                  ('Manager', 'Wylder Eastern Shore Mgmt.')]
 ALIGNMENT = [
-  ('Owner-operated, no third-party manager', 'Day-to-day operations are run by an affiliate of '
-   'ownership. There is no third-party management agreement to terminate or subordinate, no '
-   'comfort letter to negotiate and no split incentive between owner and operator.'),
+  ('Affiliate management', 'Day-to-day operations are run by an affiliate of ownership under '
+   'an executed management agreement, with no split incentive between owner and operator.'),
   ('Continuous ownership since 2017', 'The sponsor has owned and operated the hotel under the '
    'Wylder brand through the pandemic cycle and the current repositioning, investing a further '
    '$642,693 of capital between 2021 and 2025.'),
@@ -344,9 +343,9 @@ def brand():
 PLAN_ITEMS = [
   ('Guest room renovation', 'Full renovation of all 57 guest rooms at $25,000 per key. Four '
    'out-of-service keys are returned and three added in the back house, taking the hotel from '
-   '50 to 57: 12.3% more sellable inventory that has never produced revenue.', '$1.43M'),
-  ('Add revenue streams', 'A rebuilt marina, the reimagined boat bar and a replaced 3-bedroom '
-   'house broaden revenue beyond the room block.', '$0.85M'),
+   '50 to 57: seven keys, 14% more sellable inventory than today.', '$1.93M'),
+  ('Add revenue streams', 'A rebuilt marina and the reimagined boat bar broaden revenue beyond '
+   'the room block.', '$0.35M'),
   ('Lift rate through product', 'A fully renovated room block, repositioned toward weddings and '
    'group events, closes the rate gap to the comp set.', 'Rate + Group')]
 PLAN_STATS = [
@@ -397,9 +396,8 @@ def business_plan():
       + f'  <div style="border-left:3px solid {ORANGE};padding-left:18px;margin-top:16px;">\n'
       + eyebrow('Brand Optionality', mb='6px')
       + P('A <strong style="color:var(--mm-navy-900);">Small Luxury Hotels membership proposal '
-          'is in hand</strong> and can be put into effect once the renovation is complete. The '
-          'plan above does not depend on it; it is available to the repositioned product rather '
-          'than to the hotel as it stands today.', fs='15.5px', mt='0', lh='1.5')
+          'is in hand</strong>, subject to SLH&rsquo;s application, inspection and board '
+          'approval. SLH fees are not included in the pro forma.', fs='15.5px', mt='0', lh='1.5')
       + '  </div>\n'
       + stats, pad='58px 100px 42px')
 
@@ -534,8 +532,8 @@ def valuation():
       + '      <div style="height:16px;"></div>\n'
       + eyebrow('Local Eastern Shore Transactions', mb='10px')
       + _comp_table(LOCAL_COMPS, ['Property &middot; Town', 'Year', 'Keys', '$/Key'])
-      + P('The $518K/key stabilized conclusion sits above the local renovated trade ($488K) and '
-          'well below regional peers.', fs='14px', col=NAVY, mt='auto', lh='1.5')
+      + P('The $518K/key stabilized conclusion sits within the East Coast waterfront range '
+          'and well below premier regional assets.', fs='14px', col=NAVY, mt='auto', lh='1.5')
       + '    </div>\n  </div>\n', pad='56px 92px 42px')
 
 
@@ -594,31 +592,40 @@ def budget():
         'padding-left:46px;">\n'
       + eyebrow('Bids in Hand', mb='14px') + bids
       + f'      <div style="background:{NAVY};color:#fff;padding:20px 24px;margin-top:auto;">\n'
-      + P('Marina, house and pier utility bids are in hand, so the two largest line items are '
-          'priced against contractor numbers rather than allowances. The contingency is 10% of '
-          'hard costs and is drawn pro rata with hard cost spending.',
-          fs='15px', col='rgba(255,255,255,.88)', lh='1.5', ind=8)
+      + P('Bids are in hand for the house, the pier and its utilities. Room renovation is '
+          'budgeted at $25,000 per key. Contingency is 10% of hard costs, drawn pro rata with '
+          'hard cost spending.', fs='15px', col='rgba(255,255,255,.88)', lh='1.5', ind=8)
       + '      </div>\n    </div>\n  </div>\n')
 
 
 # ── 10 · next steps ──────────────────────────────────────────────────────────────────────────
-DILIGENCE = ['The CBRE appraisal', 'The renovation schedule and budget', 'Contractor bids',
-             'STR reports', 'Historical operating statements', 'The MMCC pro forma model']
+DILIGENCE = ['CBRE appraisal', 'Renovation schedule and budget', 'Contractor bids',
+             'STR reports', 'Historical operating statements', 'MMCC pro forma model',
+             'Property condition report', 'Phase I ESA', 'ALTA survey',
+             'Flood and insurance', 'Licenses and permits', 'Group and wedding pace',
+             '2027 strategy presentation', 'CapEx history', 'Dogwood Cove projections']
+assert len(DILIGENCE) == 15
 
 
 def next_steps():
     sn = ('Available for review. The diligence folder includes the C B R E appraisal, the '
-          'renovation schedule and budget, contractor bids, S T R reports, historical operating '
-          'statements and the M M C C pro forma model. Bradley M. Buzil, Senior Director, The '
+          'renovation schedule, budget and contractor bids, S T R reports, historical operating '
+          'statements, the M M C C pro forma model, the property condition report, the Phase One '
+          'environmental, the A L T A survey, flood and insurance, licenses and permits, group '
+          'and wedding pace, the twenty twenty-seven strategy presentation, the capital '
+          'expenditure history and the Dogwood Cove projections. Bradley M. Buzil, Senior '
+          'Director, The '
           'Tranche Group at Marcus and Millichap Capital Corporation, exclusive capital advisor.')
-    items = ('  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 48px;'
-             'margin-top:34px;">\n')
+    cols = 3
+    items = (f'  <div style="display:grid;grid-template-columns:repeat({cols},1fr);gap:0 44px;'
+             'margin-top:28px;">\n')
     for i, d in enumerate(DILIGENCE):
-        bb = '' if i >= len(DILIGENCE) - 2 else 'border-bottom:1px solid rgba(255,255,255,.16);'
-        items += ('    <div style="display:flex;align-items:center;gap:13px;'
-                  f'padding:{"0 0 14px" if i < 2 else "14px 0"};{bb}">'
-                  f'<span style="width:7px;height:7px;background:{ORANGE};flex:none;"></span>'
-                  f'<span style="{BODY}font-size:17.5px;color:rgba(255,255,255,.9);">{d}</span>'
+        bb = ('' if i >= len(DILIGENCE) - cols
+              else 'border-bottom:1px solid rgba(255,255,255,.16);')
+        items += ('    <div style="display:flex;align-items:center;gap:12px;'
+                  f'padding:{"0 0 12px" if i < cols else "12px 0"};{bb}">'
+                  f'<span style="width:6px;height:6px;background:{ORANGE};flex:none;"></span>'
+                  f'<span style="{BODY}font-size:16px;color:rgba(255,255,255,.9);">{d}</span>'
                   '</div>\n')
     items += '  </div>\n'
     return ('<section data-label="Next Steps" data-screen-label="Next Steps" '
@@ -639,9 +646,9 @@ def next_steps():
      f'    <div style="width:64px;height:3px;background:{ORANGE};margin-bottom:22px;"></div>\n'
      f'    <h2 style="{DISP}font-weight:700;font-size:52px;line-height:1.1;color:#fff;margin:0;'
      'letter-spacing:-.016em;max-width:none;">Available for review.</h2>\n'
-     + P('The diligence folder includes the CBRE appraisal, the renovation schedule and budget, '
-         'contractor bids, STR reports, historical operating statements and the MMCC pro forma '
-         'model.', fs='19px', col='rgba(255,255,255,.88)', mt='20px', lh='1.55')
+     + P('The diligence folder is open. It includes the appraisal, the renovation schedule, '
+         'budget and contractor bids, the operating history and the third-party reports below.',
+         fs='18px', col='rgba(255,255,255,.88)', mt='18px', lh='1.55')
      + items + '  </div>\n\n'
      '  <div style="position:relative;z-index:2;display:flex;justify-content:space-between;'
      'align-items:flex-end;border-top:1px solid rgba(255,255,255,.22);padding-top:24px;">\n'
@@ -779,9 +786,9 @@ def dogwood():
       rule(mb='18px')
       + H2('Dogwood Cove, on its own.', fs='38px', mb='16px')
       + P('The adjacent waterfront parcel: a four-bedroom residence and 24 boat slips, under '
-          f'contract at ${DOG_PRICE:,} with settlement {DOG_SETTLE}, and ${DOG_RENO:,} to bring '
-          'the house online. The residence is offline through 2027, so that year carries slip '
-          'revenue and holding costs only.', fs='15.5px', mt='0')
+          f'contract at ${DOG_PRICE:,}, settlement pending, and ${DOG_RENO:,} to bring the house '
+          'online. The residence is offline through 2027, so that year carries slip revenue and '
+          'holding costs only.', fs='15.5px', mt='0')
       + '  <div style="height:16px;"></div>\n'
       + tbl(['Line item'] + DOG_YEARS, rows, fs='13.5px', pad=5, lw='2.15fr')
       + '  <div style="display:grid;grid-template-columns:1.35fr 1fr 1fr 1.1fr;gap:0 30px;'
@@ -794,7 +801,9 @@ def dogwood():
            f'margin-top:6px;">{val}</div>\n'
            + P(note, fs='12.5px', col='var(--ink-500)', mt='5px', lh='1.4', ind=6)
            + '    </div>\n') for i, (lab, val, note) in enumerate(stats))
-      + '  </div>\n', pad='54px 92px 40px')
+      + '  </div>\n'
+      + P('Insurance, utilities and repairs are assumptions pending quotes.',
+          fs='12.5px', col='var(--ink-500)', mt='12px'), pad='54px 92px 40px')
 
 
 def combined():
