@@ -195,6 +195,25 @@ than left standing: the program opens in the months the property earns least, an
 return in waves the hotel trades throughout instead of closing, with the last wave landing for
 the back half of the 2027 season.
 
+## Corrections of record, across every package
+
+These were found in the Palette overview and carried through the rest of the library, so the
+twelve documents do not disagree with one another. `crosscheck.py` opens every exported PDF and
+fails if any of them returns.
+
+| Was | Now |
+|---|---|
+| "12.3% more sellable inventory that has never produced revenue" | "seven keys, 14% more sellable hotel inventory than today". Seven on fifty is 14%; 12.3% was seven on fifty-seven, and four of the seven have earned before |
+| "Seven keys returned to inventory · +12.3% sellable" | "Seven keys added to inventory · +14% sellable". Four are returned and three are new |
+| "Owner-operated, no third-party manager ... no third-party management agreement to terminate" | "Affiliate management ... under an executed management agreement". The agreement exists and is on file |
+| "1,100 feet of water frontage" on the asset and property pages | Deleted. Its only source also states 9.5 acres against the 8.10 used throughout. The Choptank frontage itself is not in doubt and stays |
+| "Select-service resort" | "Full-service waterfront resort". Two food and beverage outlets, event space, a pool and a marina is not select service |
+| "A reconfigured boat bar and rebuilt three-bedroom house add further sources" | "A reconfigured boat bar adds a further source". The three-bedroom house is the back house that becomes the three added keys, so it is the room block |
+| Business plan items at $1.43M and $0.85M | $1.93M and $0.35M, the house having moved into the room block |
+
+The Equity Teaser carries the same two corrections in its own no-figures voice: inventory reads
+"more to sell than it does today", and positioning reads "upper upscale, full service".
+
 ## The Palette Hotels Investment Overview
 
 **Built fresh, not edited down from a capitalization deck.** Ten slides covering the asset, the

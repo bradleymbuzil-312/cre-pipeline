@@ -830,3 +830,72 @@ def restate_parcel(b):
         b = b.replace(old, new)
     assert '$1,400,000' not in b and '18, 2026' not in b
     return b
+
+
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# Corrections of record, applied to every package that lifts the shared core
+#
+# Each of these replaced a claim that was wrong rather than differently worded. They were made
+# first in the Palette overview; this carries the same corrections through the rest of the
+# library so the two never disagree.
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+S = 'color:var(--mm-navy-900);'
+CORRECTIONS = {
+ 'THE ASSET': [
+   # the only source for the frontage also states 9.5 acres against the 8.10 used throughout
+   ('an 8.10-acre waterfront parcel with 1,100 feet of water frontage, a marina,',
+    'an 8.10-acre waterfront parcel with a marina,'),
+   # two food and beverage outlets, event space, pool and marina is not select service
+   ('>Select-service resort</div>', '>Full-service waterfront resort</div>')],
+ 'THE SPONSOR': [
+   ('The sponsor runs day-to-day operations and the renovation directly. There is no '
+    'third-party management agreement, no comfort letter and no split incentive between owner '
+    'and operator.',
+    'The sponsor runs day-to-day operations and the renovation through that affiliate, under an '
+    'executed management agreement, with no split incentive between owner and operator.'),
+   (f'<strong style="{S}">Owner-operated, no third-party manager</strong> &mdash; Day-to-day '
+    'operations are run by an affiliate of ownership. There is no third-party management '
+    'agreement to terminate or subordinate, no comfort letter to negotiate and no split '
+    'incentive between owner and operator.',
+    f'<strong style="{S}">Affiliate management</strong> &mdash; Day-to-day operations are run by '
+    'an affiliate of ownership under an executed management agreement, with no split incentive '
+    'between owner and operator.')],
+ 'BUSINESS PLAN': [
+   # seven keys on fifty is 14%, not seven on fifty-seven; and four of the seven have earned
+   ('taking the hotel from 50 to 57 &mdash; 12.3% more sellable inventory that has never '
+    'produced revenue.',
+    'taking the hotel from 50 to 57 &mdash; seven keys, 14% more sellable hotel inventory than '
+    'today.'),
+   ('>Seven keys returned to inventory</span>', '>Seven keys added to inventory</span>'),
+   ('>+12.3% sellable</span>', '>+14% sellable</span>'),
+   # the three-bedroom house is the back house that becomes the three added keys, so it is the
+   # room block rather than a further revenue source
+   ('A reconfigured boat bar and rebuilt three-bedroom house add further sources, and the '
+    'adjacent Dogwood Cove residence adds a whole-home suite.',
+    'A reconfigured boat bar adds a further source, and the adjacent Dogwood Cove residence adds '
+    'a whole-home suite.'),
+   ('>$1.43M</span>', '>$1.93M</span>'),
+   ('>$0.85M</span>', '>$0.35M</span>')],
+ 'PROPERTY OVERVIEW': [
+   # the frontage figure has no source in file; the river it fronts is not in doubt
+   ('>Water frontage</div>', '>Frontage</div>'),
+   ('>1,100 feet on the Choptank River<', '>On the Choptank River<')],
+ 'DEPARTMENTAL BENCHMARKS': [
+   ('Four out-of-service keys returned and three added in the back house lift sellable '
+    'inventory 12.3%.',
+    'Four out-of-service keys returned and three added in the back house lift sellable hotel '
+    'inventory 14%.')]}
+
+
+def correct(b, name):
+    """Apply the corrections of record to one lifted page. Every one must hit exactly once."""
+    for old, new in CORRECTIONS.get(name, ()):
+        assert b.count(old) == 1, ('correction did not hit once', name, old[:60], b.count(old))
+        b = b.replace(old, new)
+    return b
+
+
+def correct_all(body):
+    for _n in CORRECTIONS:
+        body[_n] = correct(body[_n], _n)
+    return body

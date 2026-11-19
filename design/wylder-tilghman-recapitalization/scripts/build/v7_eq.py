@@ -370,8 +370,10 @@ def build_deck():
     from v7_tranche import title, contact
     from v7_marina import marina_page
     from v7_addenda import (historicals, renovation_schedule, renovation_cash_flow, cbre, slh,
-                            restate_years, restate_proforma, restate_parcel, EQ_BASIS_DATES)
+                            restate_years, restate_proforma, restate_parcel, correct_all,
+                            EQ_BASIS_DATES)
     head, body = load_sections()
+    body = correct_all(body)
     body['VALUE POSITIONING'] = value_positioning(body['VALUE POSITIONING'], 'eq')
     body['BUSINESS PLAN'] = business_plan_window(body['BUSINESS PLAN'], 'eq')
     body['ADJACENT ACQUISITION'] = restate_parcel(

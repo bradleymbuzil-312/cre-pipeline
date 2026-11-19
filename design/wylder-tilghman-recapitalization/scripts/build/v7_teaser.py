@@ -190,8 +190,8 @@ FACTS = [
               'and the Choptank River'),
   ('The Resort', 'Guest rooms, a pool, a restaurant, a boat bar, event space and a marina, on a '
                  'single contiguous site'),
-  ('Positioning', 'Upper upscale, select service &mdash; a resort that sells the water, not a '
-                  'full&#8209;service box'),
+  ('Positioning', 'Upper upscale, full service &mdash; restaurant, bar, event space and a '
+                  'marina, not just a room block'),
   ('Operator', 'Operated under the Wylder Hotels brand, with a soft&#8209;brand affiliation '
                'planned on completion'),
   ('Adjacent Parcel', 'A neighboring waterfront property under contract, adding slips, acreage '
@@ -293,7 +293,7 @@ SCOPE = [
   ('Guest rooms', 'Every room rebuilt &mdash; finishes, casegoods, lighting, soft goods and bath '
                   'to a single specification.'),
   ('Inventory returned', 'Rooms long out of service come back, and further keys are added in the '
-                         'back house. Sellable inventory that has never produced revenue.'),
+                         'back house, so the hotel has more to sell than it does today.'),
   ('The marina', 'Slips replaced and the dock expanded, with the adjacent parcel bringing further '
                  'slips into the same operation.'),
   ('The residence', 'The waterfront house on the property is replaced rather than patched, and '

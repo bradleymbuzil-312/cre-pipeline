@@ -413,6 +413,21 @@ check(all(norm(v) in flat for v in ("$1.93M", "$0.35M", "14% more sellable hotel
 check(norm("Small Luxury Hotels") not in norm(_other) and norm("SLH") not in norm(_other),
       "the affiliation appears on no other slide")
 
+# ── corrections of record: claims that were wrong and must not return, in any package
+WITHDRAWN = ["12.3%", "never produced revenue", "no third-party management",
+             "1,100 feet", "Select-service", "select service",
+             "rebuilt three-bedroom house add further"]
+print("\n\u2500\u2500 Corrections of record, across every package \u2500\u2500")
+_bad = []
+for _label, _path, *_ in list(PKGS.values()) + [("Marina Valuation", MARINA_PDF),
+                                                ("Equity Teaser", TEASER_PDF),
+                                                ("Palette overview", PALETTE_PDF)]:
+    _raw = re.sub(r"\s+", " ", "".join(pg.get_text() for pg in pymupdf.open(_path)))
+    _hits = [w for w in WITHDRAWN if w.lower() in _raw.lower()]
+    if _hits:
+        _bad.append(f"{_label}: {_hits}")
+check(not _bad, "no withdrawn claim survives in any package", f"{_bad}")
+
 if fails:
     print(f"{len(fails)} check(s) failed")
     sys.exit(1)

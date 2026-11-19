@@ -437,8 +437,10 @@ def build_deck():
                                                     loan=SENIOR)
     for _n in ('BUSINESS PLAN', 'ADJACENT ACQUISITION'):
         body[_n] = lp_funding(body[_n], _n)
-    from v7_addenda import renovation_schedule, restate_lifted_dates, restate_parcel
+    from v7_addenda import (renovation_schedule, restate_lifted_dates, restate_parcel,
+                            correct_all)
     from v7_patch import business_plan_window
+    body = correct_all(body)
     body['RENOVATION SCHEDULE'] = renovation_schedule()
     # this deck lifts its basis page and plan header rather than regenerating them
     body['TOTAL BASIS'] = restate_lifted_dates(body['TOTAL BASIS'], 'TOTAL BASIS')
