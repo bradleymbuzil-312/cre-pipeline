@@ -82,7 +82,9 @@ SPEAKER = (
  'is priced against a room that exists rather than a drawing.')
 
 # page 24 "Start and Completion Dates", grouped
-BASIS_DATES = [('Rooms, house, FF&amp;E and exterior work', date(2026, 11, 1), MAIN_END),
-               ('Marina replacement and expansion', date(2026, 11, 1), date(2026, 12, 15)),
-               ('Event space upgrade', date(2027, 1, 4), date(2027, 2, 2)),
-               ('Punch list to completion', date(2027, 4, 1), COMPLETE)]
+# The sponsor's Renovation Capital Plan, restated November 16, 2026: a 175-day program running
+# January 4 to June 28, 2027 in four guestroom waves. Supersedes the November-to-April schedule.
+BASIS_DATES = [('Guestrooms &middot; four waves', date(2027, 1, 4), date(2027, 6, 28)),
+               ('Marina replacement and expansion', date(2027, 1, 21), date(2027, 3, 6)),
+               ('Event space upgrade', date(2027, 3, 24), date(2027, 4, 22)),
+               ('Punch list to completion', date(2027, 5, 21), date(2027, 6, 21))]

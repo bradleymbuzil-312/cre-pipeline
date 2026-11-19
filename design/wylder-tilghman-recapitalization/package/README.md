@@ -182,6 +182,42 @@ Two things were deliberately left out of every package: the third-party per-slip
 names no closed sales, and the internal note on the model's 2028 slip expense line. Both are
 underwriting notes rather than lender material.
 
+## One renovation schedule, everywhere
+
+The sponsor's November 16 file supersedes the November-to-April program that nine packages
+carried. **All eleven documents now run the same 175-day schedule, January 4 to June 28, 2027**,
+in four guestroom waves. The basis page's start and completion dates and the capital program
+header moved with it.
+
+Because a June finish does not beat the summer peak, the seasonality claim was rewritten rather
+than left standing: the program opens in the months the property earns least, and because rooms
+return in waves the hotel trades throughout instead of closing, with the last wave landing for
+the back half of the 2027 season.
+
+## The reconciled pro forma — LP Equity only
+
+LP Equity runs on the November 16 workbook with the Dogwood Cove residence and the 24 slips the
+acquisition brings added back, so its scope matches the capital plan. The other packages are
+unchanged.
+
+The one year that moves materially is **2027**. The new workbook models the renovation wave by
+wave instead of assuming a dark year, so rooms earn **$2,331,825 instead of $1,755,582** and the
+year's ADR is **$383, not $288**:
+
+| | 2027 | 2028 | 2029 | 2030 | 2031 |
+|---|---|---|---|---|---|
+| Total revenue | $4,952,258 | $6,390,423 | $7,072,662 | $7,596,783 | $8,038,582 |
+| Net operating income | $1,495,246 | $2,320,571 | **$2,661,149** | $2,858,470 | $3,061,453 |
+| NOI margin | 30.2% | 36.3% | 37.6% | 37.6% | 38.1% |
+
+**2029 is the first stabilized year** under this schedule, so the value bridge behind the 2.0x
+target restates to a **13.83% yield on cost** against a **9.02% implied cap** — the 53.3% spread
+from basis to stabilized estimate is unchanged.
+
+Three errors in the lifted table were corrected on the way through: the available-room-nights row
+had its 2028 and 2029 cells transposed, the occupied-room-nights row did too, and the stabilized
+NOI margin read 37.7% where the arithmetic gives 37.6%.
+
 ## The Equity Teaser
 
 **The piece that goes out first, before a confidentiality agreement.** It is built like an
@@ -242,7 +278,7 @@ They appear in **no other package**.
 | Page | What it carries |
 |---|---|
 | **Cash flow historicals** | The actual operating statement for 2023, 2024, 2025 and the trailing twelve months to September 2026 — revenue by department, departmental, undistributed and fixed expense, down to NOI. Every column foots to the dollar of rounding the source carries. Beneath it, the $642,693 of sponsor capital put in between 2021 and 2025. |
-| **Renovation schedule** | Restated to the sponsor's 175-day program, **January 4 to June 28, 2027**, in four guestroom waves of 14, 15, 14 and 14 keys. This replaces the November-to-April page in this package only; the other nine decks keep the earlier schedule. |
+| **Renovation schedule** | The sponsor's 175-day program, **January 4 to June 28, 2027**, in four guestroom waves of 14, 15, 14 and 14 keys. This page is now shared by every package. |
 | **Renovation cash flow** | The same program as money — spend by month, cumulative draw, share of budget deployed and what remains to fund, plus where the $3,003,000 goes by category and how it is drawn. |
 | **Valuation detail** | **The one slide in the entire library that names its source.** CBRE Valuation & Advisory Services, file CB26US098551-1, signed by Michael Cummings, MAI, ISHC and Gregory Wolfe. Three scenarios, all three approaches reconciled, discount and capitalization rates, the income behind the value, and what the valuation assumes. |
 | **SLH membership** | The Small Luxury Hotels proposal dated August 14, 2026 as delivered — four-year term, the discounted fee ladder to a $100,222 four-year total, commission by booking channel and every other charge. |

@@ -189,5 +189,12 @@ def lp_funding(b, name):
     return b
 
 
+def business_plan_window(b, t):
+    """The capital program header carries the restated January-to-June 2027 window."""
+    old = 'Sep 2026 &ndash; Apr 2027'
+    assert b.count(old) == 1, ('business plan window', t, b.count(old))
+    return b.replace(old, 'Jan &ndash; Jun 2027')
+
+
 PATCH = {'VALUE POSITIONING': value_positioning, 'EXTENDED CASH FLOW': extended_cash_flow,
-         'ADJACENT ACQUISITION': adjacent_acquisition}
+         'ADJACENT ACQUISITION': adjacent_acquisition, 'BUSINESS PLAN': business_plan_window}

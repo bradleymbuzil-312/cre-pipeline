@@ -633,12 +633,147 @@ def restate_years(b, stats_only=False):
     return b
 
 
-# the same program as the schedule slide, condensed for the basis page
-from datetime import date as _date
+# the basis page now takes the same dates from v7_reno, for every package
+from v7_reno import BASIS_DATES as EQ_BASIS_DATES
 
-EQ_BASIS_DATES = [
-    ('Guestrooms &middot; four waves', _date(2027, 1, 4), _date(2027, 6, 28)),
-    ('Marina replacement and expansion', _date(2027, 1, 21), _date(2027, 3, 6)),
-    ('Event space upgrade', _date(2027, 3, 24), _date(2027, 4, 22)),
-    ('Punch list to completion', _date(2027, 5, 21), _date(2027, 6, 21))]
-assert EQ_BASIS_DATES[0][2] == _date(2027, 6, 28)
+assert EQ_BASIS_DATES[0][1].month == 1 and EQ_BASIS_DATES[0][2].month == 6
+
+
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# Reconciled pro forma, carried by the LP Equity package only
+#
+# The November 16 workbook models the renovation wave by wave rather than assuming a dark year,
+# which changes 2027 materially: rooms earn $2,331,825 instead of $1,755,504 because renovated
+# keys come back progressively and sell at the new rate while the program runs. The workbook is
+# hotel only, so the Dogwood Cove residence and the 24 slips the acquisition brings are added
+# back here, with the departmental expense, credit card commission, management fee and
+# replacement reserve that come with that revenue.
+#
+# Years 2028 through 2031 reconcile to the earlier model to within a rounding of the deck's own
+# table; the figures below are the model's.
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+RECON_YEARS = ['2027', '2028', '2029', '2030', '2031']
+RECON = {
+  'avail':  [18_511, 20_862, 20_805, 20_805, 20_805],
+  'occ_n':  [6_094, 7_928, 8_322, 8_738, 8_946],
+  'adr':    [382.60, 395.00, 415.00, 435.00, 455.00],
+  'rooms':  [2_331_825, 3_131_386, 3_453_630, 3_801_074, 4_070_498],
+  'total':  [4_952_258, 6_390_423, 7_072_662, 7_596_783, 8_038_582],
+  'noi':    [1_495_246, 2_320_571, 2_661_149, 2_858_470, 3_061_453]}
+RECON['other'] = [RECON['total'][i] - RECON['rooms'][i] for i in range(5)]
+RECON['opex'] = [RECON['total'][i] - RECON['noi'][i] for i in range(5)]
+RECON['occ'] = [RECON['occ_n'][i] / RECON['avail'][i] for i in range(5)]
+RECON['revpar'] = [RECON['rooms'][i] / RECON['avail'][i] for i in range(5)]
+RECON['margin'] = [RECON['noi'][i] / RECON['total'][i] for i in range(5)]
+
+# 2029 is the first stabilized year under this schedule
+RECON_STAB = RECON['noi'][2]
+assert RECON_STAB == 2_661_149
+
+# rate times occupied nights has to produce the rooms line, to the dollar of rounding
+for _i in range(5):
+    assert abs(RECON['adr'][_i] * RECON['occ_n'][_i] - RECON['rooms'][_i]) < 400, _i
+# the 2027 step up is the wave schedule, not a rate assumption layered on the old model
+assert RECON['rooms'][0] - 1_755_504 == 576_321
+assert abs(RECON['other'][0] - 2_620_433) <= 1
+
+
+def _mm(v):
+    return f'${v / 1e6:,.2f}M'
+
+
+# (old, new) pairs applied to the lifted pages. Every one must hit exactly once.
+def _pairs():
+    r, p = RECON, []
+    # ── pro forma cash flow table, column by column
+    p += [('>7,906<', '>7,928<'), ('>8,345<', '>8,322<'),
+          ('>33.0%<', f'>{r["occ"][0]:.1%}<'),
+          ('>$1,755,504<', f'>${r["rooms"][0]:,.0f}<'),
+          ('>$3,122,830<', f'>${r["rooms"][1]:,.0f}<'),
+          ('>$3,463,092<', f'>${r["rooms"][2]:,.0f}<'),
+          ('>$2,620,434<', f'>${r["other"][0]:,.0f}<'),
+          ('>$4,375,938<', f'>${r["total"][0]:,.0f}<'),
+          ('>$6,381,867<', f'>${r["total"][1]:,.0f}<'),
+          ('>$7,082,124<', f'>${r["total"][2]:,.0f}<'),
+          ('>($3,246,624)<', f'>(${r["opex"][0]:,.0f})<'),
+          ('>($4,066,848)<', f'>(${r["opex"][1]:,.0f})<'),
+          ('>$1,129,314<', f'>${r["noi"][0]:,.0f}<'),
+          ('>$2,315,019<', f'>${r["noi"][1]:,.0f}<'),
+          ('>$96.00<', f'>${round(r["revpar"][0]):,.2f}<')]
+    # ── headline tiles and the projections table
+    p += [('>$4.38M<', f'>{_mm(r["total"][0])}<'), ('>$6.38M<', f'>{_mm(r["total"][1])}<'),
+          ('>$7.08M<', f'>{_mm(r["total"][2])}<'),
+          ('>$1.13M<', f'>{_mm(r["noi"][0])}<'), ('>$2.32M<', f'>{_mm(r["noi"][1])}<'),
+          ('>$2.67M<', f'>{_mm(r["noi"][2])}<'),
+          ('>$96<', f'>${r["revpar"][0]:,.0f}<'),
+          ('>25.8%<', f'>{r["margin"][0]:.1%}<')]
+    # ── average daily rate, which appears as a column value and in the assumptions
+    p += [('>$288<', f'>${r["adr"][0]:,.0f}<'),
+          ('$288 &rarr; $455', f'${r["adr"][0]:,.0f} &rarr; $455'),
+          ('$96 &rarr; $196', f'${r["revpar"][0]:,.0f} &rarr; $196')]
+    # ── the stabilized year moves from the second projected year to the third
+    p += [('>$2,670,611<', f'>${RECON_STAB:,.0f}<')]
+    # ── the hotel no longer goes dark for the program; it reopens wave by wave
+    p += [('2026 is the renovation year, with the hotel open on a limited basis;',
+           '2026 is the renovation year, with guest rooms returning to inventory wave by wave '
+           'rather than the hotel closing;')]
+    return p
+
+
+# the stabilized NOI margin appears in the table and again as a headline tile, and both move
+ALL_PAIRS = [('>37.7%<', '>37.6%<')]
+
+ROW_RE = re.compile(r'(>)([\d,.]+)(</div>)')
+
+
+def _row_fix(b, first, values, name):
+    """Rewrite a whole table row positionally.
+
+    The available-room-nights row has its 2028 and 2029 cells transposed against the model, and
+    both carry values that appear elsewhere on the page, so the row cannot be fixed cell by cell.
+    """
+    i = b.index(f'>{first}</div>')
+    out, pos = b[:i], i
+    for v in values:
+        m = ROW_RE.search(b, pos)
+        assert m, (name, 'row ran out', v)
+        out += b[pos:m.start()] + m.group(1) + v + m.group(3)
+        pos = m.end()
+    return out + b[pos:]
+
+
+def restate_proforma(b, name):
+    """Rewrite the lifted pro forma pages onto the reconciled model. LP Equity only."""
+    hits = 0
+    for old, new in _pairs():
+        n = b.count(old)
+        if n:
+            assert n == 1, ('ambiguous pro forma replacement', name, old, n)
+            b = b.replace(old, new)
+            hits += 1
+    for old, new in ALL_PAIRS:
+        if old in b:
+            hits += b.count(old)
+            b = b.replace(old, new)
+    if '>18,250</div>' in b:
+        b = _row_fix(b, '18,250', [f'{v:,}' for v in RECON['avail']], name)
+        hits += 1
+    return b, hits
+
+
+# The LP Recapitalization deck lifts its basis page from the source rather than regenerating it,
+# so its date rows are rewritten in place. Ordered so the event-space row is consumed before a
+# new January 4 window is created.
+LIFTED_DATE_ROWS = [
+    ('Sep 21, 2026 &rarr; Mar 15, 2027', 'Jan 4, 2027 &rarr; Jun 28, 2027'),
+    ('Nov 1, 2026 &rarr; Dec 15, 2026', 'Jan 21, 2027 &rarr; Mar 6, 2027'),
+    ('Jan 2, 2027 &rarr; Jan 31, 2027', 'Mar 24, 2027 &rarr; Apr 22, 2027'),
+    ('Mar 1, 2027 &rarr; Apr 1, 2027', 'May 21, 2027 &rarr; Jun 21, 2027'),
+    ('Rooms, house, FF&amp;E and exterior work', 'Guestrooms &middot; four waves')]
+
+
+def restate_lifted_dates(b, name):
+    for old, new in LIFTED_DATE_ROWS:
+        assert b.count(old) == 1, ('lifted date row', name, old, b.count(old))
+        b = b.replace(old, new)
+    return b

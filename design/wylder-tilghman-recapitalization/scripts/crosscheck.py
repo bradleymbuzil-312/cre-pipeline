@@ -87,8 +87,10 @@ EQ_FORBID = [
 ]
 # "2.0x" is required here, so NO_RETURN_WORDS cannot be reused wholesale: only IRR is barred.
 EQ_REQUIRED = ["2.0x", "36 months", "To be negotiated", "$17,404,044", "$15,747,882",
-               "$19,247,882", "$29,500,000", "$2,670,611", "13.87%", "9.05%", "$2,000,000",
-               "Target equity multiple", "Preferred return", "Sponsor promote"]
+               "$19,247,882", "$29,500,000", "$2,661,149", "13.83%", "9.02%", "$2,000,000",
+               "Target equity multiple", "Preferred return", "Sponsor promote",
+               # the reconciled 2027, which is the wave schedule rather than a dark year
+               "$4,952,258", "$2,331,825", "$1,495,246", "2031"]
 
 # Letter-spaced condensed uppercase extracts as "S E N I O R", so compare on a stripped form.
 norm = lambda t: re.sub(r"[^A-Za-z0-9.$%]", "", t).lower()
@@ -116,8 +118,10 @@ OWN = {
         "$2,070,384", "$228,536", "$313,529", "61.94%", "84.98%", "61.64%",
         "To be determined", "$0", "$10,714,782", "$530,000"],
  # the LP equity package's only economics are the target and the plan it is built on
+ # LP Equity runs on the reconciled pro forma: the November 16 workbook with the Dogwood
+ # residence and the 24 new slips added back, so 2029 is the first stabilized year
  "eq": ["2.0x", "36 months", "$17,404,044", "$15,747,882", "$19,247,882", "$331,860",
-        "$29,500,000", "13.87%", "9.05%", "To be negotiated"],
+        "$29,500,000", "13.83%", "9.02%", "To be negotiated"],
  "common": ["$3,500,000", "$2,000,000", "$5,500,000", "15.00%", "50 / 50", "51%", "49%",
             "$1,823,062", "$1,041,750", "$14,048,334", "$8,164,823", "$4,664,823",
             "2.33x", "32.6%", "63.64%"]}

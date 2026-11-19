@@ -111,6 +111,8 @@ def build(t):
     head, body = load_sections()
     for name, fn in PATCH.items():
         body[name] = fn(body[name], t)
+    from v7_addenda import renovation_schedule
+    body['RENOVATION SCHEDULE'] = renovation_schedule()
     body['TITLE'] = T.title(t)
     body['THE OPPORTUNITY'] = T.opportunity(t)
     body['CAPITAL STRUCTURE'] = capital_structure(t)

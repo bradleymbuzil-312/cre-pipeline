@@ -134,8 +134,8 @@ PILLARS = [
                 'stabilized waterfront resort trades for. The gap between the two is the '
                 'investment case.'),
   ('The Renovation', 'Designed, priced, scheduled and already under way, with the guest-room '
-                     'specification built and standing on site. It runs through the quiet months '
-                     'and finishes before the season.'),
+                     'specification built and standing on site. It starts in the quiet months and '
+                     'delivers in waves, so the hotel never goes dark.'),
   ('The Revenue Ramp', 'Renovated rooms at a higher rate, keys returned to inventory, and whole '
                        'departments &mdash; marina, bar, events, a private residence &mdash; that '
                        'the property has never sold.')]
@@ -333,17 +333,20 @@ def scope():
 
 
 # ── 08 · the renovation, when it runs ────────────────────────────────────────────────────────
-MONTHS = ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr']
-BANDS = [('Guest rooms', 1, 7), ('The residence', 1, 7), ('Furnishings and fittings', 1, 7),
-         ('Exterior and interior works', 1, 7), ('Marina replacement', 1, 3),
-         ('Event space upgrade', 3, 5), ('Punch list to completion', 6, 7)]
+MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+BANDS = [('Guest rooms &middot; four waves', 1, 7), ('The residence', 1, 7),
+         ('Furnishings and fittings', 2, 7), ('Exterior and interior works', 1, 4),
+         ('Marina replacement', 1, 3), ('Event space upgrade', 3, 5),
+         ('Punch list to completion', 5, 7)]
 
 
 def schedule():
     sn = ('When the renovation runs. Work begins in November and completes in April. The whole '
-          'program sits inside the quiet months and finishes before the summer peak, so no '
-          'season is traded for the work. The model room is already built and can be inspected '
-          'on site, which takes design and specification risk out of the remaining rooms.')
+          'program begins in the depth of winter, when the property earns least, and guest rooms '
+          'come back in four waves rather than all at once, so the hotel keeps selling throughout '
+          'and the last wave lands for the back half of the season. The model room is already '
+          'built and can be inspected on site, which takes design and specification risk out of '
+          'the remaining rooms.')
     head = ('    <div style="display:grid;grid-template-columns:230px repeat(6,1fr);gap:0 10px;'
             f'border-bottom:2px solid {NAVY};padding-bottom:9px;margin-bottom:6px;">\n'
             '      <div></div>\n')
@@ -359,13 +362,13 @@ def schedule():
                  f'      <div style="grid-column:{a + 1} / {b + 1};height:13px;'
                  f'background:{ORANGE if b - a <= 2 else "var(--mm-navy)"};"></div>\n    </div>\n')
     return page('The Renovation &middot; Schedule', sn,
-      rule() + h2('It runs through the quiet months and is done before the season.', mb='26px')
+      rule() + h2('It starts in the quiet months, and delivers wave by wave.', mb='26px')
       + '  <div style="display:grid;grid-template-columns:1.28fr .88fr;gap:58px;flex:1;'
         'grid-template-rows:1fr;min-height:0;">\n    <div style="display:flex;flex-direction:column;">\n'
       + eyebrow('Program Sequence', mb='14px') + head + rows
-      + p('Work starts in November and finishes in April. The shoulder and winter months are the '
-          'months the property earns least, so the program costs the resort the quietest part of '
-          'the year and hands back a finished hotel for the first warm weekend.',
+      + p('Work starts in the new year and finishes at the end of June. It opens in the months '
+          'the property earns least, and because the rooms come back in waves the hotel trades '
+          'through the whole program rather than closing for it.',
           fs='15px', mt='auto', lh='1.55', ind=4)
       + '    </div>\n'
       '    <div style="display:flex;flex-direction:column;">\n'
@@ -384,7 +387,7 @@ def schedule():
 # ── 10 · the revenue ramp ────────────────────────────────────────────────────────────────────
 STAGES = [('Today', 28, 'Tired rooms, a short selling season and a rate the market will not pay '
                         'twice'),
-          ('The Work', 44, 'The quiet months, with the hotel open on a limited basis and the '
+          ('The Work', 44, 'Rooms returning in waves, with the hotel trading throughout and the '
                            'program running around it'),
           ('First Full Season', 80, 'Renovated rooms, the marina back, the residences let and '
                                     'every room sellable'),
@@ -674,8 +677,8 @@ PAGES = [
   ('VALUATION', valuation),
   ('DIVIDER RENOVATION', lambda: divider(
       'The Renovation', 'Two', 'The renovation plan',
-      'Designed, priced, scheduled and under way &mdash; with the guest&#8209;room specification '
-      'already standing on site.', 'wt-suite.jpg', 'A renovated guest room', 'center',
+      'Designed, priced, scheduled and delivered in waves &mdash; with the guest&#8209;room '
+      'specification already standing on site.', 'wt-suite.jpg', 'A renovated guest room', 'center',
       'Section two. The renovation plan.')),
   ('RENOVATION SCOPE', scope),
   ('RENOVATION SCHEDULE', schedule),
