@@ -207,6 +207,12 @@ Two standing rules of the library are deliberately set aside here, on instructio
 - **The valuation is attributed.** It names CBRE and LW Hospitality Advisors and uses the word
   appraisal. Every other package still states values with no source named, and `crosscheck.py`
   still enforces that on them.
+**Photography.** Every property image in the library is used once: the spring aerial on the
+cover, the site aerial plus a four-up strip of the pool, the interior, the boat bar and the pier
+on the asset slide, the principal's portrait on the track record slide, the parcel on its own
+slide, the completed model room beside the renovation budget, and the marina behind the closing
+page. No image repeats.
+
 **Nine corrections of record, applied to this deck only.** Each replaced a claim that was wrong,
 not merely differently worded, and `crosscheck.py` now fails if any of them reappears:
 

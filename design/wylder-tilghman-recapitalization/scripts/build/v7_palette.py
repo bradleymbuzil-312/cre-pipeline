@@ -60,6 +60,14 @@ def page(label, notes, inner, pad='70px 100px 50px'):
             + inner + foot() + '</section>')
 
 
+def shot(src, alt, h=None, pos='center'):
+    box = f'height:{h};' if h else 'flex:1;min-height:0;'
+    return (f'      <div style="position:relative;overflow:hidden;{box}">\n'
+            f'        <img src="assets/{src}" alt="{alt}" style="position:absolute;inset:0;'
+            f'width:100%;height:100%;object-fit:cover;object-position:{pos};">\n'
+            '      </div>\n')
+
+
 def rule(mb='24px'):
     return f'  <div style="width:64px;height:3px;background:{ORANGE};margin-bottom:{mb};"></div>\n'
 
@@ -185,11 +193,17 @@ def asset():
           'between the Chesapeake Bay and the Choptank River: an 8.10-acre waterfront parcel '
           'with a marina, pool, restaurant and boat bar. Operated under the Wylder Hotels brand, '
           'the property is mid-repositioning.', fs='18px')
-      + '      <div style="position:relative;overflow:hidden;flex:1;min-height:0;'
-        'margin-top:24px;">\n'
-        '        <img src="assets/wt-aerial.png" alt="The resort and its marina from the air" '
-        'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">\n'
-        '      </div>\n    </div>\n'
+      + '      <div style="margin-top:22px;display:flex;flex-direction:column;flex:1;'
+        'min-height:0;gap:12px;">\n'
+      + shot('wt-aerial.png', 'The resort and its marina from the air')
+      + '        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;'
+        'height:132px;flex:none;">\n'
+      + ''.join(shot(f, a) for f, a in (
+          ('wt-pool.png', 'The pool and grounds'),
+          ('wt-lobby.png', 'The interior'),
+          ('wt-fb-signs.jpg', 'The boat bar and restaurant'),
+          ('wt-pier.png', 'The pier and the Chesapeake Bay')))
+      + '        </div>\n      </div>\n    </div>\n'
         '    <div style="display:flex;flex-direction:column;justify-content:center;'
         f'border-left:{HAIR};padding-left:46px;">\n' + facts + '    </div>\n  </div>\n')
 
@@ -328,10 +342,15 @@ def brand():
       f'    <div style="display:flex;flex-direction:column;border-left:{HAIR};'
         'padding-left:46px;">\n'
       + eyebrow('John Flannigan')
-      + f'      <div style="{DISP}font-weight:700;font-size:26px;color:{NAVY};line-height:1.15;">'
-        'Founder &amp; CEO</div>\n'
+      + '      <div style="display:flex;align-items:center;gap:20px;">\n'
+        '        <img src="assets/flannigan.png" alt="John Flannigan" style="width:88px;'
+        'height:88px;object-fit:cover;border-radius:50%;flex:none;">\n'
+        '        <div>\n'
+      + f'          <div style="{DISP}font-weight:700;font-size:26px;color:{NAVY};'
+        'line-height:1.15;">Founder &amp; CEO</div>\n'
       + P('Wylder Hotels (JEF Management LLC). Three decades in hospitality.', fs='15.5px',
-          mt='6px')
+          mt='6px', ind=10)
+      + '        </div>\n      </div>\n'
       + '      <div style="margin-top:18px;"></div>\n' + rs
       + P('Three decades across ownership, operations and development. The Wylder portfolio was '
           'acquired, renovated and opened under the same leadership that runs it today.',
@@ -591,6 +610,9 @@ def budget():
         f'    <div style="display:flex;flex-direction:column;border-left:{HAIR};'
         'padding-left:46px;">\n'
       + eyebrow('Bids in Hand', mb='14px') + bids
+      + '      <div style="margin-top:22px;">\n'
+      + shot('wt-suite.jpg', 'The completed model room', h='186px')
+      + '      </div>\n'
       + f'      <div style="background:{NAVY};color:#fff;padding:20px 24px;margin-top:auto;">\n'
       + P('Bids are in hand for the house, the pier and its utilities. Room renovation is '
           'budgeted at $25,000 per key. Contingency is 10% of hard costs, drawn pro rata with '
@@ -633,6 +655,10 @@ def next_steps():
      'style="width:100%;height:100%;box-sizing:border-box;position:relative;overflow:hidden;'
      'color:#fff;font-family:var(--font-body);display:flex;flex-direction:column;'
      f'justify-content:space-between;padding:68px 100px 46px;background:{NAVY};">\n'
+     '  <img src="assets/wt-dogwood-aerial.jpg" alt="The marina and the water" '
+     'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">\n'
+     '  <div style="position:absolute;inset:0;background:linear-gradient(180deg,'
+     'rgba(0,26,61,.90) 0%,rgba(0,26,61,.78) 50%,rgba(0,26,61,.93) 100%);"></div>\n'
      f'  <div style="position:absolute;right:0;top:0;bottom:0;width:10px;background:{ORANGE};'
        '"></div>\n\n'
      '  <div style="position:relative;z-index:2;display:flex;justify-content:space-between;'
@@ -785,11 +811,15 @@ def dogwood():
     return page('Dogwood Cove Pro Forma', sn,
       rule(mb='18px')
       + H2('Dogwood Cove, on its own.', fs='38px', mb='16px')
+      + '  <div style="display:grid;grid-template-columns:1fr 250px;gap:26px;'
+        'align-items:center;">\n    <div>\n'
       + P('The adjacent waterfront parcel: a four-bedroom residence and 24 boat slips, under '
           f'contract at ${DOG_PRICE:,}, settlement pending, and ${DOG_RENO:,} to bring the house '
           'online. The residence is offline through 2027, so that year carries slip revenue and '
-          'holding costs only.', fs='15.5px', mt='0')
-      + '  <div style="height:16px;"></div>\n'
+          'holding costs only.', fs='15.5px', mt='0', ind=6)
+      + '    </div>\n'
+      + shot('wt-dogwood-house.jpg', '21441 Dogwood Cove Road', h='96px')
+      + '  </div>\n  <div style="height:14px;"></div>\n'
       + tbl(['Line item'] + DOG_YEARS, rows, fs='13.5px', pad=5, lw='2.15fr')
       + '  <div style="display:grid;grid-template-columns:1.35fr 1fr 1fr 1.1fr;gap:0 30px;'
         'margin-top:auto;padding-top:18px;border-top:2px solid var(--mm-navy);">\n'
