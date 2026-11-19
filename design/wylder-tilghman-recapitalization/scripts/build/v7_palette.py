@@ -654,10 +654,198 @@ def next_steps():
      'Corporation<br>Exclusive Capital Advisor</div>\n  </div>\n' + dark_foot() + '</section>')
 
 
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+# Dogwood Cove: the parcel on its own, then the two together
+#
+# Every figure is the acquisition workbook's. The parcel carries its own expenses, which is why
+# it does not run at the full margin a revenue-only treatment would imply.
+# ─────────────────────────────────────────────────────────────────────────────────────────────
+DOG_YEARS = ['2027', '2028', '2029', '2030', '2031']
+DOG = {
+  'house_rev': [0, 192_150, 191_625, 191_625, 191_625],
+  'slip_rev': [101_500, 171_094, 179_648, 188_631, 198_062],
+  'house_dept': [0, 48_038, 47_906, 47_906, 47_906],
+  'slip_dept': [10_150, 17_109, 17_965, 18_863, 19_806],
+  'cc': [3_146, 11_261, 11_509, 11_788, 12_080],
+  'mgmt': [4_060, 14_530, 14_851, 15_210, 15_587],
+  'util': [12_000, 12_360, 12_731, 13_113, 13_506],
+  'rm': [10_000, 10_300, 10_609, 10_927, 11_255],
+  'tax': [7_634, 7_863, 8_099, 8_342, 8_592],
+  'ins': [12_000, 12_360, 12_731, 13_113, 13_506],
+  'reserve': [0, 7_265, 11_138, 15_210, 15_587],
+  'noi': [42_510, 222_159, 223_734, 225_784, 231_860],
+  'am_fee': [2_030, 7_265, 7_425, 7_605, 7_794]}
+_N = range(5)
+# subtotals as the workbook reports them; it carries sub-dollar rounding, so the printed
+# figures are its own and the derivation is checked to within a dollar
+DOG['rev'] = [101_500, 363_244, 371_273, 380_256, 389_687]
+DOG['dept'] = [10_150, 65_147, 65_871, 66_769, 67_712]
+DOG['goi'] = [91_350, 298_097, 305_402, 313_487, 321_975]
+DOG['undist'] = [29_206, 48_450, 49_700, 51_038, 52_429]
+DOG['gop'] = [62_144, 249_647, 255_702, 262_448, 269_546]
+DOG['fixed'] = [19_634, 27_488, 31_968, 36_665, 37_685]
+DOG['cf'] = [40_480, 214_894, 216_309, 218_179, 224_067]
+# every line of the parcel's statement has to foot, to the dollar of rounding the source carries
+for _i in _N:
+    assert DOG['house_rev'][_i] + DOG['slip_rev'][_i] == DOG['rev'][_i]
+    assert DOG['house_dept'][_i] + DOG['slip_dept'][_i] == DOG['dept'][_i]
+    assert DOG['rev'][_i] - DOG['dept'][_i] == DOG['goi'][_i]
+    assert abs(DOG['cc'][_i] + DOG['mgmt'][_i] + DOG['util'][_i] + DOG['rm'][_i]
+               - DOG['undist'][_i]) <= 1
+    assert abs(DOG['goi'][_i] - DOG['undist'][_i] - DOG['gop'][_i]) <= 1
+    assert DOG['tax'][_i] + DOG['ins'][_i] + DOG['reserve'][_i] == DOG['fixed'][_i]
+    assert abs(DOG['gop'][_i] - DOG['fixed'][_i] - DOG['noi'][_i]) <= 1, ('Dogwood does not foot', _i)
+    assert abs(DOG['noi'][_i] - DOG['am_fee'][_i] - DOG['cf'][_i]) <= 1
+
+DOG_COST, DOG_PRICE, DOG_RENO, DOG_CLOSING_COSTS = 1_433_000, 1_100_000, 300_000, 33_000
+DOG_SETTLE = 'November 16, 2026'
+DOG_NO_SLIPS = 80_195
+assert DOG_PRICE + DOG_RENO + DOG_CLOSING_COSTS == DOG_COST
+
+# hotel only, from the pro forma on the financials slide
+HOTEL_REV = [3_716_313, 4_850_759, 6_027_704, 6_701_388, 7_216_527, 7_648_894]
+HOTEL_NOI = [634_680, 1_411_103, 2_007_969, 2_293_197, 2_478_214, 2_671_765]
+HOTEL_AM = [0, 97_015, 120_554, 134_028, 144_331, 152_978]
+COMB_YEARS = ['T12 Sep-26', '2027', '2028', '2029', '2030', '2031']
+# the workbook's own combined column; the parts are checked against it to the dollar of rounding
+COMB_REV = [3_716_313, 4_952_259, 6_390_948, 7_072_662, 7_596_783, 8_038_582]
+COMB_NOI = [634_680, 1_453_613, 2_230_128, 2_516_931, 2_703_997, 2_903_626]
+COMB_AM = [0, 99_045, 127_819, 141_453, 151_936, 160_772]
+COMB_CF = [634_680, 1_354_568, 2_102_309, 2_375_478, 2_552_062, 2_742_854]
+_DR = [0] + DOG['rev']
+_DN = [0] + DOG['noi']
+_DA = [0] + DOG['am_fee']
+for _i in range(6):
+    assert abs(HOTEL_REV[_i] + _DR[_i] - COMB_REV[_i]) <= 1, ('combined revenue', _i)
+    assert abs(HOTEL_NOI[_i] + _DN[_i] - COMB_NOI[_i]) <= 1, ('combined NOI', _i)
+    assert abs(HOTEL_AM[_i] + _DA[_i] - COMB_AM[_i]) <= 1, ('combined fee', _i)
+    assert abs(COMB_NOI[_i] - COMB_AM[_i] - COMB_CF[_i]) <= 1, ('combined cash flow', _i)
+
+
+def _m(v):
+    return f'${v:,.0f}' if v else '0'
+
+
+def _money(v):
+    return f'${v:,.0f}' if v else '0'
+
+
+def _paren(v):
+    return f'(${v:,.0f})' if v else '0'
+
+
+def dogwood():
+    sn = ('Dogwood Cove on its own. The adjacent waterfront parcel: a four bedroom residence and '
+          'twenty-four boat slips, under contract at one million one hundred thousand with '
+          'settlement November sixteenth, twenty twenty-six, and three hundred thousand to bring '
+          'the house online. Total project cost of one million four hundred thirty-three '
+          'thousand. The house is offline through twenty twenty-seven, so that year carries slip '
+          'revenue and holding costs only. From twenty twenty-eight the parcel earns about two '
+          'hundred twenty-two thousand, a fifteen point five percent yield on cost, after its '
+          'own housekeeping, utilities, repairs, insurance, taxes and reserve.')
+    rows = [
+      ('Residence', [_money(v) for v in DOG['house_rev']], ''),
+      ('Slips &middot; 24', [_money(v) for v in DOG['slip_rev']], ''),
+      ('Total revenues', [_money(v) for v in DOG['rev']], 'sub'),
+      ('Residence rooms and housekeeping', [_paren(v) for v in DOG['house_dept']], ''),
+      ('Slip operating cost', [_paren(v) for v in DOG['slip_dept']], ''),
+      ('Gross operating income', [_money(v) for v in DOG['goi']], 'sub'),
+      ('Credit card commissions', [_paren(v) for v in DOG['cc']], ''),
+      ('Management fees', [_paren(v) for v in DOG['mgmt']], ''),
+      ('Utilities', [_paren(v) for v in DOG['util']], ''),
+      ('Repairs and maintenance', [_paren(v) for v in DOG['rm']], ''),
+      ('Gross operating profit', [_money(v) for v in DOG['gop']], 'sub'),
+      ('Real estate taxes', [_paren(v) for v in DOG['tax']], ''),
+      ('Insurance', [_paren(v) for v in DOG['ins']], ''),
+      ('Reserve for replacement', [_paren(v) for v in DOG['reserve']], ''),
+      ('Net operating income', [_money(v) for v in DOG['noi']], 'tot'),
+      ('NOI margin', [f'{DOG["noi"][i] / DOG["rev"][i]:.1%}' for i in _N], ''),
+      ('Cash flow after asset management', [_money(v) for v in DOG['cf']], '')]
+    stats = [('Total Project Cost', f'${DOG_COST:,}',
+              f'${DOG_PRICE:,} price, ${DOG_CLOSING_COSTS:,} costs, ${DOG_RENO:,} renovation'),
+             ('NOI &middot; 2029', f'${DOG["noi"][2]:,}', 'Unlevered, after its own expenses'),
+             ('Yield on Cost &middot; 2029', f'{DOG["noi"][2] / DOG_COST:.2%}',
+              'On total project cost, not a cap rate'),
+             ('Without Slip Approval', f'${DOG_NO_SLIPS:,}',
+              '2029 income if commercial use is not permitted')]
+    return page('Dogwood Cove Pro Forma', sn,
+      rule(mb='18px')
+      + H2('Dogwood Cove, on its own.', fs='38px', mb='16px')
+      + P('The adjacent waterfront parcel: a four-bedroom residence and 24 boat slips, under '
+          f'contract at ${DOG_PRICE:,} with settlement {DOG_SETTLE}, and ${DOG_RENO:,} to bring '
+          'the house online. The residence is offline through 2027, so that year carries slip '
+          'revenue and holding costs only.', fs='15.5px', mt='0')
+      + '  <div style="height:16px;"></div>\n'
+      + tbl(['Line item'] + DOG_YEARS, rows, fs='13.5px', pad=5, lw='2.15fr')
+      + '  <div style="display:grid;grid-template-columns:1.35fr 1fr 1fr 1.1fr;gap:0 30px;'
+        'margin-top:auto;padding-top:18px;border-top:2px solid var(--mm-navy);">\n'
+      + ''.join(
+          (f'    <div style="{"" if i == 0 else f"border-left:{HAIR};padding-left:30px;"}">\n'
+           f'      <div style="{CON}font-size:11px;letter-spacing:.15em;color:{ORANGE};">'
+           f'{lab}</div>\n'
+           f'      <div style="{DISP}font-weight:700;font-size:26px;color:{NAVY};line-height:1.1;'
+           f'margin-top:6px;">{val}</div>\n'
+           + P(note, fs='12.5px', col='var(--ink-500)', mt='5px', lh='1.4', ind=6)
+           + '    </div>\n') for i, (lab, val, note) in enumerate(stats))
+      + '  </div>\n', pad='54px 92px 40px')
+
+
+def combined():
+    sn = ('Hotel and parcel together. Combined revenue runs from three point seven two million '
+          'trailing to eight point zero four million in twenty thirty-one, with combined net '
+          'operating income of two point five two million in twenty twenty-nine, the first '
+          'stabilized year. Dogwood Cove contributes about nine percent of combined income once '
+          'the residence is in service. The hotel pro forma on the earlier slides is the hotel '
+          'on its own; this page adds the acquired parcel.')
+    rows = [
+      ('Hotel revenue', [f'${v:,.0f}' for v in HOTEL_REV], ''),
+      ('Dogwood Cove residence', [_m(v) for v in [0] + DOG['house_rev']], ''),
+      ('Dogwood Cove slips', [_m(v) for v in [0] + DOG['slip_rev']], ''),
+      ('Combined revenue', [f'${v:,.0f}' for v in COMB_REV], 'sub'),
+      ('Hotel net operating income', [f'${v:,.0f}' for v in HOTEL_NOI], ''),
+      ('Dogwood Cove net operating income', [_m(v) for v in [0] + DOG['noi']], ''),
+      ('Combined net operating income', [f'${v:,.0f}' for v in COMB_NOI], 'tot'),
+      ('Combined NOI margin', [f'{COMB_NOI[i] / COMB_REV[i]:.1%}' for i in range(6)], ''),
+      ('Dogwood share of combined NOI',
+       [('0.0%' if i == 0 else f'{([0] + DOG["noi"])[i] / COMB_NOI[i]:.1%}')
+        for i in range(6)], ''),
+      ('Asset management fee', [_m(v) for v in COMB_AM], ''),
+      ('Combined cash flow after fee', [f'${v:,.0f}' for v in COMB_CF], 'sub')]
+    note = (f'  <div style="background:{NAVY};color:#fff;padding:20px 26px;margin-top:auto;">\n'
+            + eyebrow('Read With the Hotel Pro Forma', ind=4, mb='9px')
+            + P('The opportunity and financials slides state the hotel on its own, so stabilized '
+                f'income there reads ${HOTEL_NOI[3] / 1e6:,.2f}M. This page adds the acquired '
+                f'parcel and reads ${COMB_NOI[3] / 1e6:,.2f}M. Both are 2029. The estimated '
+                'values on the valuation slide cover the hotel alone and carry nothing for the '
+                'parcel.', fs='15px', col='rgba(255,255,255,.88)', lh='1.5', ind=4)
+            + '  </div>\n')
+    stats = ('  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0 32px;'
+             'margin-top:20px;padding-top:18px;border-top:2px solid var(--mm-navy);">\n')
+    for i, (lab, val, nt) in enumerate(
+            [('Combined NOI &middot; 2029', f'${COMB_NOI[3]:,}', 'Hotel and parcel, unlevered'),
+             ('Parcel Contribution', f'{DOG["noi"][2] / COMB_NOI[3]:.1%}',
+              f'${DOG["noi"][2]:,} of combined income'),
+             ('Combined Margin &middot; 2029', f'{COMB_NOI[3] / COMB_REV[3]:.1%}',
+              f'On ${COMB_REV[3]:,} of revenue')]):
+        bl = '' if i == 0 else f'border-left:{HAIR};padding-left:32px;'
+        stats += (f'    <div style="{bl}">\n'
+                  f'      <div style="{CON}font-size:11.5px;letter-spacing:.15em;'
+                  f'color:{ORANGE};">{lab}</div>\n'
+                  f'      <div style="{DISP}font-weight:700;font-size:30px;color:{NAVY};'
+                  f'line-height:1.1;margin-top:6px;">{val}</div>\n'
+                  + P(nt, fs='13px', col='var(--ink-500)', mt='5px', ind=6) + '    </div>\n')
+    stats += '  </div>\n'
+    return page('Combined Pro Forma', sn,
+      rule(mb='18px') + H2('Hotel and parcel together.', fs='38px', mb='20px')
+      + tbl(['Line item'] + COMB_YEARS, rows, fs='14.5px', pad=13, lw='1.95fr')
+      + stats + note, pad='56px 92px 42px')
+
+
 # ── assembly ─────────────────────────────────────────────────────────────────────────────────
 PAGES = [('COVER', cover), ('THE OPPORTUNITY', opportunity), ('THE ASSET', asset),
          ('THE SPONSOR', sponsor), ('BRAND AND TRACK RECORD', brand),
          ('BUSINESS PLAN', business_plan), ('FINANCIALS', financials),
+         ('DOGWOOD COVE PRO FORMA', dogwood), ('COMBINED PRO FORMA', combined),
          ('VALUATION', valuation), ('RENOVATION BUDGET', budget), ('NEXT STEPS', next_steps)]
 PATH = f'{DECKDIR}/Wylder Tilghman Island - Investment Overview - Palette Hotels.dc.html'
 

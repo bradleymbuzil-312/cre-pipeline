@@ -345,12 +345,17 @@ PALETTE_REQUIRED = [
     "42.8%", "Jan \u2192 Jun 2027", "January 4, 2027", "175 days",
     "$3,003,000", "$1,425,000", "$258,000", "$488,039", "$152,250",
     "CBRE", "LW Hospitality Advisors", "$518K", "3.6", "$85 \u2192 $166",
+    # the parcel on its own, and the two together
+    "$1,433,000", "$1,100,000", "November 16, 2026", "$223,734", "15.61%", "$80,195",
+    "$192,150", "$191,625", "$179,648", "$47,906", "$222,159",
+    "$2,516,931", "$7,072,662", "$1,453,613", "$2,230,128", "$2,903,626", "8.9%", "35.6%",
+    "$2,375,478",
 ]
 d = pymupdf.open(PALETTE_PDF)
 raw = re.sub(r"\s+", " ", "".join(pg.get_text() for pg in d))
 flat = norm(raw)
 print(f"\n\u2500\u2500 Investment Overview, Palette Hotels \u00b7 {len(d)} pages \u2500\u2500")
-check(len(d) == 10, "10 slides", f"got {len(d)}")
+check(len(d) == 12, "12 slides", f"got {len(d)}")
 hits = [w for w in PALETTE_FORBID if w.lower() in raw.lower()]
 check(not hits, "no capital structure, no brand affiliation", f"found {hits}")
 missing = [v for v in PALETTE_REQUIRED if norm(v) not in flat]
@@ -364,6 +369,11 @@ _footed = sum(1 for pg in d
               if norm("Investment Overview") in norm(pg.get_text())
               and norm("The TRANCHE Group") in norm(pg.get_text()))
 check(_footed == len(d), "running footer on every slide", f"only {_footed} of {len(d)}")
+# the parcel is stated on its own and in combination, and the two reconcile on the page
+check(norm("Hotel and parcel together") in flat and norm("Dogwood Cove, on its own") in flat,
+      "carries the parcel individually and combined")
+check(norm("$2.29M") in flat and norm("$2.52M") in flat,
+      "reconciles the hotel-only and combined stabilized income")
 
 if fails:
     print(f"{len(fails)} check(s) failed")

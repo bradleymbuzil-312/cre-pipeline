@@ -14,7 +14,7 @@ The twelve decks export to `../package/` — about 3.1 MB each, 20 × 11.25 in
 - `Wylder Tilghman Island - Common Equity.pdf`
 - `Wylder Tilghman Island - Marina Valuation.pdf` (9 pages)
 - `Wylder Tilghman Island - Equity Teaser.pdf` (14 pages)
-- `Wylder Tilghman Island - Investment Overview - Palette Hotels (11.18.26).pdf` (10 pages)
+- `Wylder Tilghman Island - Investment Overview - Palette Hotels (11.18.26).pdf` (12 pages)
 
 Text stays live (selectable and searchable); it is not rasterized.
 
