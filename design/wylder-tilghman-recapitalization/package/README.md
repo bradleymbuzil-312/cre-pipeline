@@ -18,6 +18,7 @@ $3,500,000 of common equity from a new LP, alongside $2,000,000 of sponsor cash 
 | `Wylder Tilghman Island - Common Equity.pdf` | The LP | — | 29 |
 | `Wylder Tilghman Island - Marina Valuation.pdf` | **Standalone** — the marina analysis on its own | — | 9 |
 | `Wylder Tilghman Island - Equity Teaser.pdf` | **First look** — no figures of any kind | — | 14 |
+| `Wylder Tilghman Island - Investment Overview - Palette Hotels (11.18.26).pdf` | **Operating and valuation overview** — no capital structure at all | — | 10 |
 
 **The three "Request" packages are the lender-facing set.** Same loan, same 12.00% all-in rate,
 same 3-year interest-only term, same 2.00% origination — sized at three requests. They quote no
@@ -193,6 +194,28 @@ Because a June finish does not beat the summer peak, the seasonality claim was r
 than left standing: the program opens in the months the property earns least, and because rooms
 return in waves the hotel trades throughout instead of closing, with the last wave landing for
 the back half of the 2027 season.
+
+## The Palette Hotels Investment Overview
+
+**Built fresh, not edited down from a capitalization deck.** Ten slides covering the asset, the
+sponsor, the business plan, the financials, the valuation and the renovation budget, with **no
+capital structure of any kind**: no preferred, no senior debt, no returns, no sources and uses,
+no target close. None of that language exists in the file to leak.
+
+Two standing rules of the library are deliberately set aside here, on instruction:
+
+- **The valuation is attributed.** It names CBRE and LW Hospitality Advisors and uses the word
+  appraisal. Every other package still states values with no source named, and `crosscheck.py`
+  still enforces that on them.
+- **No em dashes anywhere.** The build asserts it before writing the file.
+
+**The pro forma is the hotel on its own.** Stabilized NOI reads **$2.29M**, not the $2.52M the
+combined packages carry, because the Dogwood Cove parcel is not in this deck. The valuation
+slide also discloses that CBRE's as-complete premise assumes completion by April 1, 2027 while
+the current schedule runs to late June.
+
+`crosscheck.py` verifies the ten slides, the figures the brief specifies, the absence of every
+banned term, the running footer on all ten slides, and that no em dash survives.
 
 ## Dogwood Cove, priced and expensed — all packages
 

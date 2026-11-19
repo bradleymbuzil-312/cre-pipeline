@@ -53,7 +53,8 @@ DECKS = ["Wylder Tilghman Island - Senior Debt.dc.html",
           "Wylder Tilghman Island - Preferred Equity.dc.html",
           "Wylder Tilghman Island - Common Equity.dc.html",
           "Wylder Tilghman Island - Marina Valuation.dc.html",
-          "Wylder Tilghman Island - Equity Teaser.dc.html"]
+          "Wylder Tilghman Island - Equity Teaser.dc.html",
+          "Wylder Tilghman Island - Investment Overview - Palette Hotels.dc.html"]
 
 
 def build(src_deck, out_deck):

@@ -22,7 +22,8 @@ for loan in REQUESTS:
 for extra, lab in [('v7_lp.py', 'LP recapitalization deck'),
                    ('v7_eq.py', 'LP equity marketing deck'),
                    ('v7_marina.py', 'standalone marina valuation'),
-                   ('v7_teaser.py', 'equity teaser')]:
+                   ('v7_teaser.py', 'equity teaser'),
+                   ('v7_palette.py', 'Palette Hotels investment overview')]:
     print(f'\n{"═" * 70}\n  {lab}\n{"═" * 70}')
     r = subprocess.run([sys.executable, os.path.join(HERE, extra)],
                        cwd=HERE, text=True, capture_output=True)

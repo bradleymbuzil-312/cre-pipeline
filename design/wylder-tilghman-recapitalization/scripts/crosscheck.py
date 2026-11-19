@@ -325,6 +325,46 @@ check(not brit, "US spelling", f"found {brit}")
 for word in ("Valuation", "renovation", "revenue"):
     check(re.search(word, raw, re.I) is not None, f"carries the {word.lower()} section")
 
+# ── the Palette Hotels investment overview
+#
+# This deck is the one exception to the no-source rule in the whole library, by instruction: it
+# names CBRE and LW Hospitality Advisors and uses the word appraisal. What it must not carry is
+# any capital structure at all.
+PALETTE_PDF = f"{P}/Wylder Tilghman Island - Investment Overview - Palette Hotels (11.18.26).pdf"
+PALETTE_FORBID = [
+    "preferred", "17.00%", "current pay", "accrued", "minimum multiple", "1.20x", "1.55x",
+    "profit participation", "kicker", "last-dollar", "LTV", "senior loan", "LCP Investors",
+    "waterfall", "redemption", "origination fee", "broker fee", "carry reserve",
+    "value cushion", "sources and uses", "target close", "Small Luxury Hotels", "SLH",
+    "Hilton", "September 21, 2026",
+    "$7,276,056", "$7.28M", "$9,000,000", "$9.00M", "$16,276,056", "$8,731,268",
+    "$11,252,661", "$727,606", "$823,769",
+]
+PALETTE_REQUIRED = [
+    "50 \u2192 57", "$3.0M", "$52,684", "$21.4M", "$29.5M", "$0.63M", "$2.29M",
+    "42.8%", "Jan \u2192 Jun 2027", "January 4, 2027", "175 days",
+    "$3,003,000", "$1,425,000", "$258,000", "$488,039", "$152,250",
+    "CBRE", "LW Hospitality Advisors", "$518K", "3.6", "$85 \u2192 $166",
+]
+d = pymupdf.open(PALETTE_PDF)
+raw = re.sub(r"\s+", " ", "".join(pg.get_text() for pg in d))
+flat = norm(raw)
+print(f"\n\u2500\u2500 Investment Overview, Palette Hotels \u00b7 {len(d)} pages \u2500\u2500")
+check(len(d) == 10, "10 slides", f"got {len(d)}")
+hits = [w for w in PALETTE_FORBID if w.lower() in raw.lower()]
+check(not hits, "no capital structure, no brand affiliation", f"found {hits}")
+missing = [v for v in PALETTE_REQUIRED if norm(v) not in flat]
+check(not missing, "carries the figures the brief specifies", f"missing {missing}")
+check("\u2014" not in raw, "no em dashes",
+      f"found {raw.count(chr(0x2014))}")
+brit = [w for w in BRITISH if w in raw.lower()]
+check(not brit, "US spelling", f"found {brit}")
+# letter-spaced condensed type extracts one character at a time, so compare on the stripped form
+_footed = sum(1 for pg in d
+              if norm("Investment Overview") in norm(pg.get_text())
+              and norm("The TRANCHE Group") in norm(pg.get_text()))
+check(_footed == len(d), "running footer on every slide", f"only {_footed} of {len(d)}")
+
 if fails:
     print(f"{len(fails)} check(s) failed")
     sys.exit(1)

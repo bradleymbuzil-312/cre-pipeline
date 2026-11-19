@@ -89,6 +89,9 @@ Serve `deck/` over a local static server (relative paths to `_ds/`, `assets/`, `
   9 slides
 - `Wylder Tilghman Island - Equity Teaser.dc.html` — the no-figures equity teaser:
   valuation, the renovation plan and the revenue ramp, argued qualitatively, 14 slides
+- `Wylder Tilghman Island - Investment Overview - Palette Hotels.dc.html` — an operating
+  and valuation overview with no capital structure at all, 10 slides. The one deck that
+  names its valuation sources, and the one with no em dashes
 
 Arrow keys / on-screen nav move between slides; the shell handles scaling, a thumbnail rail, speaker
 notes and print-to-PDF.
