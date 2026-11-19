@@ -207,6 +207,11 @@ Two standing rules of the library are deliberately set aside here, on instructio
 - **The valuation is attributed.** It names CBRE and LW Hospitality Advisors and uses the word
   appraisal. Every other package still states values with no source named, and `crosscheck.py`
   still enforces that on them.
+- **The brand affiliation is named on one slide.** The brief banned Small Luxury Hotels outright;
+  it is reinstated on the business plan slide only, as a **proposal in hand that can be put into
+  effect once the renovation is complete**, with the plan explicitly not depending on it. Hilton
+  stays out. `crosscheck.py` requires the sentence on that slide and fails if the affiliation
+  appears on any other.
 - **No em dashes anywhere.** The build asserts it before writing the file.
 
 **Three pro forma slides, in sequence.** The financials slide states the hotel on its own

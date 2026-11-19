@@ -369,7 +369,7 @@ def business_plan():
     for i, (t, d, v) in enumerate(PLAN_ITEMS):
         bb = '' if i == len(PLAN_ITEMS) - 1 else f'border-bottom:{HAIR};'
         items += (f'    <div style="display:grid;grid-template-columns:46px 1fr 132px;gap:18px;'
-                  f'padding:34px 0;{bb}align-items:start;">\n'
+                  f'padding:32px 0;{bb}align-items:start;">\n'
                   f'      <div style="{MONO}font-size:14px;color:{ORANGE};padding-top:4px;">'
                   f'{i + 1:02d}</div>\n      <div>\n'
                   f'        <div style="{DISP}font-weight:700;font-size:23px;color:{NAVY};">'
@@ -393,8 +393,15 @@ def business_plan():
       + items
       + P('Exterior and interior improvements, contingency and professional fees complete the '
           '$3,003,000 program, which starts January 4, 2027 and completes in late June 2027.',
-          fs='15.5px', mt='18px')
-      + stats, pad='64px 100px 46px')
+          fs='15.5px', mt='16px')
+      + f'  <div style="border-left:3px solid {ORANGE};padding-left:18px;margin-top:16px;">\n'
+      + eyebrow('Brand Optionality', mb='6px')
+      + P('A <strong style="color:var(--mm-navy-900);">Small Luxury Hotels membership proposal '
+          'is in hand</strong> and can be put into effect once the renovation is complete. The '
+          'plan above does not depend on it; it is available to the repositioned product rather '
+          'than to the hotel as it stands today.', fs='15.5px', mt='0', lh='1.5')
+      + '  </div>\n'
+      + stats, pad='58px 100px 42px')
 
 
 # ── 07 · historical and pro forma financials ─────────────────────────────────────────────────
@@ -857,8 +864,10 @@ FORBIDDEN = [
     'carry reserve', 'value cushion', 'sources and uses', 'target close',
     '$7,276,056', '$7.28M', '$9,000,000', '$9.00M', '$16,276,056', '$8,731,268',
     '$11,252,661', '$727,606', '$823,769',
-    'Small Luxury Hotels', 'SLH', 'Hilton', 'September 21, 2026',
+    'Hilton', 'September 21, 2026',
 ]
+# the affiliation may be named on the business plan slide, and nowhere else
+AFFILIATION = ('Small Luxury Hotels', 'SLH')
 
 
 def build_deck():
@@ -881,6 +890,11 @@ if __name__ == '__main__':
     txt = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ',
                                      re.sub(r'data-speaker-notes="[^"]*"', ' ', s)))
     hits = [w for w in FORBIDDEN if w.lower() in txt.lower()]
+    # the affiliation belongs to the business plan slide alone
+    _slides = re.split(r'<!-- ═+ \d+ · ([^═]*?) ═+ -->', s)
+    _elsewhere = ''.join(_slides[i + 1] for i in range(1, len(_slides), 2)
+                         if _slides[i] != 'BUSINESS PLAN')
+    hits += [f'{w} outside the business plan' for w in AFFILIATION if w in _elsewhere]
     brit = [w for w in ('utilise', 'organis', 'centre', 'labour', 'colour', 'analyse')
             if w in txt.lower()]
     print(f'  {path.split("/")[-1]}  ,  {n} slides')

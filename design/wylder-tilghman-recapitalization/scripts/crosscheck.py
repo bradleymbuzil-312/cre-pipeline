@@ -335,7 +335,8 @@ PALETTE_FORBID = [
     "preferred", "17.00%", "current pay", "accrued", "minimum multiple", "1.20x", "1.55x",
     "profit participation", "kicker", "last-dollar", "LTV", "senior loan", "LCP Investors",
     "waterfall", "redemption", "origination fee", "broker fee", "carry reserve",
-    "value cushion", "sources and uses", "target close", "Small Luxury Hotels", "SLH",
+    "value cushion", "sources and uses", "target close",
+    # Hilton stays out; the affiliation itself is named on the business plan slide only
     "Hilton", "September 21, 2026",
     "$7,276,056", "$7.28M", "$9,000,000", "$9.00M", "$16,276,056", "$8,731,268",
     "$11,252,661", "$727,606", "$823,769",
@@ -374,6 +375,14 @@ check(norm("Hotel and parcel together") in flat and norm("Dogwood Cove, on its o
       "carries the parcel individually and combined")
 check(norm("$2.29M") in flat and norm("$2.52M") in flat,
       "reconciles the hotel-only and combined stabilized income")
+# the affiliation is a proposal in hand on the business plan slide, and appears nowhere else
+_plan = next((pg.get_text() for pg in d if norm("Business plan and capital") in norm(pg.get_text())),
+             "")
+_other = "".join(pg.get_text() for pg in d if pg.get_text() != _plan)
+check(norm("Small Luxury Hotels membership proposal is in hand") in norm(_plan),
+      "the business plan states the affiliation proposal is in hand")
+check(norm("Small Luxury Hotels") not in norm(_other) and norm("SLH") not in norm(_other),
+      "the affiliation appears on no other slide")
 
 if fails:
     print(f"{len(fails)} check(s) failed")
